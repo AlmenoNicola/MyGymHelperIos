@@ -1,0 +1,27 @@
+# Xcode / Swift
+xcuserdata/
+DerivedData/
+.build/
+*.xcuserstate
+.swiftpm/
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/core/build/
+android/.idea/
+android/local.properties
+*.jks
+*.keystore
+# Varie
+.DS_Store
+Thumbs.db
+# Android: sta nel suo repository
+android/
+docs/ANDROID.md
+# Materiale di lavoro, non fa parte del progetto
+Claude outputs/
+_to_delete/
+*.zip
+*.tar
+*.tgz

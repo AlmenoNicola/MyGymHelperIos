@@ -1,0 +1,20 @@
+# Configurazione minima per la Supabase CLI (supabase functions deploy ...).
+# project_id: metti il riferimento del tuo progetto (Dashboard > Project Settings > General).
+project_id = "mygymhelper"
+
+# Apple chiama questa funzione senza token Supabase: la sicurezza e' la firma JWS di Apple, verificata nel codice.
+[functions.apple-notifications]
+verify_jwt = false
+
+# Catalogo: chiamato dall'app con la chiave anon o il token dell'utente.
+[functions.catalog]
+verify_jwt = true
+
+# Cancellazione account: solo utenti autenticati (il codice ricontrolla il token).
+[functions.delete-account]
+verify_jwt = true
+
+# Google Play chiama questa funzione tramite Pub/Sub senza token Supabase: la sicurezza e' il token OIDC
+# di Pub/Sub (firma Google, pubblico ed e-mail dell'account di servizio), verificato nel codice.
+[functions.google-play-notifications]
+verify_jwt = false

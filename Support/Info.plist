@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Chiavi personalizzate: si uniscono a quelle generate da Xcode (GENERATE_INFOPLIST_FILE = YES). -->
+	<!-- Contatto per lo User-Agent di Open Food Facts: l'indirizzo dell'app (AppContact.email). -->
+	<key>MyGymHelperContactEmail</key>
+	<string>mygymhelper@gmail.com</string>
+	<!-- Facoltativa: URL di un backend diverso da Supabase che fornisce /catalog?lang=xx. Vuota = si usa Supabase. -->
+	<key>MyGymHelperBackendURL</key>
+	<string></string>
+	<!-- Progetto Supabase (Dashboard > Project Settings > API). Vuote = niente account e niente catalogo online. -->
+	<key>MyGymHelperSupabaseURL</key>
+	<string></string>
+	<key>MyGymHelperSupabaseAnonKey</key>
+	<string></string>
+	<!-- Accesso con Facebook: YES solo dopo averlo attivato in Supabase (Authentication > Providers > Facebook). -->
+	<key>MyGymHelperFacebookLogin</key>
+	<false/>
+	<!-- Accesso con e-mail e codice: YES solo dopo aver collegato un SMTP proprio in Supabase (Authentication > Emails). -->
+	<key>MyGymHelperEmailLogin</key>
+	<false/>
+	<!-- Pagine web pubbliche richieste da Apple. Privacy: obbligatoria. Condizioni: vuota = EULA standard Apple. -->
+	<!-- Apple Music (facoltativo, Voce e musica): testo tradotto in App/InfoPlist.xcstrings. -->
+	<key>NSAppleMusicUsageDescription</key>
+	<string>MyGymHelper starts and pauses Apple Music during your workout, if you turn it on in Voice and music.</string>
+	<!-- Spotify (facoltativo, Voce e musica): Client ID dell'app creata su developer.spotify.com. Vuoto = Spotify spento. -->
+	<!-- Nella dashboard Spotify registrare i Redirect URI mygymhelper://spotify-auth e mygymhelper://spotify-remote. -->
+	<key>MyGymHelperSpotifyClientID</key>
+	<string>e63efb757c3b4fec95924e3ba5710708</string>
+	<!-- Per sapere se l'app Spotify e' installata e per aprirla (SDK Spotify). -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>spotify</string>
+	</array>
+	<!-- Schema mygymhelper:// per il ritorno da Spotify (mygymhelper://spotify-remote). -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>app.mygymhelper</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mygymhelper</string>
+			</array>
+		</dict>
+	</array>
+	<key>MyGymHelperPrivacyURL</key>
+	<string>https://mygymhelper-site.github.io/privacy.html</string>
+	<key>MyGymHelperTermsURL</key>
+	<string></string>
+	<!-- Supabase config. -->
+	<key>MyGymHelperSupabaseURL</key>
+	<string>https://xydfakxpybmqtbpglipx.supabase.co</string>
+	<key>MyGymHelperSupabaseAnonKey</key>
+	<string>sb_publishable_CGETSjtgesJTMuU_4FjMdA_B5lqOqOA</string>
+</dict>
+</plist>

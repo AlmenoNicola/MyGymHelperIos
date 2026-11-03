@@ -1,0 +1,3 @@
+# Consenso al trattamento dei dati relativi alla salute
+Acconsento esplicitamente, ove necessario, al trattamento dei dati relativi alla salute che scelgo di inserire nell'applicazione, per le finalità descritte nell'informativa privacy e per il funzionamento delle funzionalità locali di personalizzazione e benessere. Dichiaro di aver letto l'informativa e di essere stato informato delle modalità per revocare il consenso, ove applicabile.
+Il consenso è facoltativo: puoi continuare a usare le funzioni che non richiedono dati sulla salute e puoi revocarlo in qualsiasi momento dall'Area personale.
