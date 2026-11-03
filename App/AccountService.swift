@@ -39,7 +39,14 @@ final class AccountService {
         let urlText = (info["MyGymHelperSupabaseURL"] as? String ?? "").trimmingCharacters(in: .whitespaces)
         let key = (info["MyGymHelperSupabaseAnonKey"] as? String ?? "").trimmingCharacters(in: .whitespaces)
         if let url = URL(string: urlText), url.scheme == "https", !key.isEmpty {
-            client = SupabaseClient(supabaseURL: url, supabaseKey: key)
+            // emitLocalSessionAsInitialSession: all'avvio arriva subito la sessione salvata, anche se scaduta
+            // (nuovo comportamento di supabase-swift, toglie l'avviso in console). Il token scaduto si rinnova
+            // da solo alla prima chiamata al backend (vedi bearerToken()).
+            client = SupabaseClient(
+                supabaseURL: url,
+                supabaseKey: key,
+                options: SupabaseClientOptions(auth: .init(emitLocalSessionAsInitialSession: true))
+            )
         } else {
             client = nil
         }
@@ -62,6 +69,9 @@ final class AccountService {
     func start() async {
         guard let client else { return }
         for await change in client.auth.authStateChanges {
+            // La sessione iniziale puo' essere scaduta (change.session?.isExpired): l'utente resta comunque
+            // quello salvato, cosi' l'app funziona anche offline; il token viene rinnovato quando serve
+            // e, se il rinnovo fallisce, Supabase manda l'evento di uscita (session nil).
             sessionKnown = true
             userID = change.session?.user.id
             email = change.session?.user.email

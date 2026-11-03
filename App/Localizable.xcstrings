@@ -1,22 +1,20 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "OK" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        }
-      }
+    "" : {
+
+    },
+    " " : {
+
+    },
+    "—" : {
+
+    },
+    "/ %lld" : {
+
+    },
+    "%lld" : {
+
     },
     "account.appleConfirm" : {
       "extractionState" : "manual",
@@ -103,6 +101,23 @@
         }
       }
     },
+    "account.deleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account deleted."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account eliminato."
+          }
+        }
+      }
+    },
     "account.deleteMessage" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -133,23 +148,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gli abbonamenti non si annullano eliminando l'account: annullali dalle impostazioni dell'Apple ID."
-          }
-        }
-      }
-    },
-    "account.deleted" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account deleted."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account eliminato."
           }
         }
       }
@@ -290,23 +288,6 @@
         }
       }
     },
-    "account.signOut" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign out"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esci"
-          }
-        }
-      }
-    },
     "account.signedIn" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -337,6 +318,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accesso effettuato come"
+          }
+        }
+      }
+    },
+    "account.signOut" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign out"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci"
           }
         }
       }
@@ -3928,23 +3926,6 @@
         }
       }
     },
-    "ex.photoStart" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inizio"
-          }
-        }
-      }
-    },
     "ex.photos" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3975,6 +3956,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Foto: Free Exercise DB (pubblico dominio)."
+          }
+        }
+      }
+    },
+    "ex.photoStart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizio"
           }
         }
       }
@@ -5308,16 +5306,16 @@
     "import.formatsPhoto" : {
       "extractionState" : "manual",
       "localizations" : {
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Formati: foto della scheda. Per le tabelle servono le colonne Esercizio, Serie, Ripetizioni ed eventualmente Peso (kg) e Recupero."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Format: a photo of the plan. Tables need the columns Exercise, Sets, Reps and optionally Weight (kg) and Rest."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formati: foto della scheda. Per le tabelle servono le colonne Esercizio, Serie, Ripetizioni ed eventualmente Peso (kg) e Recupero."
           }
         }
       }
@@ -5376,16 +5374,16 @@
     "import.privacyPhoto" : {
       "extractionState" : "manual",
       "localizations" : {
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La foto viene letta sul telefono (riconoscimento del testo): nulla viene inviato a server."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The photo is read on your phone (text recognition): nothing is sent to servers."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La foto viene letta sul telefono (riconoscimento del testo): nulla viene inviato a server."
           }
         }
       }
@@ -5916,6 +5914,9 @@
           }
         }
       }
+    },
+    "level.%@" : {
+
     },
     "level.beginner" : {
       "extractionState" : "manual",
@@ -7290,6 +7291,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scheda del nutrizionista"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
@@ -10677,6 +10695,9 @@
         }
       }
     },
+    "Spotify" : {
+
+    },
     "spotify.album" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11649,16 +11670,16 @@
     "tutorial.exercisesLinks.body" : {
       "extractionState" : "manual",
       "localizations" : {
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Full) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "In Lists you find ready-made and saved lists. In Plans (Full) you upload your gym's plan from a photo: if your phone has AI (Apple Intelligence or Gemini Nano) it recognizes exercises, sets, reps and weights and links the exercises to the catalog, without the text leaving your phone. Data it can't find is shown in orange: you fill it in, or confirm the import as it is."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Full) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
           }
         }
       }
@@ -13023,6 +13044,23 @@
         }
       }
     },
+    "workout.added %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added to the list: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiunto all'elenco: %@"
+          }
+        }
+      }
+    },
     "workout.addExercise" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13070,23 +13108,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aggiungi esercizi"
-          }
-        }
-      }
-    },
-    "workout.added %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Added to the list: %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aggiunto all'elenco: %@"
           }
         }
       }

@@ -2,7 +2,7 @@ import SwiftUI
 import MyGymHelperCore
 
 extension SensorPosition: Identifiable {
-    var id: String { rawValue }
+    public var id: String { rawValue }
     var titleKey: LocalizedStringKey { LocalizedStringKey("position." + rawValue) }
     var hintKey: LocalizedStringKey { LocalizedStringKey("position." + rawValue + ".hint") }
     var symbol: String {
