@@ -1,7 +1,7 @@
 import SwiftUI
 import MyGymHelperCore
 
-// Revisione della scheda ogni due settimane (piano Full): domanda a fine allenamento, proposta in
+// Revisione della scheda ogni due settimane (piano Pro): domanda a fine allenamento, proposta in
 // "Consiglio per oggi", elenco dei suggeriti nel dettaglio della scheda e ritorno alla scheda precedente.
 // Come PlanReviewUi.kt su Android.
 

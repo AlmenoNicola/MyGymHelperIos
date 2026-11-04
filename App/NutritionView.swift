@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftData
 import MyGymHelperCore
 
-/// Nutrizione: profilo (dati sanitari, solo con consenso), BMI (Free), obiettivi di calorie e macro (Mid+),
-/// piano dei pasti per dieta e giorno di allenamento (Full), scheda del nutrizionista (Full), ricerca alimenti (Mid+).
+/// Nutrizione: profilo (dati sanitari, solo con consenso), BMI (Free), obiettivi di calorie e macro (Pro),
+/// piano dei pasti per dieta e giorno di allenamento (Pro), scheda del nutrizionista (Pro), ricerca alimenti (Pro).
 /// Indicazioni generali: non sostituisce un nutrizionista e non considera allergie o patologie.
 struct NutritionView: View {
     @Environment(SubscriptionManager.self) private var subscriptions

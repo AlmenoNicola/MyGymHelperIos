@@ -12,7 +12,6 @@ final class HomeEquipmentTests: XCTestCase {
 
     func testOnlyFullPlanHasIt() {
         XCTAssertFalse(FeatureGate.isAvailable(.homeEquipment, for: .free))
-        XCTAssertFalse(FeatureGate.isAvailable(.homeEquipment, for: .mid))
         XCTAssertTrue(FeatureGate.isAvailable(.homeEquipment, for: .full))
     }
 

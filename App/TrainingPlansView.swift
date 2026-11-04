@@ -4,7 +4,7 @@ import PhotosUI
 import UniformTypeIdentifiers
 import MyGymHelperCore
 
-/// Schede di allenamento (piano Full, con consenso): elenco, dettaglio, eliminazione e importazione da PDF, Excel, Word o foto.
+/// Schede di allenamento (piano Pro, con consenso): elenco, dettaglio, eliminazione e importazione da PDF, Excel, Word o foto.
 /// La scheda piu' recente e' quella usata dai consigli adattivi.
 struct TrainingPlansView: View {
     @Environment(SubscriptionManager.self) private var subscriptions

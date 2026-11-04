@@ -27,7 +27,7 @@ final class MuscleAndCatalogTests: XCTestCase {
     func testFreeSeesOnePerType() {
         let free = CatalogAccess.visible(catalog, tier: .free)
         XCTAssertEqual(free.map(\.id), ["a", "c"])
-        XCTAssertEqual(CatalogAccess.visible(catalog, tier: .mid).count, 3)
+        XCTAssertEqual(CatalogAccess.visible(catalog, tier: .full).count, 3)
     }
 
     func testMatcherFindsSimilarName() {

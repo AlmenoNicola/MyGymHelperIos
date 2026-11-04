@@ -26,7 +26,7 @@ final class PresetsTests: XCTestCase {
 
     func testFreeSeesOnlyTheBasePlan() {
         XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .free) }.map(\.id), [PresetPlans.freeID])
-        XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .mid) }.count, 5)
+        XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .full) }.count, 5)
         XCTAssertFalse(FeatureGate.isAvailable(.monthlyPlan, for: .free))
     }
 

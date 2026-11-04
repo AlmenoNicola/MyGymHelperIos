@@ -205,7 +205,7 @@ final class SessionController {
         }
     }
 
-    /// La sessione appena svolta nel formato del motore adattivo (piano Full).
+    /// La sessione appena svolta nel formato del motore adattivo (piano Pro).
     func sample() -> SessionSample {
         SessionSample(date: startedAt, weightKg: targets.map(\.weightKg).max() ?? weightKg, sets: records.enumerated().map { i, r in
             SessionSetSample(doneReps: r.doneReps, plannedReps: r.plannedReps, stoppedEarly: r.stoppedEarly,

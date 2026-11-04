@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Versione per le build di DEBUG con account sviluppatore gratuito (Personal Team):
+	     senza "Accedi con Apple", che il Personal Team non supporta. Le build Release usano
+	     MyGymHelper.entitlements completo (serve l'Apple Developer Program). -->
+	<!-- Apple Salute: lettura peso/altezza e scrittura allenamenti (vedi HealthKitService.swift). -->
+	<key>com.apple.developer.healthkit</key>
+	<true/>
+	<key>com.apple.developer.healthkit.access</key>
+	<array/>
+</dict>
+</plist>

@@ -119,7 +119,7 @@ extension Exercise {
 
 public enum CatalogAccess {
     /// Piano Free: un esercizio per tipologia (gruppo muscolare principale), scelto tra i nostri ("seed-")
-    /// e poi in ordine di id; solo esercizi di forza o pliometria. Mid e Full: catalogo completo.
+    /// e poi in ordine di id; solo esercizi di forza o pliometria. Pro: catalogo completo.
     public static func visible(_ all: [CatalogExercise], tier: SubscriptionTier) -> [CatalogExercise] {
         if FeatureGate.isAvailable(.catalogFull, for: tier) { return all }
         var seen = Set<MuscleGroup>()
@@ -137,7 +137,7 @@ public enum CatalogAccess {
     }
 }
 
-/// Attrezzi che l'utente ha in casa (solo piano Full, Feature.homeEquipment). Uguale a HomeEquipment in Catalog.kt.
+/// Attrezzi che l'utente ha in casa (solo piano Pro, Feature.homeEquipment). Uguale a HomeEquipment in Catalog.kt.
 /// Con il filtro attivo restano gli esercizi a corpo libero (o senza attrezzo indicato) e quelli con un attrezzo
 /// posseduto; gli esercizi con un attrezzo sconosciuto (nomi liberi delle fonti esterne) si nascondono.
 public enum HomeEquipment {

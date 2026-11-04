@@ -178,7 +178,7 @@ public enum PresetPlans {
 
     public static func plan(_ id: String) -> PresetPlan? { all.first { $0.id == id } }
 
-    /// Free: solo la scheda base total body. Mid e Full: tutte.
+    /// Free: solo la scheda base total body. Pro: tutte.
     public static func isAvailable(_ plan: PresetPlan, for tier: SubscriptionTier) -> Bool {
         plan.id == freeID || FeatureGate.isAvailable(.presetPlans, for: tier)
     }
@@ -216,7 +216,7 @@ public struct MonthlyPlan: Equatable, Sendable, Codable {
     }
 }
 
-/// Scheda consigliata del mese (Mid e Full), a regole fisse dallo storico del mese precedente (stesse regole di
+/// Scheda consigliata del mese (Pro), a regole fisse dallo storico del mese precedente (stesse regole di
 /// MonthlyPlanner in Presets.kt). Su iPhone con Apple Intelligence il modello sul telefono puo' poi rivederla
 /// scegliendo solo tra gli esercizi candidati (MonthlyPlanAI.swift nell'app).
 public enum MonthlyPlanner {

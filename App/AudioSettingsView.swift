@@ -8,11 +8,16 @@ struct AudioSettingsView: View {
     private var settings: AppSettings { AppSettings.shared }
     private var voice: VoiceEngine { VoiceEngine.shared }
     @State private var rate = AppSettings.shared.voiceRate
+    @State private var cueTester: CueService?
+    @AppStorage("cue.sound") private var soundOn = true
+    @AppStorage("cue.voice") private var voiceOn = true
+    @AppStorage("cue.haptics") private var hapticsOn = true
 
     var body: some View {
         ScrollView {
             VStack(spacing: 18) {
                 ScreenHeader(symbol: "person.wave.2.fill", title: "audio.title", subtitle: "audio.subtitle")
+                cueCard
                 voiceCard
                 coachingCard
                 musicCard
@@ -22,6 +27,31 @@ struct AudioSettingsView: View {
         .appScreen()
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { voice.applyVoice() }
+        // Niente shutdown: fermerebbe la voce condivisa.
+        .onDisappear { cueTester = nil }
+    }
+
+    /// Avvisi durante l'allenamento (voce, suono, vibrazione) con prova: prima erano nella scheda Allenamento.
+    private var cueCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("cue.title").font(.headline)
+            Toggle("cue.voice", isOn: $voiceOn)
+            Toggle("cue.sound", isOn: $soundOn)
+            Toggle("cue.haptics", isOn: $hapticsOn)
+            Button {
+                let tester = cueTester ?? CueService()
+                tester.options = CueOptions(sound: soundOn, voice: voiceOn, haptics: hapticsOn,
+                                            countReps: AppSettings.shared.voiceCountReps)
+                tester.preview()
+                cueTester = tester
+            } label: {
+                Label("cue.test", systemImage: "speaker.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.glass)
+            Text("cue.testNote").font(.caption).foregroundStyle(.secondary)
+        }
+        .tint(Theme.accent)
+        .glassCard()
     }
 
     private var voiceCard: some View {

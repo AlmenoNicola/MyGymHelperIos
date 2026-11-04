@@ -3,19 +3,18 @@ import StoreKit
 import Observation
 import MyGymHelperCore
 
-/// Identificatori prodotto: da creare in App Store Connect, in UN gruppo di abbonamento.
-/// Prezzi: Mid 4,99 €/mese e 49,99 €/anno; Full 9,99 €/mese e 99,99 €/anno.
+/// Identificatori prodotto: un solo abbonamento, Pro (prodotti app.mygymhelper.full.*), da creare in App Store
+/// Connect in UN gruppo di abbonamento. Prezzi: 9,99 €/mese e 99,99 €/anno.
 /// La prova gratuita di 7 giorni va configurata come offerta introduttiva (free trial)
 /// sul gruppo: StoreKit la concede una sola volta per gruppo e per utente.
+/// Il piano Mid (app.mygymhelper.mid.*) è stato tolto il 4 novembre 2026.
 enum ProductID {
-    static let midMonthly = "app.mygymhelper.mid.monthly"
-    static let midYearly = "app.mygymhelper.mid.yearly"
     static let fullMonthly = "app.mygymhelper.full.monthly"
     static let fullYearly = "app.mygymhelper.full.yearly"
-    static let all = [midMonthly, midYearly, fullMonthly, fullYearly]
+    static let all = [fullMonthly, fullYearly]
 
     static func tier(for id: String) -> SubscriptionTier {
-        id.contains(".full.") ? .full : (id.contains(".mid.") ? .mid : .free)
+        id.contains(".full.") ? .full : .free
     }
 }
 
@@ -23,7 +22,6 @@ extension SubscriptionTier {
     var titleKey: LocalizedStringResource {
         switch self {
         case .free: "tier.free"
-        case .mid: "tier.mid"
         case .full: "tier.full"
         }
     }
@@ -139,7 +137,7 @@ final class SubscriptionManager {
         let d = UserDefaults.standard
         guard let verified = d.object(forKey: serverDateKey) as? Date,
               Date().timeIntervalSince(verified) < offlineGraceDays * 86400,
-              let tier = SubscriptionTier(rawValue: d.integer(forKey: serverTierKey)) else { return nil }
+              let tier = SubscriptionTier(storedLevel: d.integer(forKey: serverTierKey)) else { return nil }
         if let until = d.object(forKey: serverUntilKey) as? Date, until <= Date() { return nil }
         return tier
     }
@@ -148,7 +146,7 @@ final class SubscriptionManager {
         let d = UserDefaults.standard
         guard let date = d.object(forKey: cacheDateKey) as? Date,
               Date().timeIntervalSince(date) < offlineGraceDays * 86400,
-              let tier = SubscriptionTier(rawValue: d.integer(forKey: cacheTierKey)) else { return }
+              let tier = SubscriptionTier(storedLevel: d.integer(forKey: cacheTierKey)) else { return }
         publish(tier)
     }
 
@@ -166,7 +164,7 @@ final class SubscriptionManager {
         }
         if TestTools.enabled {
             let simulated = AppSettings.shared.debugTier
-            if simulated >= 0, let t = SubscriptionTier(rawValue: simulated) { tier = t; return }
+            if simulated >= 0, let t = SubscriptionTier(storedLevel: simulated) { tier = t; return }
         }
         tier = best
     }

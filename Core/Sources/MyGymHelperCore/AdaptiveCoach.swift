@@ -44,7 +44,7 @@ public struct AdaptiveAdvice: Equatable, Sendable {
     public let reasonKeys: [String]
 }
 
-/// Motore adattivo del piano Full: usa lo storico dell'esercizio (completamento, interruzioni, calo di velocita')
+/// Motore adattivo del piano Pro: usa lo storico dell'esercizio (completamento, interruzioni, calo di velocita')
 /// e, se presente, gli obiettivi della scheda caricata. Ogni consiglio ha un motivo spiegabile.
 /// Soglie e incrementi sono un punto di partenza da rivedere con un professionista.
 public enum AdaptiveCoach {

@@ -59,8 +59,8 @@ struct DifficultyBadge: View {
     }
 }
 
-/// Schede pronte: la consigliata del mese (Mid e Full), la base total body (per tutti) e le altre schede (Mid e Full).
-/// Come PresetPlansScreen su Android.
+/// Schede pronte: "Crea la tua scheda" con le schede create (Pro), la consigliata del mese (Pro), la base total body
+/// (per tutti) e le altre schede (Pro). Come PresetPlansScreen su Android.
 struct PresetPlansView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(CatalogStore.self) private var catalog
@@ -75,6 +75,9 @@ struct PresetPlansView: View {
                 // Invito alla scelta, sopra l'elenco delle schede
                 Text("presets.choose").font(.title3.bold()).lineLimit(1).minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, alignment: .leading)
+
+                // "Crea la tua scheda" (scheda su misura) e le schede gia' create, sopra la scheda del mese
+                CustomPlansSection(tier: tier)
 
                 let monthlyOn = FeatureGate.isAvailable(.monthlyPlan, for: tier)
                 NavigationLink { PresetPlanView(planID: MonthlyPlanner.id) } label: {
@@ -133,6 +136,7 @@ struct PresetPlansView: View {
 }
 
 /// Una scheda: descrizione e allenamenti; "Usa questo allenamento" lo mette come elenco attuale.
+/// Anche le schede create con "Crea la tua scheda" (id "custom:<id>"): nome, note e pulsanti della scheda.
 /// Come PresetPlanScreen su Android.
 struct PresetPlanView: View {
     let planID: String
@@ -147,18 +151,33 @@ struct PresetPlanView: View {
     private var monthlyPlan: MonthlyPlan {
         monthly.plan ?? MonthlyPlanner.generate(catalog: catalog.all, sessions: sessionSummaries(sessions))
     }
-    private var plan: PresetPlan? { planID == MonthlyPlanner.id ? monthlyPlan.plan : PresetPlans.plan(planID) }
+    /// Scheda creata dall'utente, se l'id e' "custom:<id>".
+    private var custom: CustomPlanRecord? { CustomPlanStore.shared.record(planID: planID) }
+    private var plan: PresetPlan? {
+        if planID == MonthlyPlanner.id { return monthlyPlan.plan }
+        if planID.hasPrefix(CustomPlanGenerator.idPrefix) { return custom?.plan }
+        return PresetPlans.plan(planID)
+    }
     private var canSaveLists: Bool { FeatureGate.isAvailable(.savedExerciseLists, for: subscriptions.tier) }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 if let plan {
-                    ScreenHeader(symbol: planID == MonthlyPlanner.id ? "sparkles" : "calendar",
-                                 title: LocalizedStringKey(plan.titleKey), subtitle: LocalizedStringKey(planFacts(plan)))
+                    if let custom {
+                        // Scheda creata: il titolo e' il nome scelto dall'utente (testo non da tradurre)
+                        ScreenHeader(symbol: "slider.horizontal.3", title: LocalizedStringKey("\(custom.name)"),
+                                     subtitle: LocalizedStringKey("\(customFacts(custom))"))
+                    } else {
+                        ScreenHeader(symbol: planID == MonthlyPlanner.id ? "sparkles" : "calendar",
+                                     title: LocalizedStringKey(plan.titleKey), subtitle: LocalizedStringKey(planFacts(plan)))
+                    }
                     VStack(alignment: .leading, spacing: 8) {
                         DifficultyBadge(level: plan.level)
-                        if planID == MonthlyPlanner.id { monthlyNotes } else {
+                        if let custom {
+                            CustomPlanNotesView(record: custom)
+                            CustomPlanActions(record: custom)
+                        } else if planID == MonthlyPlanner.id { monthlyNotes } else {
                             Text(LocalizedStringKey(plan.summaryKey)).font(.subheadline).foregroundStyle(.secondary)
                         }
                         if plan.id == PresetPlans.freeID {
@@ -244,8 +263,10 @@ struct PresetPlanView: View {
     private func use(_ day: PresetDay, plan: PresetPlan) {
         let items = PresetPlans.items(for: day, sessions: sessionSummaries(sessions))
         if canSaveLists {
-            // Mid e Full: un elenco per allenamento ("Upper / Lower · Parte alta A"), riusato se c'e' gia'
-            let name = NSLocalizedString(plan.titleKey, comment: "") + " · " + NSLocalizedString(day.titleKey, comment: "")
+            // Pro: un elenco per allenamento ("Upper / Lower · Parte alta A"), riusato se c'e' gia'
+            // Schede create: "Nome scheda · Giorno"
+            let title = custom?.name ?? NSLocalizedString(plan.titleKey, comment: "")
+            let name = title + " · " + NSLocalizedString(day.titleKey, comment: "")
             AppSettings.shared.setCurrentList(store.upsertList(name: name, items: items))
         } else {
             // Free: un solo elenco, quello attuale

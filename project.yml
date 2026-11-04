@@ -49,5 +49,9 @@ targets:
         SWIFT_DEFAULT_ACTOR_ISOLATION: nonisolated
         TARGETED_DEVICE_FAMILY: "1"
         LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+      configs:
+        # Debug con account gratuito (Personal Team): entitlements senza "Accedi con Apple".
+        Debug:
+          CODE_SIGN_ENTITLEMENTS: Support/MyGymHelper-Dev.entitlements
     scheme:
       storeKitConfiguration: Support/MyGymHelper.storekit

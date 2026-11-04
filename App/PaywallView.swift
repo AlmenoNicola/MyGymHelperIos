@@ -57,7 +57,7 @@ struct PaywallView: View {
     }
 }
 
-/// Parte descrittiva: piano attuale e confronto tra Free, Mid e Full (solo funzioni gia' disponibili).
+/// Parte descrittiva: piano attuale e confronto tra Free e Pro (solo funzioni gia' disponibili).
 private struct PlansMarketing: View {
     let tier: SubscriptionTier
     let renewal: Date?
@@ -66,22 +66,23 @@ private struct PlansMarketing: View {
 
     private struct Row: Identifiable {
         let id: String
-        let tiers: [Bool]        // free, mid, full
+        let tiers: [Bool]        // Colonne: Free, Pro.
     }
 
     private let allRows: [Row] = [
-        Row(id: "compare.counting", tiers: [true, true, true]),
-        Row(id: "compare.bmi", tiers: [true, true, true]),
-        Row(id: "compare.catalogBasic", tiers: [true, true, true]),
-        Row(id: "compare.catalogFull", tiers: [false, true, true]),
-        Row(id: "compare.lists", tiers: [false, true, true]),
-        Row(id: "compare.variedSets", tiers: [false, true, true]),
-        Row(id: "compare.fixedCoaching", tiers: [false, true, true]),
-        Row(id: "compare.nutrition", tiers: [false, true, true]),
-        Row(id: "compare.adaptive", tiers: [false, false, true]),
-        Row(id: "compare.import", tiers: [false, false, true]),
-        Row(id: "compare.homeEquipment", tiers: [false, false, true]),
-        Row(id: "compare.meals", tiers: [false, false, true])
+        Row(id: "compare.counting", tiers: [true, true]),
+        Row(id: "compare.bmi", tiers: [true, true]),
+        Row(id: "compare.catalogBasic", tiers: [true, true]),
+        Row(id: "compare.catalogFull", tiers: [false, true]),
+        Row(id: "compare.lists", tiers: [false, true]),
+        Row(id: "compare.variedSets", tiers: [false, true]),
+        Row(id: "compare.fixedCoaching", tiers: [false, true]),
+        Row(id: "compare.nutrition", tiers: [false, true]),
+        Row(id: "compare.adaptive", tiers: [false, true]),
+        Row(id: "compare.import", tiers: [false, true]),
+        Row(id: "compare.homeEquipment", tiers: [false, true]),
+        Row(id: "compare.customPlans", tiers: [false, true]),
+        Row(id: "compare.meals", tiers: [false, true])
     ]
 
     /// Righe delle funzioni della scheda Nutrizione: nascoste finche' e' disattivata (AppFeatures.nutritionEnabled).
@@ -122,7 +123,7 @@ private struct PlansMarketing: View {
             VStack(spacing: 10) {
                 HStack {
                     Spacer()
-                    ForEach([SubscriptionTier.free, .mid, .full], id: \.self) { t in
+                    ForEach([SubscriptionTier.free, .full], id: \.self) { t in
                         Text(t.titleKey).font(.caption.bold()).frame(width: 44)
                             .foregroundStyle(t == .full ? Theme.accentSoft : .primary)
                     }
@@ -131,7 +132,7 @@ private struct PlansMarketing: View {
                     HStack(alignment: .firstTextBaseline) {
                         Text(LocalizedStringKey(row.id)).font(.footnote)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        ForEach(0..<3, id: \.self) { i in
+                        ForEach(0..<2, id: \.self) { i in
                             Image(systemName: row.tiers[i] ? "checkmark.circle.fill" : "minus")
                                 .foregroundStyle(row.tiers[i] ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(.tertiary))
                                 .frame(width: 44)

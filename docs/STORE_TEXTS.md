@@ -19,7 +19,7 @@ formulazioni mediche. Il disclaimer va nella descrizione. Verifica che il nome "
   • Apple Salute: salva gli allenamenti e importa peso e altezza, se lo attivi.
   • Privacy: i dati sulla salute restano sul tuo telefono.
 
-  Piani: Free (conteggio, BMI, un esercizio per gruppo muscolare), Mid e Full in abbonamento mensile o annuale, con 7 giorni di prova gratuita alla prima iscrizione per chi ne ha diritto. Il rinnovo è automatico salvo disdetta almeno 24 ore prima della scadenza, dalle impostazioni dell'Apple ID.
+  Piani: Free (conteggio, BMI, un esercizio per gruppo muscolare) e abbonamento Pro, mensile o annuale, con 7 giorni di prova gratuita alla prima iscrizione per chi ne ha diritto. Il rinnovo è automatico salvo disdetta almeno 24 ore prima della scadenza, dalle impostazioni dell'Apple ID.
 
   Avvertenza: MyGymHelper fornisce indicazioni generali e non sostituisce un nutrizionista, un personal trainer o un medico. Consulta sempre un professionista prima di cambiare allenamento o alimentazione.
 
@@ -41,7 +41,7 @@ formulazioni mediche. Il disclaimer va nella descrizione. Verifica che il nome "
   • Apple Health: saves workouts and imports weight and height, if you turn it on.
   • Privacy: your health data stays on your phone.
 
-  Plans: Free (counting, BMI, one exercise per muscle group), Mid and Full as monthly or yearly subscriptions, with a 7-day free trial on first subscription for eligible users. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the period, in your Apple ID settings.
+  Plans: Free (counting, BMI, one exercise per muscle group) and the Pro subscription, monthly or yearly, with a 7-day free trial on first subscription for eligible users. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the period, in your Apple ID settings.
 
   Notice: MyGymHelper provides general guidance and does not replace a nutritionist, personal trainer or doctor. Always consult a professional before changing your training or diet.
 
@@ -50,12 +50,11 @@ formulazioni mediche. Il disclaimer va nella descrizione. Verifica che il nome "
 ## Abbonamenti (nome visualizzato / descrizione)
 | ID | IT | EN |
 | --- | --- | --- |
-| app.mygymhelper.mid.monthly | Mid mensile – Catalogo completo, elenchi e consigli | Mid monthly – Full catalog, lists and coaching |
-| app.mygymhelper.mid.yearly | Mid annuale – Catalogo completo, elenchi e consigli | Mid yearly – Full catalog, lists and coaching |
-| app.mygymhelper.full.monthly | Full mensile – Tutto Mid + consigli adattivi, schede, pasti | Full monthly – All of Mid + adaptive coaching, plans, meals |
-| app.mygymhelper.full.yearly | Full annuale – Tutto Mid + consigli adattivi, schede, pasti | Full yearly – All of Mid + adaptive coaching, plans, meals |
+| app.mygymhelper.full.monthly | Pro mensile – Catalogo completo, elenchi, consigli adattivi, schede | Pro monthly – Full catalog, lists, adaptive coaching, plans |
+| app.mygymhelper.full.yearly | Pro annuale – Catalogo completo, elenchi, consigli adattivi, schede | Pro yearly – Full catalog, lists, adaptive coaching, plans |
 
-Gruppo unico "MyGymHelper"; livelli: Full = 1, Mid = 2. Offerta introduttiva: prova gratuita 1 settimana.
+Gruppo unico "MyGymHelper"; un solo livello (Pro = 1). Offerta introduttiva: prova gratuita 1 settimana.
+Se in App Store Connect i prodotti Mid esistono già, toglili dalla vendita (Rimuovi dalla vendita); gli ID non si possono riutilizzare.
 
 ## Note per la revisione (App Review Information)
 The app counts repetitions with the iPhone motion sensors: strap the phone to your arm or leg (or hold it firmly)

@@ -9,16 +9,12 @@ struct WorkoutSetupView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(CatalogStore.self) private var catalog
     @AppStorage(ConsentStore.grantedAtKey) private var consentAt = 0.0
-    @State private var cueTester: CueService?
     @State private var showLists = false
     /// Riquadro degli esercizi caricati: chiuso all'apertura, resta com'è mentre si entra in un esercizio e si torna.
     @State private var itemsExpanded = false
     @State private var toDelete: WorkoutItem?
     @State private var sessionTarget: SessionTarget?
     @State private var editTarget: EditTarget?
-    @AppStorage("cue.sound") private var soundOn = true
-    @AppStorage("cue.voice") private var voiceOn = true
-    @AppStorage("cue.haptics") private var hapticsOn = true
 
     private var tier: SubscriptionTier { subscriptions.tier }
     private var store: WorkoutListStore { WorkoutListStore.shared }
@@ -52,7 +48,6 @@ struct WorkoutSetupView: View {
                 }
                 .buttonStyle(.plain)
                 .tutorialTarget(TutorialTarget.workoutPresets)
-                cueCard.tutorialTarget(TutorialTarget.workoutCues)
                 Button { sessionTarget = SessionTarget(exercise: nil, parameters: WorkoutItem.defaultParameters) } label: {
                     Label("workout.freeCount", systemImage: "timer").lineLimit(1).frame(maxWidth: .infinity)
                 }
@@ -82,8 +77,6 @@ struct WorkoutSetupView: View {
             Text(verbatim: toDelete.flatMap { catalog.exercise(id: $0.exerciseID)?.name } ?? "")
         }
         .onAppear { store.reload() }
-        // Niente shutdown: fermerebbe la voce condivisa proprio mentre parte la sessione.
-        .onDisappear { cueTester = nil }
     }
 
     // MARK: - Elenco
@@ -210,34 +203,6 @@ struct WorkoutSetupView: View {
         guard let exercise = catalog.exercise(id: item.exerciseID) else { return }
         sessionTarget = SessionTarget(exercise: exercise, parameters: item.parameters, listID: list.id, itemID: item.id)
     }
-
-    // MARK: - Avvisi
-
-    private var cueCard: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("cue.title").font(.headline)
-            Toggle("cue.voice", isOn: $voiceOn)
-            Toggle("cue.sound", isOn: $soundOn)
-            Toggle("cue.haptics", isOn: $hapticsOn)
-            Button {
-                let tester = cueTester ?? CueService()
-                tester.options = CueOptions(sound: soundOn, voice: voiceOn, haptics: hapticsOn,
-                                            countReps: AppSettings.shared.voiceCountReps)
-                tester.preview()
-                cueTester = tester
-            } label: {
-                Label("cue.test", systemImage: "speaker.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.glass)
-            Text("cue.testNote").font(.caption).foregroundStyle(.secondary)
-            NavigationLink { AudioSettingsView() } label: {
-                Label("audio.open", systemImage: "person.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.glass)
-        }
-        .tint(Theme.accent)
-        .glassCard()
-    }
 }
 
 /// Aggiunta di esercizi all'elenco attuale: mappa del corpo, tipo, ricerca e lista di tutti gli esercizi, filtrata dai
@@ -313,6 +278,8 @@ struct AddExerciseView: View {
         if AppFlags.homeEquipment { HomeEquipmentCard(tier: tier) }
 
         VStack(spacing: 14) {
+            // Primo filtro: ricerca per nome (anche per "Fai esercizio alternativo")
+            ExerciseSearchField(query: $query)
             Picker("", selection: $side) {
                 ForEach(BodySide.allCases) { Text($0.titleKey).tag($0) }
             }
@@ -334,11 +301,6 @@ struct AddExerciseView: View {
         .onChange(of: bodyweight) { _, _ in shown = CatalogFilter.pageSize }
         .onChange(of: AppSettings.shared.equipmentFilter) { _, _ in shown = CatalogFilter.pageSize }
         .onChange(of: AppSettings.shared.ownedEquipment) { _, _ in shown = CatalogFilter.pageSize }
-
-        TextField("ex.search", text: $query)
-            .textFieldStyle(.plain)
-            .padding(14)
-            .glassEffect(.regular, in: .capsule)
 
         let items = results
         if selected.count >= 2 && items.contains(where: { WorkoutListLogic.coversAll($0, selected: selected) }) {
@@ -409,7 +371,7 @@ private struct BrowseRow: View {
     }
 }
 
-/// Scelta dell'elenco attuale tra quelli salvati, o creazione di uno nuovo (piano Mid e Full).
+/// Scelta dell'elenco attuale tra quelli salvati, o creazione di uno nuovo (Pro).
 private struct ListPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(ConsentStore.grantedAtKey) private var consentAt = 0.0
@@ -461,7 +423,7 @@ private struct ListPickerSheet: View {
 
 // MARK: - Parametri di un esercizio dell'elenco
 
-/// Serie, ripetizioni, pausa e peso di un esercizio, con i consigli (Mid a regole fisse, Full adattivi).
+/// Serie, ripetizioni, pausa e peso di un esercizio, con i consigli (piano Pro: adattivi).
 /// item nil = esercizio nuovo (precompilato da scheda e ultima sessione), da aggiungere all'elenco attuale
 /// (o ad "Allenamento odierno" se non ce n'e' uno); altrimenti si modifica quello esistente.
 struct ItemEditorView: View {
@@ -490,7 +452,7 @@ struct ItemEditorView: View {
     }
 
     private var tier: SubscriptionTier { subscriptions.tier }
-    /// Serie diverse (Mid e Full): una riga per serie. Free: serie tutte uguali.
+    /// Serie diverse (Pro): una riga per serie. Free: serie tutte uguali.
     private var canVary: Bool { FeatureGate.isAvailable(.variedSets, for: tier) }
     private var shown: [SetTarget] {
         let list = rows
@@ -578,7 +540,7 @@ struct ItemEditorView: View {
                         CounterRow(title: "counter.rest", value: $restSeconds, range: WorkoutParameters.restRange, step: 15)
                         Divider().overlay(Color.primary.opacity(0.15))
                         WeightRow(title: "setup.weight", value: weightBinding)
-                        // Piano Free: le serie diverse sono di Mid e Full.
+                        // Piano Free: le serie diverse sono del Pro.
                         LockedNote(key: "sets.locked")
                     }
                     .glassCard()
@@ -646,7 +608,7 @@ struct ItemEditorView: View {
 
     @ViewBuilder
     private var adviceSection: some View {
-        // Revisione della scheda ogni due settimane (Full): la proposta per questo esercizio va in "Consiglio per oggi".
+        // Revisione della scheda ogni due settimane (Pro): la proposta per questo esercizio va in "Consiglio per oggi".
         if adaptive != nil, let pending = review.pending(in: plans), let change = pending.change(for: exercise.id) {
             PlanReviewAdviceCard(review: pending, change: change, working: review.working, onApply: {
                 if review.apply(pending, plans: plans) { apply(change.afterParameters) }

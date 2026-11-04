@@ -76,14 +76,23 @@ final class FeatureGateTests: XCTestCase {
         XCTAssertTrue(FeatureGate.isAvailable(.repCounting, for: .free))
         XCTAssertFalse(FeatureGate.isAvailable(.catalogFull, for: .free))
     }
-    func testWatchIsMidAndUp() {
+    func testWatchIsPro() {
         XCTAssertFalse(FeatureGate.isAvailable(.appleWatch, for: .free))
-        XCTAssertTrue(FeatureGate.isAvailable(.appleWatch, for: .mid))
         XCTAssertTrue(FeatureGate.isAvailable(.appleWatch, for: .full))
     }
-    func testAdaptiveOnlyFull() {
-        XCTAssertFalse(FeatureGate.isAvailable(.adaptiveCoaching, for: .mid))
+    func testAdaptiveOnlyPro() {
+        XCTAssertFalse(FeatureGate.isAvailable(.adaptiveCoaching, for: .free))
         XCTAssertTrue(FeatureGate.isAvailable(.adaptiveCoaching, for: .full))
+        // Tutte le funzioni sono nel Pro (anche quelle dell'ex piano Mid).
+        for f in Feature.allCases { XCTAssertTrue(FeatureGate.isAvailable(f, for: .full), "\(f)") }
+    }
+    func testStoredLevelsOfTheOldPlansBecomePro() {
+        XCTAssertNil(SubscriptionTier(storedLevel: -1))
+        XCTAssertEqual(SubscriptionTier(storedLevel: 0), .free)
+        XCTAssertEqual(SubscriptionTier(storedLevel: 1), .full)   // vecchio Mid, oggi Pro
+        XCTAssertEqual(SubscriptionTier(storedLevel: 2), .full)   // vecchio Full
+        let old = try! JSONDecoder().decode([SubscriptionTier].self, from: Data("[0,1,2]".utf8))
+        XCTAssertEqual(old, [.free, .full, .full])
     }
 }
 

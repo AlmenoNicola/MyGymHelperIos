@@ -38,7 +38,7 @@ enum CoachingService {
         return best?.0.target
     }
 
-    /// Consiglio adattivo del piano Full per il prossimo allenamento dell'esercizio.
+    /// Consiglio adattivo del piano Pro per il prossimo allenamento dell'esercizio.
     static func adaptive(exercise: CatalogExercise, sessions: [WorkoutSessionRecord],
                          plans: [TrainingPlanRecord], defaultSets: Int, defaultReps: Int) -> AdaptiveAdvice {
         AdaptiveCoach.advise(history: samples(for: exercise.id, from: sessions), isCompound: exercise.isCompound,
@@ -46,7 +46,7 @@ enum CoachingService {
                              plan: planTarget(for: exercise, plans: plans))
     }
 
-    /// Consiglio a regole fisse del piano Mid sull'ultima sessione dell'esercizio.
+    /// Consiglio a regole fisse (ex piano Mid, ora parte del Pro) sull'ultima sessione dell'esercizio.
     static func fixed(exercise: CatalogExercise, sessions: [WorkoutSessionRecord]) -> CoachingResult? {
         guard let last = samples(for: exercise.id, from: sessions).last else { return nil }
         let outcomes = last.sets.map { SetOutcome(plannedReps: $0.plannedReps, doneReps: $0.doneReps, stoppedEarly: $0.stoppedEarly) }

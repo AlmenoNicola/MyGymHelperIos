@@ -17,7 +17,7 @@ public struct Recommendation: Equatable, Sendable {
     public let reasonKey: String
 }
 
-/// Consigli sugli esercizi a regole fisse (Mid e Full): privilegia i muscoli scelti che
+/// Consigli sugli esercizi a regole fisse (Pro): privilegia i muscoli scelti che
 /// hanno ricevuto meno serie negli ultimi 7 giorni, gli esercizi multiarticolari e quelli non ripetuti da poco.
 public enum ExerciseRecommender {
     public static func recommend(from catalog: [CatalogExercise], targets: Set<MuscleGroup>,

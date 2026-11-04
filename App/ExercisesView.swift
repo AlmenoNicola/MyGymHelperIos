@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import MyGymHelperCore
 
-/// Catalogo: mappa del corpo (fronte/retro) e blocchi per scegliere i muscoli, consigli (Mid e Full) ed elenco esercizi.
+/// Catalogo: mappa del corpo (fronte/retro) e blocchi per scegliere i muscoli, consigli (Pro) ed elenco esercizi.
 /// Piano Free: un esercizio per tipologia.
 struct ExercisesView: View {
     @Environment(CatalogStore.self) private var catalog
@@ -58,6 +58,8 @@ struct ExercisesView: View {
                 }
 
                 VStack(spacing: 14) {
+                    // Primo filtro: ricerca per nome
+                    ExerciseSearchField(query: $query)
                     Picker("", selection: $side) {
                         ForEach(BodySide.allCases) { Text($0.titleKey).tag($0) }
                     }
@@ -89,11 +91,6 @@ struct ExercisesView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .glassCard()
                 }
-
-                TextField("ex.search", text: $query)
-                    .textFieldStyle(.plain)
-                    .padding(14)
-                    .glassEffect(.regular, in: .capsule)
 
                 if !FeatureGate.isAvailable(.catalogFull, for: tier) {
                     Label("ex.freeLimit", systemImage: "lock.fill")
@@ -415,6 +412,31 @@ struct ExerciseMusclesCard: View {
     }
 }
 
+/// Filtro testuale "Cerca esercizio", primo dei filtri: mostra solo gli esercizi il cui nome
+/// contiene il testo (maiuscole/minuscole indifferenti). La X svuota il campo.
+/// Come ExerciseSearchField su Android.
+struct ExerciseSearchField: View {
+    @Binding var query: String
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+            TextField("ex.search", text: $query)
+                .textFieldStyle(.plain)
+                .autocorrectionDisabled()
+            if !query.isEmpty {
+                Button { query = "" } label: {
+                    Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("ex.searchClear"))
+            }
+        }
+        .padding(14)
+        .glassEffect(.regular, in: .capsule)
+    }
+}
+
 /// Filtro per tipo di esercizio: Tutti, Forza, Pliometria, Stretching, Cardio (come KindChips su Android).
 struct KindChips: View {
     @Binding var kind: ExerciseKind?
@@ -461,10 +483,10 @@ struct BodyweightChip: View {
     }
 }
 
-// MARK: - Attrezzi in casa (solo piano Full)
+// MARK: - Attrezzi in casa (solo piano Pro)
 // Si possono spegnere con AppFlags.homeEquipment = false.
 
-/// Esercizi filtrati per gli attrezzi in casa: solo se la funzione e' accesa, il filtro e' attivo e il piano e' Full.
+/// Esercizi filtrati per gli attrezzi in casa: solo se la funzione e' accesa, il filtro e' attivo e il piano e' Pro.
 @MainActor
 func equipmentFiltered(_ list: [CatalogExercise], tier: SubscriptionTier) -> [CatalogExercise] {
     let settings = AppSettings.shared
@@ -474,7 +496,7 @@ func equipmentFiltered(_ list: [CatalogExercise], tier: SubscriptionTier) -> [Ca
 }
 
 /// Riquadro "Attrezzi in casa", sopra i filtri degli esercizi (schede Esercizi e Aggiungi esercizio).
-/// Piano Full: mostra gli attrezzi segnati e apre l'elenco per aggiungerli o toglierli. Altri piani: invito ai piani.
+/// Piano Pro: mostra gli attrezzi segnati e apre l'elenco per aggiungerli o toglierli. Altri piani: invito ai piani.
 /// Come HomeEquipmentCard su Android.
 struct HomeEquipmentCard: View {
     let tier: SubscriptionTier
@@ -547,7 +569,7 @@ private struct HomeEquipmentSheet: View {
     }
 }
 
-/// Filtro "Solo i miei attrezzi" accanto agli altri filtri: compare solo con il piano Full (come EquipmentFilterChip su Android).
+/// Filtro "Solo i miei attrezzi" accanto agli altri filtri: compare solo con il piano Pro (come EquipmentFilterChip su Android).
 struct EquipmentFilterChip: View {
     let tier: SubscriptionTier
     private var settings: AppSettings { AppSettings.shared }

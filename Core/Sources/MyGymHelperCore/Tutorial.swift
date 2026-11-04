@@ -41,7 +41,6 @@ public enum TutorialTarget {
     public static let workoutList = "workout.list"
     public static let workoutAdd = "workout.add"
     public static let workoutPresets = "workout.presets"
-    public static let workoutCues = "workout.cues"
     public static let workoutFree = "workout.free"
     public static let workoutHistory = "workout.history"
     public static let exercisesLinks = "exercises.links"
@@ -51,23 +50,27 @@ public enum TutorialTarget {
     public static let infoTutorial = "info.tutorial"
     public static let infoAppearance = "info.appearance"
     public static let infoSuggest = "info.suggest"
+    /// Voce "Voce e musica" dell'Area personale (avvisi, voce, musica).
+    public static let infoAudio = "info.audio"
 }
 
 public enum TutorialGuide {
     /// Versione del tutorial: aumentarla a ogni aggiornamento dei passi. Viene salvata quando l'utente lo
     /// completa o lo salta; il tutorial parte da solo solo se non e' mai stato visto (valore salvato 0).
-    public static let version = 14  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
+    public static let version = 16  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
                                     // 4: passi della Nutrizione nascosti mentre la scheda e' disattivata;
                                     // 5: i Piani passano dalla barra delle schede all'Area personale;
                                     // 6: "Suggerisci una funzione" (ultima voce dell'Area personale);
                                     // 7: serie diverse (ripetizioni e peso di ogni serie, dalla matita dell'esercizio);
-                                    // 8: attrezzi in casa e filtro "Solo i miei attrezzi" (piano Full);
-                                    // 9: revisione della scheda ogni due settimane (piano Full);
+                                    // 8: attrezzi in casa e filtro "Solo i miei attrezzi" (piano Pro);
+                                    // 9: revisione della scheda ogni due settimane (piano Pro);
                                     // 10: attrezzi in casa nascosti; filtro "Corpo libero" nei testi di Esercizi e Aggiungi esercizio
                                     // 11: "Fai esercizio alternativo" dalla schermata di avvio dell'esercizio
                                     // 12: difficoltà evidenziata e "Scegli la tua scheda di esercizi" nel passo "presets"
                                     // 13: avviso a voce prima dell'ultima serie con il prossimo esercizio, nel passo "session"
                                     // 14: attrezzi in casa di nuovo visibili (passo "homeEquipment" dopo "exercisesLinks")
+                                    // 15: avvisi spostati in Area personale > Voce e musica (passo "cues" dopo "replay", stesso ordine della schermata)
+                                    // 16: "Crea la tua scheda" (scheda su misura da altezza, peso, sesso e obiettivo) nel passo "presets"
 
     /// Tutti i passi, compresi quelli delle funzioni disattivate.
     public static let allSteps: [TutorialStep] = [
@@ -80,7 +83,6 @@ public enum TutorialGuide {
         TutorialStep("presets", tab: .workout, target: TutorialTarget.workoutPresets),
         TutorialStep("session", art: .session),
         TutorialStep("alternative", art: .session),
-        TutorialStep("cues", tab: .workout, target: TutorialTarget.workoutCues),
         TutorialStep("free", tab: .workout, target: TutorialTarget.workoutFree),
         TutorialStep("history", tab: .workout, target: TutorialTarget.workoutHistory),
         TutorialStep("planReview", tab: .workout, target: TutorialTarget.workoutHistory),
@@ -93,6 +95,7 @@ public enum TutorialGuide {
         TutorialStep("plans", tab: .info, target: TutorialTarget.infoPlans),
         TutorialStep("appearance", tab: .info, target: TutorialTarget.infoAppearance),
         TutorialStep("replay", tab: .info, target: TutorialTarget.infoTutorial),
+        TutorialStep("cues", tab: .info, target: TutorialTarget.infoAudio),
         TutorialStep("suggest", tab: .info, target: TutorialTarget.infoSuggest),
         TutorialStep("done", art: .done)
     ]

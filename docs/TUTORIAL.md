@@ -23,11 +23,11 @@ Differenza voluta: sui passi delle schede Android illumina la voce nella barra i
 non misurabile) illumina il titolo della schermata della scheda. Se un elemento non è sullo schermo (es. profilo
 Nutrizione senza consenso, o una scheda iOS lasciata in una sotto-schermata) il fumetto compare al centro, senza riquadro.
 
-## Passi attuali (versione 14)
+## Passi attuali (versione 16)
 
-I passi 17 e 18 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
+I passi 16 e 17 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
 Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 22 passi
-(il passo 16, attrezzi in casa, si nasconde solo con `AppFlags.HOME_EQUIPMENT` / `AppFlags.homeEquipment` = false).
+(il passo 15, attrezzi in casa, si nasconde solo con `AppFlags.HOME_EQUIPMENT` / `AppFlags.homeEquipment` = false).
 
 | # | id | Scheda | Elemento illuminato | Contenuto |
 | --- | --- | --- | --- | --- |
@@ -37,22 +37,22 @@ Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutrit
 | 4 | list | Allenamento | elenco attuale | Esercizi con parametri, avvio/modifica/elimina, verde, Reset, "Esercizio successivo", più elenchi (Mid/Full) |
 | 5 | addExercise | Allenamento | Aggiungi esercizio | Schermata di scelta: mappa, zone, tipo, ricerca; aggiunta con i parametri |
 | 6 | variedSets | Allenamento | elenco attuale | Serie diverse (Mid/Full): dalla matita righe con numero di serie, ripetizioni e peso (serie uguali in una riga sola); in allenamento si vedono e si sentono quelli della serie successiva; nelle schede caricate le righe con lo stesso esercizio nello stesso giorno diventano un esercizio solo |
-| 7 | presets | Allenamento | Schede pronte | "Scegli la tua scheda di esercizi", difficoltà in pastiglia colorata; base total body (tutti), altre schede e consigliata del mese (Mid/Full) |
+| 7 | presets | Allenamento | Schede pronte | "Scegli la tua scheda di esercizi"; in cima "Crea la tua scheda" (Pro: scheda su misura da altezza, peso, sesso, età, obiettivo, esperienza, allenamenti e luogo; più schede, rinomina e rifai); difficoltà in pastiglia colorata (verde, arancione, rosso per Esperto); base total body (tutti), altre schede e consigliata del mese (Pro) |
 | 8 | session | – | disegno | Pronto (posizione, Avvia), spiegazione saltabile, conteggio, pausa, "Mi sono fermato", "Ripetizioni completate", riepilogo |
 | 9 | alternative | – | disegno | "Fai esercizio alternativo" nella schermata Pronto: elenco esercizi con i filtri, già sugli stessi muscoli; l'alternativa vale solo per questa sessione (l'esercizio diventa verde) oppure, con "Sostituisci nell'elenco", diventa definitiva |
-| 10 | cues | Allenamento | Avvisi | Voce/suono/vibrazione, Voce e musica |
-| 11 | free | Allenamento | Conteggio libero | Contare senza esercizio |
-| 12 | history | Allenamento | Storico | Solo sul telefono, solo con consenso |
-| 13 | planReview | Allenamento | Storico | Full: ogni due settimane, a fine allenamento, domanda "troppo leggero / giusto / troppo pesante"; controllo delle ripetizioni dello Storico, nuovi carichi in "Consiglio per oggi", Applica aggiorna scheda ed elenchi, si può tornare alla scheda precedente |
-| 14 | exercisesTab | Esercizi | scheda | Catalogo (quasi 900 esercizi), filtro per tipo e "Corpo libero", foto, spiegazioni, consigli (Mid/Full) |
-| 15 | exercisesLinks | Esercizi | Elenchi / Schede | Elenchi pronti e salvati; scheda (Full) inserita a mano (`bodyManual`: caricamento da file e foto disattivato per ora). Con il caricamento attivo: import da foto con l'AI, dati mancanti da completare o confermare |
-| 16 | homeEquipment | Esercizi | riquadro Attrezzi in casa | (nascosto, funzione spenta) Full: segnare gli attrezzi di casa (vedere, aggiungere, togliere) e filtro "Solo i miei attrezzi" in Esercizi e Aggiungi esercizio; corpo libero sempre visibile |
-| 17 | nutritionTab | Nutrizione | scheda | (nascosto, Nutrizione disattivata) Indicazioni generali, non sostituisce il nutrizionista |
-| 18 | nutritionProfile | Nutrizione | profilo | (nascosto, Nutrizione disattivata) Dati, BMI, fabbisogno; Full: pasti e scheda del nutrizionista; serve consenso |
-| 19 | infoTab | Area personale | scheda | Foto profilo (tocco sul cerchio), account, piani e abbonamenti, consenso, Salute/Health Connect, voce, calibrazione, documenti, cancellazione |
-| 20 | plans | Area personale | voce Piani e abbonamenti | Free/Mid/Full, ripristino, 7 giorni di prova, scadenza della licenza gratuita |
-| 21 | appearance | Area personale | scheda Aspetto | Tema: neutro del telefono (predefinito), scuro oppure originale arancio e viola |
-| 22 | replay | Area personale | riga Tutorial | Come rivederlo |
+| 10 | free | Allenamento | Conteggio libero | Contare senza esercizio |
+| 11 | history | Allenamento | Storico | Solo sul telefono, solo con consenso |
+| 12 | planReview | Allenamento | Storico | Full: ogni due settimane, a fine allenamento, domanda "troppo leggero / giusto / troppo pesante"; controllo delle ripetizioni dello Storico, nuovi carichi in "Consiglio per oggi", Applica aggiorna scheda ed elenchi, si può tornare alla scheda precedente |
+| 13 | exercisesTab | Esercizi | scheda | Catalogo (quasi 900 esercizi), "Cerca esercizio" come primo filtro, filtro per tipo e "Corpo libero", foto, spiegazioni, consigli (Mid/Full) |
+| 14 | exercisesLinks | Esercizi | Elenchi / Schede | Elenchi pronti e salvati; scheda (Full) inserita a mano (`bodyManual`: caricamento da file e foto disattivato per ora). Con il caricamento attivo: import da foto con l'AI, dati mancanti da completare o confermare |
+| 15 | homeEquipment | Esercizi | riquadro Attrezzi in casa | (nascosto, funzione spenta) Full: segnare gli attrezzi di casa (vedere, aggiungere, togliere) e filtro "Solo i miei attrezzi" in Esercizi e Aggiungi esercizio; corpo libero sempre visibile |
+| 16 | nutritionTab | Nutrizione | scheda | (nascosto, Nutrizione disattivata) Indicazioni generali, non sostituisce il nutrizionista |
+| 17 | nutritionProfile | Nutrizione | profilo | (nascosto, Nutrizione disattivata) Dati, BMI, fabbisogno; Full: pasti e scheda del nutrizionista; serve consenso |
+| 18 | infoTab | Area personale | scheda | Foto profilo (tocco sul cerchio), account, piani e abbonamenti, consenso, Salute/Health Connect, voce, calibrazione, documenti, cancellazione |
+| 19 | plans | Area personale | voce Piani e abbonamenti | Free/Mid/Full, ripristino, 7 giorni di prova, scadenza della licenza gratuita |
+| 20 | appearance | Area personale | scheda Aspetto | Tema: neutro del telefono (predefinito), scuro oppure originale arancio e viola |
+| 21 | replay | Area personale | riga Tutorial | Come rivederlo |
+| 22 | cues | Area personale | voce Voce e musica | Avvisi (voce, suono, vibrazione) con prova; voce, velocità e musica (prima nella scheda Allenamento) |
 | 23 | suggest | Area personale | voce Suggerisci una funzione (ultima) | Idee o cosa manca: si apre l'app di posta con l'e-mail per mygymhelper@gmail.com |
 | 24 | done | – | disegno | Fine, promemoria del disclaimer |
 
@@ -144,4 +144,15 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
   Stessi passi su Android e iOS, versione del tutorial invariata.
 - 3 novembre 2026: licenze gratuite manuali. Aggiornato il testo del passo "plans" (`tutorial.plans.body`): se c'è una
   licenza gratuita, nei Piani si vede fino a quando vale. Stesso testo su Android e iOS; nessun passo nuovo, versione invariata.
-
+- 4 novembre 2026: "Cerca esercizio" diventa il primo filtro, dentro il riquadro dei filtri (Esercizi, Aggiungi esercizio
+  ed Esercizio alternativo), con la X per svuotarlo. Aggiornato il testo del passo "exercisesTab"
+  (`tutorial.exercisesTab.body`); nessun passo nuovo. Stessi testi su Android e iOS.
+- 4 novembre 2026 (versione 15): gli avvisi (voce, suono, vibrazione e prova) passano dalla scheda Allenamento all'Area
+  personale > Voce e musica (prima card). Il passo "cues" ora è nell'Area personale, subito dopo "replay"
+  (`TutorialTarget.infoAudio` = "info.audio", tolto `workoutCues`); nuovi testi `tutorial.cues.title`/`.body`.
+  24 passi in tutto, come prima. Stessi passi su Android e iOS.
+- 4 novembre 2026: tolto il piano Mid, il Full si chiama Pro; aggiornati i testi dei passi che citavano Mid o Full;
+  versione del tutorial invariata.
+- 4 novembre 2026 (versione 16): "Crea la tua scheda" (scheda su misura da altezza, peso, sesso e obiettivo, piano Pro)
+  in cima alle Schede pronte. Aggiornato il testo del passo "presets" (`tutorial.presets.body`); nessun passo nuovo.
+  Stessi testi su Android e iOS.

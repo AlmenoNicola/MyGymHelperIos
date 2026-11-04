@@ -52,6 +52,11 @@ final class TutorialTests: XCTestCase {
         let plans = steps.firstIndex { $0.target == TutorialTarget.infoPlans }!
         XCTAssertEqual(steps[plans].tab, .info)
         XCTAssertEqual(steps[plans - 1].id, "infoTab")
+        // Avvisi: nell'Area personale, voce "Voce e musica", subito dopo la riga Tutorial.
+        let cues = steps.firstIndex { $0.id == "cues" }!
+        XCTAssertEqual(steps[cues].tab, .info)
+        XCTAssertEqual(steps[cues].target, TutorialTarget.infoAudio)
+        XCTAssertEqual(steps[cues - 1].id, "replay")
         // "Suggerisci una funzione" e' l'ultimo passo con un elemento, prima della fine.
         XCTAssertEqual(steps[steps.count - 2].target, TutorialTarget.infoSuggest)
         XCTAssertEqual(steps[steps.count - 2].tab, .info)

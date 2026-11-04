@@ -4,7 +4,7 @@ import SwiftData
 import FoundationModels
 import MyGymHelperCore
 
-/// Revisione della scheda ogni due settimane (piano Full), come PlanReviewService.kt su Android.
+/// Revisione della scheda ogni due settimane (piano Pro), come PlanReviewService.kt su Android.
 /// La scheda usata e' la piu' recente (la stessa dei consigli). La proposta a regole del Core si salva subito;
 /// se l'iPhone ha Apple Intelligence, il modello la rivede (un passo al massimo, nella direzione chiesta) e scrive
 /// una nota. Lo stato (ultimo controllo, proposta in attesa, copia per tornare indietro) si salva con il consenso

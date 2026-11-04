@@ -101,7 +101,8 @@ final class AccountService {
         do {
             let rows: [EntitlementRow] = try await client.rpc("get_my_entitlement").execute().value
             let row = rows.first
-            let tier: SubscriptionTier = row?.tier == "full" ? .full : (row?.tier == "mid" ? .mid : .free)
+            // "mid": vecchie licenze, ora Pro
+            let tier: SubscriptionTier = row?.tier == "full" || row?.tier == "mid" ? .full : .free
             return .found(tier: tier, until: row?.currentPeriodEnd.flatMap(Self.parseDate), source: row?.source)
         } catch {
             return .unavailable

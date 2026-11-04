@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - Revisione della scheda ogni due settimane (piano Full)
+// MARK: - Revisione della scheda ogni due settimane (piano Pro)
 //
 // Ogni 14 giorni, a fine allenamento, l'app chiede se la scheda e' troppo leggera, giusta o troppo pesante.
 // Con la risposta e lo storico delle ultime due settimane (ripetizioni fatte, serie interrotte, calo di velocita')

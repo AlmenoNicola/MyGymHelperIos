@@ -25,7 +25,7 @@ public struct CoachingResult: Sendable, Equatable {
     public let reasonKey: String
 }
 
-/// Regole fisse del piano Mid. Il piano Full usa un motore adattivo (da sviluppare).
+/// Regole fisse (ex piano Mid, ora parte del Pro). Il piano Pro usa anche un motore adattivo (da sviluppare).
 public enum FixedCoaching {
     public static func advise(sets: [SetOutcome], isCompound: Bool, isLowerBody: Bool,
                               maxSets: Int = 5, minSets: Int = 2) -> CoachingResult {

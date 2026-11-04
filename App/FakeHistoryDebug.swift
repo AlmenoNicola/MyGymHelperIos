@@ -14,7 +14,7 @@ enum TestTools {
     }
 }
 
-/// Strumenti di test: cronologia finta per provare la revisione della scheda ogni due settimane (piano Full).
+/// Strumenti di test: cronologia finta per provare la revisione della scheda ogni due settimane (piano Pro).
 /// Crea sessioni degli esercizi della scheda attiva negli ultimi 12 giorni, sposta indietro le date delle schede
 /// e azzera la revisione: la domanda compare alla prossima fine allenamento di un esercizio della scheda.
 /// Gli id delle sessioni finte si ricordano in UserDefaults per poterle togliere. Come FakeHistoryCard su Android.

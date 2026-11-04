@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import MyGymHelperCore
 
-/// Riepilogo di fine allenamento. Mid: consigli a regole fisse. Full: consiglio adattivo per la prossima volta
+/// Riepilogo di fine allenamento. Pro: consigli a regole fisse e consiglio adattivo per la prossima volta
 /// (calcolato con lo storico dell'esercizio, la sessione appena finita e la scheda caricata).
 struct SessionSummaryView: View {
     let controller: SessionController
@@ -96,7 +96,7 @@ struct SessionSummaryView: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }
 
-                // Revisione della scheda ogni due settimane (Full): la domanda compare a fine allenamento.
+                // Revisione della scheda ogni due settimane (Pro): la domanda compare a fine allenamento.
                 if saved, !records.isEmpty, let exercise = controller.exercise,
                    FeatureGate.isAvailable(.adaptiveCoaching, for: tier) {
                     if reviewAnswered == true {

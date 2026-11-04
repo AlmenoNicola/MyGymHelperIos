@@ -131,7 +131,9 @@ struct InfoView: View {
                 healthCard
 
                 VStack(spacing: 0) {
+                    // Voce e musica: comprende anche gli avvisi (voce, suono, vibrazione), prima nella scheda Allenamento.
                     NavigationLink { AudioSettingsView() } label: { row("audio.title", "person.wave.2.fill") }
+                        .tutorialTarget(TutorialTarget.infoAudio)
                     Divider().overlay(Color.primary.opacity(0.15))
                     NavigationLink { CalibrationView() } label: { row("calib.open", "slider.horizontal.3") }
                 }
@@ -139,7 +141,7 @@ struct InfoView: View {
                 .glassCard(padding: 16)
 
                 // Build di debug (Xcode) o strumenti di test accesi (AppFlags.testTools, da spegnere prima della
-                // pubblicazione): piano simulato per provare Mid e Full senza acquisti e cronologia finta.
+                // pubblicazione): piano simulato per provare il Pro senza acquisti e cronologia finta.
                 if TestTools.enabled {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("debug.title").font(.headline).foregroundStyle(.orange)
@@ -147,8 +149,7 @@ struct InfoView: View {
                                                                 set: { subscriptions.setDebugTier($0) })) {
                             Text("debug.real").tag(-1)
                             Text(verbatim: "Free").tag(0)
-                            Text(verbatim: "Mid").tag(1)
-                            Text(verbatim: "Full").tag(2)
+                            Text(verbatim: "Pro").tag(2)
                         }
                         .pickerStyle(.segmented)
                         Text("debug.note \(String(localized: subscriptions.tier.titleKey))").font(.caption).foregroundStyle(.secondary)

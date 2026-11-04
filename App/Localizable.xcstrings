@@ -7,6 +7,754 @@
     " " : {
 
     },
+    "compare.customPlans" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom plan from height, weight and goal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda su misura da altezza, peso e obiettivo"
+          }
+        }
+      }
+    },
+    "custom.create" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la tua scheda"
+          }
+        }
+      }
+    },
+    "custom.create.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter height, weight, sex, age and goal (lose weight, maintain or build muscle): the app builds a plan for you. You can create more than one and rename them."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci altezza, peso, sesso, età e obiettivo (dimagrire, mantenere o massa muscolare): l'app prepara una scheda su misura. Puoi crearne più di una e rinominarle."
+          }
+        }
+      }
+    },
+    "custom.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workouts a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti a settimana"
+          }
+        }
+      }
+    },
+    "custom.defaultName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mia scheda"
+          }
+        }
+      }
+    },
+    "custom.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina la scheda"
+          }
+        }
+      }
+    },
+    "custom.deleteBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lists already created from this plan are kept."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli elenchi già creati da questa scheda restano."
+          }
+        }
+      }
+    },
+    "custom.deleteTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete this plan?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminare la scheda?"
+          }
+        }
+      }
+    },
+    "custom.editor.redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change the plan details"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia i dati della scheda"
+          }
+        }
+      }
+    },
+    "custom.editor.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your details stay on your phone"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I dati restano solo sul telefono"
+          }
+        }
+      }
+    },
+    "custom.editor.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la tua scheda"
+          }
+        }
+      }
+    },
+    "custom.exp.advanced" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzato"
+          }
+        }
+      }
+    },
+    "custom.exp.beginner" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginner"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Principiante"
+          }
+        }
+      }
+    },
+    "custom.exp.intermediate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermediate"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermedio"
+          }
+        }
+      }
+    },
+    "custom.experience" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Experience"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esperienza"
+          }
+        }
+      }
+    },
+    "custom.facts %@ %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %lld workouts a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %lld allenamenti a settimana"
+          }
+        }
+      }
+    },
+    "custom.generate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la scheda"
+          }
+        }
+      }
+    },
+    "custom.goal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiettivo"
+          }
+        }
+      }
+    },
+    "custom.goal.gain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build muscle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Massa"
+          }
+        }
+      }
+    },
+    "custom.goal.lose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lose weight"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimagrire"
+          }
+        }
+      }
+    },
+    "custom.goal.maintain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintain"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantenere"
+          }
+        }
+      }
+    },
+    "custom.goal.recommended %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested by your BMI: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigliato dal tuo BMI: %@"
+          }
+        }
+      }
+    },
+    "custom.limit %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have %lld plans: delete one to create another."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai già %lld schede: eliminane una per crearne un'altra."
+          }
+        }
+      }
+    },
+    "custom.mine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your plans"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue schede"
+          }
+        }
+      }
+    },
+    "custom.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan name"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome della scheda"
+          }
+        }
+      }
+    },
+    "custom.note.bmi %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@: %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@: %2$@"
+          }
+        }
+      }
+    },
+    "custom.note.gentle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longer rests and at least 10 reps, with lighter loads."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause più lunghe e almeno 10 ripetizioni, con carichi più leggeri."
+          }
+        }
+      }
+    },
+    "custom.note.goal %@ %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal: %1$@ · %2$@ · %3$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiettivo: %1$@ · %2$@ · %3$@"
+          }
+        }
+      }
+    },
+    "custom.note.kcal %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rough daily need for your goal: about %lld kcal."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fabbisogno indicativo per il tuo obiettivo: circa %lld kcal al giorno."
+          }
+        }
+      }
+    },
+    "custom.note.lowImpact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No jumping exercises, to protect your joints."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niente esercizi con salti, per proteggere le articolazioni."
+          }
+        }
+      }
+    },
+    "custom.note.person %@ %lld %lld %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld years, %3$lld cm, %4$@ kg"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld anni, %3$lld cm, %4$@ kg"
+          }
+        }
+      }
+    },
+    "custom.note.rules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan built on your phone with fixed rules from your details: it does not replace a personal trainer or a doctor. You choose the weight: start light."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda creata sul telefono con regole fisse in base ai tuoi dati: non sostituisce un personal trainer o un medico. Il peso lo scegli tu: parti leggero."
+          }
+        }
+      }
+    },
+    "custom.place" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where you train"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dove ti alleni"
+          }
+        }
+      }
+    },
+    "custom.place.bodyweight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bodyweight"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corpo libero"
+          }
+        }
+      }
+    },
+    "custom.place.gym" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gym"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palestra"
+          }
+        }
+      }
+    },
+    "custom.place.home" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Casa"
+          }
+        }
+      }
+    },
+    "custom.place.homeNote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tick the equipment you own: the plan will use only that and bodyweight."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segna gli attrezzi che hai: la scheda userà solo quelli e il corpo libero."
+          }
+        }
+      }
+    },
+    "custom.redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change details"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia i dati"
+          }
+        }
+      }
+    },
+    "custom.regenerate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redo the plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rifai la scheda"
+          }
+        }
+      }
+    },
+    "custom.rename" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rinomina"
+          }
+        }
+      }
+    },
+    "custom.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva"
+          }
+        }
+      }
+    },
+    "custom.section.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About you"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo corpo"
+          }
+        }
+      }
+    },
+    "custom.section.training" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your training"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo allenamento"
+          }
+        }
+      }
+    },
+    "custom.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda su misura"
+          }
+        }
+      }
+    },
     "—" : {
 
     },
@@ -668,13 +1416,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock exercise advice with the Mid or Full plan."
+            "value" : "Unlock exercise advice with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sblocca i consigli sugli esercizi con il piano Mid o Full."
+            "value" : "Sblocca i consigli sugli esercizi con l'abbonamento Pro."
           }
         }
       }
@@ -3065,13 +3813,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulate the Full plan"
+            "value" : "Simulate the Pro subscription"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simula il piano Full"
+            "value" : "Simula l'abbonamento Pro"
           }
         }
       }
@@ -3133,13 +3881,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Testing tool, to be removed before release. Creates 4 sessions in the last 12 days for each exercise of the most recent plan and makes the plan review due: then finish an exercise of the plan to see the question. Requires the Full plan and health data consent."
+            "value" : "Testing tool, to be removed before release. Creates 4 sessions in the last 12 days for each exercise of the most recent plan and makes the plan review due: then finish an exercise of the plan to see the question. Requires the Pro subscription and health data consent."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Strumento di test, da togliere prima della pubblicazione. Crea 4 sessioni negli ultimi 12 giorni per ogni esercizio della scheda più recente e rende la revisione della scheda «da fare»: poi finisci un esercizio della scheda per vedere la domanda. Servono il piano Full e il consenso ai dati sulla salute."
+            "value" : "Strumento di test, da togliere prima della pubblicazione. Crea 4 sessioni negli ultimi 12 giorni per ogni esercizio della scheda più recente e rende la revisione della scheda «da fare»: poi finisci un esercizio della scheda per vedere la domanda. Servono l'abbonamento Pro e il consenso ai dati sulla salute."
           }
         }
       }
@@ -3626,13 +4374,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter exercises by the equipment you have at home: Full plan only."
+            "value" : "Filter exercises by the equipment you have at home: Pro subscription only."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtra gli esercizi per gli attrezzi che hai in casa: solo con il piano Full."
+            "value" : "Filtra gli esercizi per gli attrezzi che hai in casa: solo con l'abbonamento Pro."
           }
         }
       }
@@ -3813,13 +4561,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Free plan: one exercise per muscle group. Upgrade to Mid for the full catalog."
+            "value" : "Free plan: one exercise per muscle group. Upgrade to Pro for the full catalog."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Piano Free: un esercizio per gruppo muscolare. Passa a Mid per il catalogo completo."
+            "value" : "Piano Free: un esercizio per gruppo muscolare. Passa a Pro per il catalogo completo."
           }
         }
       }
@@ -3864,13 +4612,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saved lists are available from the Mid plan."
+            "value" : "Saved lists are available with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gli elenchi salvati sono disponibili dal piano Mid."
+            "value" : "Gli elenchi salvati sono disponibili con l'abbonamento Pro."
           }
         }
       }
@@ -4041,6 +4789,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerca esercizio"
+          }
+        }
+      }
+    },
+    "ex.searchClear" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear search"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svuota la ricerca"
           }
         }
       }
@@ -6995,13 +7760,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The meal plan by diet and training is available with the Full plan."
+            "value" : "The meal plan by diet and training is available with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il piano dei pasti per dieta e allenamento è disponibile con il piano Full."
+            "value" : "Il piano dei pasti per dieta e allenamento è disponibile con l'abbonamento Pro."
           }
         }
       }
@@ -7131,13 +7896,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calories, macros and food search are available from the Mid plan."
+            "value" : "Calories, macros and food search are available with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calorie, macronutrienti e ricerca alimenti sono disponibili dal piano Mid."
+            "value" : "Calorie, macronutrienti e ricerca alimenti sono disponibili con l'abbonamento Pro."
           }
         }
       }
@@ -7607,13 +8372,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uploading plans is available with the Full plan."
+            "value" : "Uploading plans is available with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il caricamento delle schede è disponibile con il piano Full."
+            "value" : "Il caricamento delle schede è disponibile con l'abbonamento Pro."
           }
         }
       }
@@ -8236,13 +9001,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Free, Mid or Full"
+            "value" : "Free or Pro subscription"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Free, Mid o Full"
+            "value" : "Free o abbonamento Pro"
           }
         }
       }
@@ -8865,13 +9630,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The other plans and the monthly recommended plan come with Mid and Full."
+            "value" : "The other plans and the monthly recommended plan come with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le altre schede e la scheda consigliata del mese sono con Mid e Full."
+            "value" : "Le altre schede e la scheda consigliata del mese sono con l'abbonamento Pro."
           }
         }
       }
@@ -10463,13 +11228,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sets with different reps and weights: with Mid and Full."
+            "value" : "Sets with different reps and weights: with the Pro subscription."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Serie con ripetizioni e pesi diversi: con Mid e Full."
+            "value" : "Serie con ripetizioni e pesi diversi: con l'abbonamento Pro."
           }
         }
       }
@@ -11435,30 +12200,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Full"
+            "value" : "Pro"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Full"
-          }
-        }
-      }
-    },
-    "tier.mid" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mid"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mid"
+            "value" : "Pro"
           }
         }
       }
@@ -11588,13 +12336,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn voice, sound and vibration on or off and try them. In \"Voice and music\" choose the voice, the speed and the music: the app restarts it at the start of each set and pauses it during the explanation."
+            "value" : "Here, in \"Voice and music\", turn the alerts (voice, sound and vibration) on or off and try them. You also choose the voice, the speed and the music: the app restarts it at the start of each set and pauses it during the explanation."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Attiva o spegni voce, suono e vibrazione e provali. Da \"Voce e musica\" scegli la voce, la velocità e la musica: l'app la fa ripartire a inizio serie e la mette in pausa durante la spiegazione."
+            "value" : "Qui, in \"Voce e musica\", attivi o spegni gli avvisi (voce, suono e vibrazione) e li provi. Scegli anche la voce, la velocità e la musica: l'app la fa ripartire a inizio serie e la mette in pausa durante la spiegazione."
           }
         }
       }
@@ -11605,13 +12353,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alerts"
+            "value" : "Voice and music"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avvisi"
+            "value" : "Voce e musica"
           }
         }
       }
@@ -11673,13 +12421,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Lists you find ready-made and saved lists. In Plans (Full) you upload your gym's plan from a photo: if your phone has AI (Apple Intelligence or Gemini Nano) it recognizes exercises, sets, reps and weights and links the exercises to the catalog, without the text leaving your phone. Data it can't find is shown in orange: you fill it in, or confirm the import as it is."
+            "value" : "In Lists you find ready-made and saved lists. In Plans (Pro) you upload your gym's plan from a photo: if your phone has AI (Apple Intelligence or Gemini Nano) it recognizes exercises, sets, reps and weights and links the exercises to the catalog, without the text leaving your phone. Data it can't find is shown in orange: you fill it in, or confirm the import as it is."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Full) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
+            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Pro) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
           }
         }
       }
@@ -11690,13 +12438,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Lists you find ready-made and saved lists. In Plans (Full) you enter your gym's plan manually: exercises, sets, reps and weights."
+            "value" : "In Lists you find ready-made and saved lists. In Plans (Pro) you enter your gym's plan manually: exercises, sets, reps and weights."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Full) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi."
+            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Pro) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi."
           }
         }
       }
@@ -11724,13 +12472,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The catalogue, with almost 900 exercises: choose muscles or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. Mid and Full also suggest exercises for you."
+            "value" : "The catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose muscles or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il catalogo, con quasi 900 esercizi: scegli i muscoli o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con Mid e Full ricevi anche esercizi consigliati."
+            "value" : "Il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli i muscoli o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
           }
         }
       }
@@ -11826,13 +12574,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With the Full plan, mark the equipment you have at home (dumbbells, kettlebell, bands…): you can view, add or remove it whenever you like. Then turn on the \"My equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it. Bodyweight exercises are always shown."
+            "value" : "With the Pro subscription, mark the equipment you have at home (dumbbells, kettlebell, bands…): you can view, add or remove it whenever you like. Then turn on the \"My equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it. Bodyweight exercises are always shown."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con il piano Full segni gli attrezzi che hai in casa (manubri, kettlebell, elastici…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo i miei attrezzi\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli. Gli esercizi a corpo libero si vedono sempre."
+            "value" : "Con l'abbonamento Pro segni gli attrezzi che hai in casa (manubri, kettlebell, elastici…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo i miei attrezzi\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli. Gli esercizi a corpo libero si vedono sempre."
           }
         }
       }
@@ -11894,13 +12642,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green; Reset clears them. With \"Next exercise\" you move on to the next one, but it always starts when you say so. Mid and Full let you save several lists (Change list). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
+            "value" : "Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green; Reset clears them. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Change list). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi; Reset li azzera. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con Mid e Full puoi salvare più elenchi (Cambia elenco). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
+            "value" : "Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi; Reset li azzera. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Cambia elenco). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
           }
         }
       }
@@ -11945,13 +12693,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter sex, age, weight, height, activity and diet: we work out BMI and calories to lose, maintain or gain weight, with the option recommended for your BMI already selected (you can change it). With Full you also get a meal plan and can load your nutritionist's plan. Consent to health data is required."
+            "value" : "Enter sex, age, weight, height, activity and diet: we work out BMI and calories to lose, maintain or gain weight, with the option recommended for your BMI already selected (you can change it). With the Pro subscription you also get a meal plan and can load your nutritionist's plan. Consent to health data is required."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inserisci sesso, età, peso, altezza, attività e dieta: calcoliamo BMI e calorie per dimagrire, mantenere o aumentare, con già selezionata l'opzione consigliata per il tuo BMI (puoi cambiarla). Con Full anche il piano dei pasti e la scheda del nutrizionista. Serve il consenso ai dati sulla salute."
+            "value" : "Inserisci sesso, età, peso, altezza, attività e dieta: calcoliamo BMI e calorie per dimagrire, mantenere o aumentare, con già selezionata l'opzione consigliata per il tuo BMI (puoi cambiarla). Con l'abbonamento Pro anche il piano dei pasti e la scheda del nutrizionista. Serve il consenso ai dati sulla salute."
           }
         }
       }
@@ -12013,13 +12761,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With the Full plan, every two weeks after a workout we ask whether your plan is too light, about right or too heavy. We check the reps in your History and prepare new loads in “Today's suggestion”: Apply updates the plan and your lists, and you can always go back to the previous plan. If the text written by the AI seems inappropriate, report it with “Report AI text”."
+            "value" : "With the Pro subscription, every two weeks after a workout we ask whether your plan is too light, about right or too heavy. We check the reps in your History and prepare new loads in “Today's suggestion”: Apply updates the plan and your lists, and you can always go back to the previous plan. If the text written by the AI seems inappropriate, report it with “Report AI text”."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con il piano Full, ogni due settimane a fine allenamento ti chiediamo se la scheda è troppo leggera, giusta o troppo pesante. Controlliamo le ripetizioni dello Storico e prepariamo i nuovi carichi in «Consiglio per oggi»: con Applica si aggiornano scheda ed elenchi, e puoi sempre tornare alla scheda precedente. Se il testo scritto dall'IA ti sembra inappropriato, segnalalo con «Segnala il testo dell'IA»."
+            "value" : "Con l'abbonamento Pro, ogni due settimane a fine allenamento ti chiediamo se la scheda è troppo leggera, giusta o troppo pesante. Controlliamo le ripetizioni dello Storico e prepariamo i nuovi carichi in «Consiglio per oggi»: con Applica si aggiornano scheda ed elenchi, e puoi sempre tornare alla scheda precedente. Se il testo scritto dall'IA ti sembra inappropriato, segnalalo con «Segnala il testo dell'IA»."
           }
         }
       }
@@ -12047,13 +12795,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "From here you compare Free, Mid and Full, subscribe or restore a purchase. Your first subscription starts with a 7-day free trial. If you have a free license, you see here until when it's valid."
+            "value" : "From here you compare the Free plan and the Pro subscription, subscribe or restore a purchase. Your first subscription starts with a 7-day free trial. If you have a free license, you see here until when it's valid."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Da questa voce confronti Free, Mid e Full, ti abboni o ripristini un acquisto. Alla prima iscrizione hai 7 giorni di prova gratuita. Se hai una licenza gratuita, qui vedi fino a quando vale."
+            "value" : "Da questa voce confronti il piano Free e l'abbonamento Pro, ti abboni o ripristini un acquisto. Alla prima iscrizione hai 7 giorni di prova gratuita. Se hai una licenza gratuita, qui vedi fino a quando vale."
           }
         }
       }
@@ -12081,13 +12829,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ready-made workouts: choose your workout plan and a day and it becomes your list. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate. Everyone gets the basic total body plan; Mid and Full add Beginner, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching and the recommended plan, which changes every month based on your workouts."
+            "value" : "Ready-made workouts: choose your workout plan and a day and it becomes your list. At the top, with the Pro subscription, \"Create your plan\": enter height, weight, sex, age, goal (lose weight, maintain or build muscle), experience, workouts a week and where you train, and the app builds a plan for you; you can create more than one, rename them and redo them. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate, red for Expert. Everyone gets the basic total body plan; Pro adds Beginner, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching and the recommended plan, which changes every month based on your workouts."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allenamenti già organizzati: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio. Per tutti c'è la scheda base total body; con Mid e Full anche Principiante, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching e la scheda consigliata, che cambia ogni mese in base ai tuoi allenamenti."
+            "value" : "Allenamenti già organizzati: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. In cima, con l'abbonamento Pro, \"Crea la tua scheda\": inserisci altezza, peso, sesso, età, obiettivo (dimagrire, mantenere o massa), esperienza, allenamenti a settimana e dove ti alleni, e l'app prepara una scheda su misura; puoi crearne più di una, rinominarle e rifarle. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio, rosso per Esperto. Per tutti c'è la scheda base total body; con il Pro anche Principiante, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching e la scheda consigliata, che cambia ogni mese in base ai tuoi allenamenti."
           }
         }
       }
@@ -12285,13 +13033,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With Mid and Full each set can have its own reps and weight (for example 3 sets of 10, then 2 of 8 with more weight). Tap the pencil of an exercise: each row has number of sets, reps and weight, so equal sets are entered only once; Add set adds a row, the bin removes it. During the workout you see and hear the reps and weight of the next set. In uploaded plans, rows with the same exercise on the same day become one exercise with its sets."
+            "value" : "With the Pro subscription each set can have its own reps and weight (for example 3 sets of 10, then 2 of 8 with more weight). Tap the pencil of an exercise: each row has number of sets, reps and weight, so equal sets are entered only once; Add set adds a row, the bin removes it. During the workout you see and hear the reps and weight of the next set. In uploaded plans, rows with the same exercise on the same day become one exercise with its sets."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con Mid e Full ogni serie può avere ripetizioni e peso diversi (per esempio 3 serie da 10 e poi 2 da 8 con più peso). Tocca la matita di un esercizio: ogni riga ha numero di serie, ripetizioni e peso, così le serie uguali si scrivono una volta sola; Aggiungi serie aggiunge una riga, il cestino la toglie. Durante l'allenamento vedi e senti ripetizioni e peso della serie successiva. Nelle schede caricate, le righe con lo stesso esercizio nello stesso giorno diventano un solo esercizio con le sue serie."
+            "value" : "Con l'abbonamento Pro ogni serie può avere ripetizioni e peso diversi (per esempio 3 serie da 10 e poi 2 da 8 con più peso). Tocca la matita di un esercizio: ogni riga ha numero di serie, ripetizioni e peso, così le serie uguali si scrivono una volta sola; Aggiungi serie aggiunge una riga, il cestino la toglie. Durante l'allenamento vedi e senti ripetizioni e peso della serie successiva. Nelle schede caricate, le righe con lo stesso esercizio nello stesso giorno diventano un solo esercizio con le sue serie."
           }
         }
       }

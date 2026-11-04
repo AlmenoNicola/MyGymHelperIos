@@ -2,7 +2,7 @@ import Foundation
 
 /// Esercizio dentro un elenco di allenamento, con i propri parametri (equivalente di WorkoutItem in Kotlin).
 /// `done` = gia' svolto (sfondo verde nell'elenco), si azzera con "Reset".
-/// `perSet` = serie diverse (ripetizioni e peso di ogni serie, piani Mid e Full); vuoto = serie tutte uguali.
+/// `perSet` = serie diverse (ripetizioni e peso di ogni serie, Pro); vuoto = serie tutte uguali.
 public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
     public var id: UUID
     public var exerciseID: String

@@ -111,7 +111,7 @@ final class ExerciseListRecord {
     }
 }
 
-/// Scheda di allenamento caricata dall'utente (piano Full). `data` e' un TrainingPlan in JSON.
+/// Scheda di allenamento caricata dall'utente (piano Pro). `data` e' un TrainingPlan in JSON.
 @Model
 final class TrainingPlanRecord {
     var id: UUID = UUID()
@@ -125,7 +125,7 @@ final class TrainingPlanRecord {
     }
 }
 
-/// Scheda del nutrizionista caricata dall'utente (piano Full). `data` e' un ParsedNutritionPlan in JSON.
+/// Scheda del nutrizionista caricata dall'utente (piano Pro). `data` e' un ParsedNutritionPlan in JSON.
 @Model
 final class NutritionPlanRecord {
     var id: UUID = UUID()
@@ -133,6 +133,22 @@ final class NutritionPlanRecord {
     var data: Data = Data()
 
     init(data: Data) { self.data = data }
+}
+
+/// Scheda creata con "Crea la tua scheda" (piano Pro). `data` e' il JSON di un CustomPlanRecord, con la stessa
+/// struttura usata su Android dentro AppData ("customPlans"): vedi CustomPlanCodec nel Core.
+/// Contiene dati sulla salute (eta', altezza, peso): si salva solo con il consenso, nell'archivio escluso dai backup.
+@Model
+final class CustomPlanEntity {
+    var id: String = ""
+    var createdAt: Int64 = 0
+    var data: Data = Data()
+
+    init(id: String, createdAt: Int64, data: Data) {
+        self.id = id
+        self.createdAt = createdAt
+        self.data = data
+    }
 }
 
 /// Profilo con dati sulla salute (peso, altezza, eta', obiettivo, dieta). Solo sul telefono.
@@ -270,10 +286,76 @@ final class WorkoutListStore {
     }
 }
 
+/// Schede create con "Crea la tua scheda" (come saveCustomPlan / renameCustomPlan / deleteCustomPlan dell'AppStore
+/// su Android). Si salvano solo con il consenso ai dati sulla salute (il modulo senza consenso non si apre).
+@Observable
+@MainActor
+final class CustomPlanStore {
+    static let shared = CustomPlanStore()
+
+    /// Schede create, dalla piu' recente.
+    private(set) var plans: [CustomPlanRecord] = []
+
+    private var context: ModelContext { PersistenceController.container.mainContext }
+    private var persistent: Bool { UserDefaults.standard.double(forKey: ConsentStore.grantedAtKey) > 0 }
+
+    private init() {}
+
+    func reload() {
+        guard persistent else { plans = []; return }
+        let rows = (try? context.fetch(FetchDescriptor<CustomPlanEntity>())) ?? []
+        plans = rows.flatMap { CustomPlanCodec.decodeJSON($0.data) }.sorted { $0.createdAt > $1.createdAt }
+    }
+
+    func record(id: String) -> CustomPlanRecord? { plans.first { $0.id == id } }
+
+    /// Record della scheda dall'id della scheda ("custom:<id>"), se c'e'.
+    func record(planID: String) -> CustomPlanRecord? {
+        guard planID.hasPrefix(CustomPlanGenerator.idPrefix) else { return nil }
+        return record(id: String(planID.dropFirst(CustomPlanGenerator.idPrefix.count)))
+    }
+
+    /// Nuova scheda o scheda rifatta (stesso id: si sostituisce).
+    func save(_ r: CustomPlanRecord) {
+        guard persistent else { return }
+        let data = CustomPlanCodec.encodeJSON([r])
+        if let row = entity(r.id) {
+            row.data = data
+            row.createdAt = r.createdAt
+        } else {
+            context.insert(CustomPlanEntity(id: r.id, createdAt: r.createdAt, data: data))
+        }
+        try? context.save()
+        reload()
+    }
+
+    func rename(_ id: String, to name: String) {
+        guard var r = record(id: id) else { return }
+        r.name = name
+        save(r)
+    }
+
+    /// Gli elenchi gia' creati da questa scheda restano.
+    func delete(_ id: String) {
+        if let row = entity(id) { context.delete(row); try? context.save() }
+        reload()
+    }
+
+    /// Dopo "Elimina dati" o la revoca del consenso.
+    func clear() { plans = [] }
+
+    private func entity(_ id: String) -> CustomPlanEntity? {
+        var descriptor = FetchDescriptor<CustomPlanEntity>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+}
+
 enum PersistenceController {
     static let container: ModelContainer = {
         let schema = Schema([WorkoutSessionRecord.self, SetLogRecord.self, ExerciseListRecord.self,
-                             TrainingPlanRecord.self, NutritionPlanRecord.self, HealthProfileRecord.self])
+                             TrainingPlanRecord.self, NutritionPlanRecord.self, HealthProfileRecord.self,
+                             CustomPlanEntity.self])
         var dir = URL.applicationSupportDirectory.appending(path: "MyGymHelperData", directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         var values = URLResourceValues()

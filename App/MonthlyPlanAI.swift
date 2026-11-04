@@ -3,7 +3,7 @@ import Observation
 import FoundationModels
 import MyGymHelperCore
 
-/// Scheda consigliata del mese (Mid e Full). Parte da quella a regole fisse del Core (MonthlyPlanner, uguale su
+/// Scheda consigliata del mese (Pro). Parte da quella a regole fisse del Core (MonthlyPlanner, uguale su
 /// Android); se l'iPhone ha Apple Intelligence, il modello sul telefono la rivede scegliendo solo tra gli esercizi
 /// candidati di ogni posto e scrive una breve nota. Tutto resta sul telefono (come dice l'informativa privacy).
 /// La scheda rivista si salva per il mese (con il consenso, in un file escluso dai backup) e si rifà il mese dopo o

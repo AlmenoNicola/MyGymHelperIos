@@ -1,10 +1,25 @@
 import Foundation
 
-/// Livelli di abbonamento. Free è gratuito; Mid e Full sono a pagamento.
+/// Livelli di abbonamento: Free (gratuito) e `.full`, mostrato come "Pro" / "abbonamento Pro" (a pagamento).
+/// Il piano Mid è stato tolto il 4 novembre 2026: le sue funzioni sono passate al Pro. Il nome interno resta
+/// `full` (prodotti app.mygymhelper.full.*, valore 'full' nel database).
 public enum SubscriptionTier: Int, Comparable, Codable, Sendable {
     case free = 0
-    case mid = 1
     case full = 2
+
+    /// Livello salvato come numero (UserDefaults, JSON...). Prima del 4 novembre 2026: 0 Free, 1 Mid, 2 Full.
+    /// Qualunque valore da 1 in su è Pro (il vecchio Mid diventa Pro); negativo: nil.
+    public init?(storedLevel: Int) {
+        if storedLevel < 0 { return nil }
+        self = storedLevel == 0 ? .free : .full
+    }
+
+    /// Decodifica tollerante: un vecchio 1 (Mid) salvato in JSON diventa Pro invece di far fallire la lettura.
+    /// L'encode resta quello automatico del rawValue.
+    public init(from decoder: Decoder) throws {
+        let level = try decoder.singleValueContainer().decode(Int.self)
+        self = SubscriptionTier(storedLevel: level) ?? .free
+    }
 
     public static func < (lhs: SubscriptionTier, rhs: SubscriptionTier) -> Bool {
         lhs.rawValue < rhs.rawValue
@@ -31,6 +46,7 @@ public enum Feature: CaseIterable, Sendable {
     case monthlyPlan            // scheda consigliata del mese
     case variedSets             // serie diverse sullo stesso esercizio (ripetizioni e peso di ogni serie)
     case homeEquipment          // attrezzi in casa e filtro degli esercizi fattibili con quegli attrezzi
+    case customPlans            // "Crea la tua scheda": scheda su misura da altezza, peso, sesso e obiettivo
 }
 
 /// Funzioni accese o spente in questa versione dell'app (uguale su Android: AppFlags in Basics.kt).
@@ -39,7 +55,7 @@ public enum AppFlags {
     /// in modalita' sviluppo Spotify accetta solo 5 utenti registrati a mano. Il codice resta; per riaccenderlo basta true.
     public static let spotifyIntegration = false
 
-    /// Attrezzi in casa e filtro "Solo i miei attrezzi" (piano Full). Riaccesi il 3 novembre 2026 (erano stati nascosti
+    /// Attrezzi in casa e filtro "Solo i miei attrezzi" (piano Pro). Riaccesi il 3 novembre 2026 (erano stati nascosti
     /// per errore il 2 novembre). Con false spariscono riquadro, elenco, filtro, passo del tutorial e riga dei piani
     /// (uguale su Android: AppFlags.HOME_EQUIPMENT in Basics.kt).
     public static let homeEquipment = true
@@ -61,11 +77,11 @@ public enum FeatureGate {
         switch feature {
         case .repCounting, .bmi, .catalogOnePerType:
             return .free
+        // Tutto il resto è nel Pro (comprese le funzioni dell'ex piano Mid).
         case .catalogFull, .savedExerciseLists, .muscleSelection,
-             .fixedCoaching, .generalNutritionAdvice, .appleWatch, .presetPlans, .monthlyPlan, .variedSets:
-            return .mid
-        case .adaptiveCoaching, .uploadTrainingAndNutritionPlans,
-             .dietPlans, .offlineFull, .cloudSync, .homeEquipment:
+             .fixedCoaching, .generalNutritionAdvice, .appleWatch, .presetPlans, .monthlyPlan, .variedSets,
+             .adaptiveCoaching, .uploadTrainingAndNutritionPlans,
+             .dietPlans, .offlineFull, .cloudSync, .homeEquipment, .customPlans:
             return .full
         }
     }

@@ -30,18 +30,18 @@
           "localizations": [
             {
               "description": "Tutta l'app, consigli adattivi e schede",
-              "displayName": "Full annuale",
+              "displayName": "Pro annuale",
               "locale": "it"
             },
             {
               "description": "Full app, adaptive coaching and plans",
-              "displayName": "Full yearly",
+              "displayName": "Pro yearly",
               "locale": "en_US"
             }
           ],
           "productID": "app.mygymhelper.full.yearly",
           "recurringSubscriptionPeriod": "P1Y",
-          "referenceName": "Full annuale",
+          "referenceName": "Pro annuale",
           "subscriptionGroupID": "21000001",
           "type": "RecurringSubscription"
         },
@@ -61,80 +61,18 @@
           "localizations": [
             {
               "description": "Tutta l'app, consigli adattivi e schede",
-              "displayName": "Full mensile",
+              "displayName": "Pro mensile",
               "locale": "it"
             },
             {
               "description": "Full app, adaptive coaching and plans",
-              "displayName": "Full monthly",
+              "displayName": "Pro monthly",
               "locale": "en_US"
             }
           ],
           "productID": "app.mygymhelper.full.monthly",
           "recurringSubscriptionPeriod": "P1M",
-          "referenceName": "Full mensile",
-          "subscriptionGroupID": "21000001",
-          "type": "RecurringSubscription"
-        },
-        {
-          "adHocOffers": [],
-          "codeOffers": [],
-          "displayPrice": "49.99",
-          "familyShareable": false,
-          "groupNumber": 2,
-          "internalID": "31000002",
-          "introductoryOffer": {
-            "internalID": "41000002",
-            "numberOfPeriods": 1,
-            "paymentMode": "free",
-            "subscriptionPeriod": "P1W"
-          },
-          "localizations": [
-            {
-              "description": "Catalogo completo, elenchi e consigli",
-              "displayName": "Mid annuale",
-              "locale": "it"
-            },
-            {
-              "description": "Full catalog, lists and suggestions",
-              "displayName": "Mid yearly",
-              "locale": "en_US"
-            }
-          ],
-          "productID": "app.mygymhelper.mid.yearly",
-          "recurringSubscriptionPeriod": "P1Y",
-          "referenceName": "Mid annuale",
-          "subscriptionGroupID": "21000001",
-          "type": "RecurringSubscription"
-        },
-        {
-          "adHocOffers": [],
-          "codeOffers": [],
-          "displayPrice": "4.99",
-          "familyShareable": false,
-          "groupNumber": 2,
-          "internalID": "31000001",
-          "introductoryOffer": {
-            "internalID": "41000001",
-            "numberOfPeriods": 1,
-            "paymentMode": "free",
-            "subscriptionPeriod": "P1W"
-          },
-          "localizations": [
-            {
-              "description": "Catalogo completo, elenchi e consigli",
-              "displayName": "Mid mensile",
-              "locale": "it"
-            },
-            {
-              "description": "Full catalog, lists and suggestions",
-              "displayName": "Mid monthly",
-              "locale": "en_US"
-            }
-          ],
-          "productID": "app.mygymhelper.mid.monthly",
-          "recurringSubscriptionPeriod": "P1M",
-          "referenceName": "Mid mensile",
+          "referenceName": "Pro mensile",
           "subscriptionGroupID": "21000001",
           "type": "RecurringSubscription"
         }

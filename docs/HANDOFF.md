@@ -1147,3 +1147,63 @@ da un elenco. Core: `WorkoutListLogic.replaceExercise` (Kotlin e Swift, test in 
 - UI: `AiNote` in PlanReviewUi.kt, `AINoteView` in PlanReviewViews.swift. Stringhe `review.report`,
   `review.report.intro`; tutorial: aggiunta una frase al passo `planReview`. strings.xml rigenerati.
 - **Non compilato né testato** (qui c'è solo Java 11: niente Gradle/Android; niente Xcode).
+
+## 4 novembre 2026 – Tolto il piano Mid (iOS)
+Stessa modifica già fatta su Android. Restano Free e un solo abbonamento a pagamento, mostrato come "Pro" /
+"abbonamento Pro" (ex Full). Nel codice resta `.full` (rawValue 2), i prodotti restano app.mygymhelper.full.monthly /
+.yearly (9,99 €/mese, 99,99 €/anno, prova di 7 giorni), nel database resta 'full'. Tutte le funzioni dell'ex Mid sono
+nel Pro; Free invariato. Licenze o acquisti "mid" già esistenti valgono come Pro.
+- `Core/Sources/MyGymHelperCore/Tier.swift`: tolto `case mid`; nuovo `SubscriptionTier(storedLevel:)` (da 1 in su = Pro,
+  negativo = nil) e decodifica Codable tollerante (un vecchio 1 in JSON diventa Pro); `FeatureGate`: tutto tranne
+  conteggio, BMI e catalogo ridotto è `.full`.
+- `App/SubscriptionManager.swift`: tolti i prodotti mid, `all` = solo full; letture salvate con `storedLevel`.
+- `App/AccountService.swift`: tier "mid" dal server = Pro. `App/PaywallView.swift`: confronto a 2 colonne (Free, Pro).
+- `App/InfoView.swift`: piano simulato (debug) -1 / Free / Pro. `App/AppSettings.swift`: un vecchio Mid simulato (1)
+  diventa Pro.
+- Commenti "Mid/Full" → "Pro" in App/ e Core/Sources (solo commenti).
+- `Support/MyGymHelper.storekit`: tolti i prodotti mid, nomi "Pro mensile/annuale" ("Pro monthly/yearly").
+- `App/Localizable.xcstrings`: `tier.full` = "Pro", tolta `tier.mid`, testi dei blocchi e del tutorial con
+  "abbonamento Pro" (24 chiavi).
+- Test Core: CoreTests (tutte le funzioni nel Pro, `testStoredLevelsOfTheOldPlansBecomePro`), FeatureTests,
+  HomeEquipmentTests, PresetsTests.
+- Documenti: `docs/STORE_TEXTS.md` (descrizione, prodotti, gruppo), `docs/TUTORIAL.md` (registro).
+- **Non compilato e test non eseguiti** (modifica fatta senza Xcode).
+
+
+## 4 novembre 2026 – Crea la tua scheda (iOS, piano Pro)
+Stessa funzione già fatta e approvata su Android. In Schede pronte, sotto "Scegli la tua scheda di esercizi" e sopra la
+scheda del mese, la card "Crea la tua scheda" apre un modulo (sesso, età 18-100, altezza 120-230 cm, peso 30-250 kg,
+obiettivo con "Consigliato dal tuo BMI", esperienza, 3 o 4 allenamenti, Palestra / Casa con attrezzi / Corpo libero, nome).
+Nel Free la card si vede con la nota `presets.locked`. Serve il consenso ai dati sulla salute. Fino a 20 schede ("Le tue
+schede", dalla più recente); il dettaglio è quello delle schede pronte con note, Rinomina, Cambia i dati (rifà la scheda
+con lo stesso id, nome e data) ed Elimina (gli elenchi già creati restano). Tutto sul telefono, nessuna API esterna.
+
+Regole (Core `CustomPlanGenerator`, uguale a CustomPlans.kt):
+- divisione: 4 allenamenti → parte alta / parte bassa A e B; 3 allenamenti principiante → total body A/B/C;
+  3 allenamenti intermedio o avanzato → push / pull / legs;
+- esercizi per allenamento: 5 principiante, 6 intermedio, 7 avanzato (dal muscolo più importante del giorno);
+- per ogni muscolo un esercizio di forza con quel muscolo principale, fattibile nel luogo, adatto all'esperienza
+  (principiante solo esercizi "beginner" o senza livello; intermedio niente "expert"), esclusi olympic e strongman;
+  ordine: alla prima volta del muscolo i multiarticolari, per gli addominali prima gli esercizi a ripetizioni del plank,
+  poi gli esercizi base (`seed-`), poi l'hash `MonthlyPlanner.stableHash(id + seed)`; ordinamento stabile; mai lo stesso
+  esercizio due volte nella scheda (se non ce ne sono altri si ripete, ma mai nello stesso giorno);
+- serie × ripetizioni e pausa: massa multiarticolari 3×10 90" / 4×8 120" / 4×6 150", complementari 3×12 60" / 3×10 75" /
+  4×10 75"; mantenimento multiarticolari 3×10 90" (avanzato 4×8 90"), complementari 3×12 60"; dimagrimento multiarticolari
+  3×12 60" (avanzato 4×12 60"), complementari 3×15 45"; addominali 3×15 45" (dimagrimento 3×20 30"); polpacci 4×15 60";
+- dimagrimento: finale pliometrico 3×15 30" a ogni allenamento, tranne che a basso impatto;
+- basso impatto (niente salti) con BMI ≥ 30 o età ≥ 65; dai 50 anni almeno 10 ripetizioni e +30" sui multiarticolari;
+  dai 65 anni al massimo 3 serie;
+- note: BMI, calorie indicative (`NutritionCalculator.targets`, attività leggera con 3 allenamenti, moderata con 4).
+
+File:
+- Core: `CustomPlans.swift` (nuovo: `Experience`, `TrainingPlace`, `HealthProfile` con i valori del profilo,
+  `CustomPlanInput`, `CustomPlanRecord`, `CustomPlanNotes`, `CustomPlanGenerator`, `CustomPlanCodec` con lo stesso JSON di
+  Android: "customPlans" → id, name, createdAt, input {…}, plan {level, daysPerWeek, days […]}); `Tier.swift`
+  (`Feature.customPlans`, Pro); `Tutorial.swift` (versione 16). Test: `CustomPlansTests.swift` (stessi casi di Android).
+- App: `CustomPlanViews.swift` (nuovo: sezione, note, pulsanti, modulo); `Persistence.swift` (`CustomPlanEntity` in
+  SwiftData con il JSON di un record, `CustomPlanStore`); `ConsentStore.swift` ("Cancella dati sulla salute" cancella anche
+  le schede create); `PresetsView.swift` (sezione in cima, dettaglio delle schede "custom:", elenchi "Nome scheda · Giorno");
+  `PaywallView.swift` (riga `compare.customPlans`); `Localizable.xcstrings` (44 chiavi nuove e `tutorial.presets.body`).
+  Il file nuovo dell'app entra da solo nel progetto (cartella App sincronizzata; project.yml usa `path: App`).
+- **Non compilato e test non eseguiti** (modifiche fatte senza Xcode e senza Swift): l'equivalenza con il Kotlin è
+  ragionata riga per riga, non verificata eseguendo i test.

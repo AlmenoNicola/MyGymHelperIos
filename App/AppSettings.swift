@@ -10,7 +10,7 @@ import MyGymHelperCore
 final class AppSettings {
     static let shared = AppSettings()
 
-    /// Piano simulato predefinito: Full nelle build di debug (Xcode), nessuno (-1) in quelle pubblicate.
+    /// Piano simulato predefinito: Pro nelle build di debug (Xcode), nessuno (-1) in quelle pubblicate.
     static var debugTierDefault: Int {
         #if DEBUG
         return SubscriptionTier.full.rawValue
@@ -35,7 +35,7 @@ final class AppSettings {
     private(set) var explainExercise = true
     /// Elenco scelto nella scheda Allenamento (nil = nessuno: al primo esercizio si crea "Allenamento odierno").
     private(set) var currentListID: UUID?
-    /// Attrezzi che l'utente ha in casa (solo piano Full) e filtro "Solo i miei attrezzi" acceso o spento.
+    /// Attrezzi che l'utente ha in casa (solo piano Pro) e filtro "Solo i miei attrezzi" acceso o spento.
     private(set) var ownedEquipment: Set<String> = []
     private(set) var equipmentFilter = false
 
@@ -77,6 +77,7 @@ final class AppSettings {
         spotifyURI = d.string(forKey: "music.spotifyPlaylist") ?? ""
         spotifyChoice = d.data(forKey: "music.spotifyChoice").flatMap { try? JSONDecoder().decode(SpotifyItem.self, from: $0) }
         debugTier = d.object(forKey: "debug.tier") as? Int ?? Self.debugTierDefault
+        if debugTier == 1 { debugTier = SubscriptionTier.full.rawValue }   // vecchio Mid simulato: ora Pro
         var map: [SensorPosition: PositionTuning] = [:]
         for p in SensorPosition.allCases {
             if let data = d.data(forKey: "tuning.\(p.rawValue)"),

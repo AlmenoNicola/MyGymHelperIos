@@ -36,7 +36,7 @@ public struct SetGroup: Equatable, Hashable, Sendable {
 
 /// Parametri di un allenamento su un esercizio: quelli impostati dall'utente o proposti da un consiglio.
 /// Serie tutte uguali: `sets` serie da `reps` ripetizioni con `weightKg`.
-/// Serie diverse (piani Mid e Full): `perSet` ha una voce per serie con le sue ripetizioni e il suo peso; in quel caso
+/// Serie diverse (Pro): `perSet` ha una voce per serie con le sue ripetizioni e il suo peso; in quel caso
 /// `sets`, `reps` e `weightKg` valgono come la prima serie. La pausa e' sempre unica.
 /// Usare `WorkoutParameters.of(_:restSeconds:)` per costruirli da un elenco di serie (tutte uguali -> `perSet` vuoto).
 public struct WorkoutParameters: Equatable, Sendable {
@@ -182,7 +182,7 @@ public enum WeightInput {
 }
 
 extension CoachingResult {
-    /// Applica i consigli a regole fisse (piano Mid) ai parametri attuali.
+    /// Applica i consigli a regole fisse (ex piano Mid, ora parte del Pro) ai parametri attuali.
     /// Serie diverse: la stessa variazione su ogni serie, mantenendo lo schema (es. +2,5 kg a ogni serie;
     /// una serie in piu' = copia dell'ultima; una in meno = si toglie l'ultima).
     public func applied(to current: WorkoutParameters) -> WorkoutParameters {
@@ -224,7 +224,7 @@ extension CoachingResult {
 }
 
 extension AdaptiveAdvice {
-    /// Parametri proposti dal motore adattivo (piano Full). Se il consiglio non ha un peso (nessun dato) si tiene quello attuale.
+    /// Parametri proposti dal motore adattivo (piano Pro). Se il consiglio non ha un peso (nessun dato) si tiene quello attuale.
     public func parameters(keepingWeight current: Double) -> WorkoutParameters {
         WorkoutParameters(sets: sets, reps: reps, restSeconds: restSeconds,
                           weightKg: weightKg > 0 ? weightKg : current).clamped()
