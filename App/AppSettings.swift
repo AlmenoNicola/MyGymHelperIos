@@ -40,8 +40,9 @@ final class AppSettings {
     private(set) var equipmentFilter = false
 
     /// Schede principali (per passare all'Allenamento dopo aver aggiunto un esercizio da un'altra scheda). Non salvata.
-    /// I Piani non sono una scheda: si aprono dall'Area personale.
-    enum MainTab: Hashable { case workout, exercises, nutrition, info }
+    /// I Piani non sono una scheda: si aprono dalle Impostazioni.
+    /// Schede principali; `info` sono le Impostazioni (ex Area personale).
+    enum MainTab: Hashable { case workout, exercises, nutrition, profile, info }
     var selectedTab: MainTab = .workout
     /// Identita' della pila di navigazione di Allenamento: cambiandola si torna alla schermata iniziale. Non salvata.
     var workoutStackID = UUID()

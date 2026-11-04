@@ -6,8 +6,9 @@ import Foundation
 /// REGOLA DI PROGETTO: a ogni modifica o aggiunta di una funzione dell'app va aggiornato questo elenco
 /// (e Tutorial.kt, le stringhe tutorial.* e docs/TUTORIAL.md), poi va aumentato `TutorialGuide.version`.
 ///
-/// Schede principali. I Piani non sono piu' una scheda: sono una voce dell'Area personale (TutorialTarget.infoPlans).
-public enum TutorialTab: String, CaseIterable, Sendable { case workout, exercises, nutrition, info }
+/// Schede principali. I Piani non sono piu' una scheda: sono una voce delle Impostazioni (TutorialTarget.infoPlans).
+/// `info` e' la scheda Impostazioni (ex Area personale); `profile` la scheda Profilo.
+public enum TutorialTab: String, CaseIterable, Sendable { case workout, exercises, nutrition, profile, info }
 
 /// Disegno mostrato nel fumetto dei passi senza un elemento da indicare.
 public enum TutorialArt: String, Sendable { case welcome, strap, session, done }
@@ -38,6 +39,10 @@ public enum TutorialTarget {
     public static let tabExercises = "tab.exercises"
     public static let tabNutrition = "tab.nutrition"
     public static let tabInfo = "tab.info"
+    /// Scheda Profilo: titolo, muscoli allenati, grafici dell'andamento.
+    public static let tabProfile = "tab.profile"
+    public static let profileMuscles = "profile.muscles"
+    public static let profileCharts = "profile.charts"
     public static let workoutList = "workout.list"
     public static let workoutAdd = "workout.add"
     public static let workoutPresets = "workout.presets"
@@ -50,14 +55,14 @@ public enum TutorialTarget {
     public static let infoTutorial = "info.tutorial"
     public static let infoAppearance = "info.appearance"
     public static let infoSuggest = "info.suggest"
-    /// Voce "Voce e musica" dell'Area personale (avvisi, voce, musica).
+    /// Voce "Voce e musica" delle Impostazioni (avvisi, voce, musica).
     public static let infoAudio = "info.audio"
 }
 
 public enum TutorialGuide {
     /// Versione del tutorial: aumentarla a ogni aggiornamento dei passi. Viene salvata quando l'utente lo
     /// completa o lo salta; il tutorial parte da solo solo se non e' mai stato visto (valore salvato 0).
-    public static let version = 16  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
+    public static let version = 17  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
                                     // 4: passi della Nutrizione nascosti mentre la scheda e' disattivata;
                                     // 5: i Piani passano dalla barra delle schede all'Area personale;
                                     // 6: "Suggerisci una funzione" (ultima voce dell'Area personale);
@@ -71,6 +76,7 @@ public enum TutorialGuide {
                                     // 14: attrezzi in casa di nuovo visibili (passo "homeEquipment" dopo "exercisesLinks")
                                     // 15: avvisi spostati in Area personale > Voce e musica (passo "cues" dopo "replay", stesso ordine della schermata)
                                     // 16: "Crea la tua scheda" (scheda su misura da altezza, peso, sesso e obiettivo) nel passo "presets"
+                                    // 17: nuova scheda Profilo (dati, avatar, muscoli, grafici); 'Area personale' diventa 'Impostazioni'
 
     /// Tutti i passi, compresi quelli delle funzioni disattivate.
     public static let allSteps: [TutorialStep] = [
@@ -91,6 +97,9 @@ public enum TutorialGuide {
         TutorialStep("homeEquipment", tab: .exercises, target: TutorialTarget.exercisesEquipment),
         TutorialStep("nutritionTab", tab: .nutrition, target: TutorialTarget.tabNutrition),
         TutorialStep("nutritionProfile", tab: .nutrition, target: TutorialTarget.nutritionProfile),
+        TutorialStep("profileTab", tab: .profile, target: TutorialTarget.tabProfile),
+        TutorialStep("profileMuscles", tab: .profile, target: TutorialTarget.profileMuscles),
+        TutorialStep("profileCharts", tab: .profile, target: TutorialTarget.profileCharts),
         TutorialStep("infoTab", tab: .info, target: TutorialTarget.tabInfo),
         TutorialStep("plans", tab: .info, target: TutorialTarget.infoPlans),
         TutorialStep("appearance", tab: .info, target: TutorialTarget.infoAppearance),

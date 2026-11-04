@@ -337,11 +337,14 @@ struct CustomPlanEditorView: View {
         // L'obiettivo del profilo non cambia.
         let profile: HealthProfileRecord
         if let existing = profiles.first { profile = existing } else { profile = HealthProfileRecord(); context.insert(profile) }
+        let oldWeight = profiles.first?.weightKg
         profile.sex = i.sex.rawValue
         profile.age = i.age
         profile.heightCm = i.heightCm
         profile.weightKg = i.weightKg
         try? context.save()
+        // Peso diverso da quello del profilo: si salva anche la pesata di oggi (grafico del peso nel Profilo)
+        if oldWeight != i.weightKg { ProfileData.setWeight(i.weightKg, profile: profile) }
         if wasNew { createdPlanID = plan.id } else { dismiss() }
     }
 }

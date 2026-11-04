@@ -6,7 +6,7 @@ I passi senza una funzione da indicare (benvenuto, telefono sul corpo, sessione,
 
 - **Primo avvio**: parte da solo dopo disclaimer e consenso, una volta sola (`tutorial.seenVersion` = 0).
   Completato o saltato, si salva `TutorialGuide.VERSION`. Dopo "Elimina tutti i dati" ricompare (come disclaimer e consenso).
-- **Area personale**: riga "Tutorial dell'app" (in alto, sotto account, Piani e Aspetto) per rivederlo quando si vuole.
+- **Impostazioni** (ex Area personale): riga "Tutorial dell'app" (in alto, sotto account, Piani e Aspetto) per rivederlo quando si vuole.
 - Il tasto Indietro di Android torna al passo precedente (al primo passo chiude il tutorial).
 
 ## Dove sta il codice
@@ -23,15 +23,15 @@ Differenza voluta: sui passi delle schede Android illumina la voce nella barra i
 non misurabile) illumina il titolo della schermata della scheda. Se un elemento non è sullo schermo (es. profilo
 Nutrizione senza consenso, o una scheda iOS lasciata in una sotto-schermata) il fumetto compare al centro, senza riquadro.
 
-## Passi attuali (versione 16)
+## Passi attuali (versione 17)
 
 I passi 16 e 17 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
-Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 22 passi
+Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 25 passi
 (il passo 15, attrezzi in casa, si nasconde solo con `AppFlags.HOME_EQUIPMENT` / `AppFlags.homeEquipment` = false).
 
 | # | id | Scheda | Elemento illuminato | Contenuto |
 | --- | --- | --- | --- | --- |
-| 1 | welcome | – | disegno | Benvenuto, si può saltare e rivedere dall'Area personale |
+| 1 | welcome | – | disegno | Benvenuto, si può saltare e rivedere dalle Impostazioni |
 | 2 | strap | – | disegno | Telefono legato a braccio/avambraccio/coscia/stinco/addome; in tasca meno preciso |
 | 3 | workoutTab | Allenamento | scheda | A cosa serve la scheda |
 | 4 | list | Allenamento | elenco attuale | Esercizi con parametri, avvio/modifica/elimina, verde, Reset, "Esercizio successivo", più elenchi (Mid/Full) |
@@ -48,13 +48,16 @@ Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutrit
 | 15 | homeEquipment | Esercizi | riquadro Attrezzi in casa | (nascosto, funzione spenta) Full: segnare gli attrezzi di casa (vedere, aggiungere, togliere) e filtro "Solo i miei attrezzi" in Esercizi e Aggiungi esercizio; corpo libero sempre visibile |
 | 16 | nutritionTab | Nutrizione | scheda | (nascosto, Nutrizione disattivata) Indicazioni generali, non sostituisce il nutrizionista |
 | 17 | nutritionProfile | Nutrizione | profilo | (nascosto, Nutrizione disattivata) Dati, BMI, fabbisogno; Full: pasti e scheda del nutrizionista; serve consenso |
-| 18 | infoTab | Area personale | scheda | Foto profilo (tocco sul cerchio), account, piani e abbonamenti, consenso, Salute/Health Connect, voce, calibrazione, documenti, cancellazione |
-| 19 | plans | Area personale | voce Piani e abbonamenti | Free/Mid/Full, ripristino, 7 giorni di prova, scadenza della licenza gratuita |
-| 20 | appearance | Area personale | scheda Aspetto | Tema: neutro del telefono (predefinito), scuro oppure originale arancio e viola |
-| 21 | replay | Area personale | riga Tutorial | Come rivederlo |
-| 22 | cues | Area personale | voce Voce e musica | Avvisi (voce, suono, vibrazione) con prova; voce, velocità e musica (prima nella scheda Allenamento) |
-| 23 | suggest | Area personale | voce Suggerisci una funzione (ultima) | Idee o cosa manca: si apre l'app di posta con l'e-mail per mygymhelper@gmail.com |
-| 24 | done | – | disegno | Fine, promemoria del disclaimer |
+| 18 | profileTab | Profilo | titolo della scheda | Età, sesso, altezza e peso con l'avatar che cambia con i dati; servono anche per "Crea la tua scheda"; solo sul telefono, con il consenso |
+| 19 | profileMuscles | Profilo | riquadro Muscoli allenati | Periodo (giorno, settimana, mese, anno, totale), figure fronte e retro colorate in base all'uso con le percentuali; Free: solo oggi |
+| 20 | profileCharts | Profilo | primo riquadro Andamento | Pro: grafici di allenamenti, serie, kg sollevati, ripetizioni e peso corporeo nel periodo; tocco su una colonna per il valore |
+| 21 | infoTab | Impostazioni | scheda | Foto profilo (tocco sul cerchio), account, piani e abbonamenti, consenso, Salute/Health Connect, voce, calibrazione, documenti, cancellazione |
+| 22 | plans | Impostazioni | voce Piani e abbonamenti | Free/Mid/Full, ripristino, 7 giorni di prova, scadenza della licenza gratuita |
+| 23 | appearance | Impostazioni | scheda Aspetto | Tema: neutro del telefono (predefinito), scuro oppure originale arancio e viola |
+| 24 | replay | Impostazioni | riga Tutorial | Come rivederlo |
+| 25 | cues | Impostazioni | voce Voce e musica | Avvisi (voce, suono, vibrazione) con prova; voce, velocità e musica (prima nella scheda Allenamento) |
+| 26 | suggest | Impostazioni | voce Suggerisci una funzione (ultima) | Idee o cosa manca: si apre l'app di posta con l'e-mail per mygymhelper@gmail.com |
+| 27 | done | – | disegno | Fine, promemoria del disclaimer |
 
 ## REGOLA: aggiornare il tutorial a ogni modifica dell'app
 
@@ -156,3 +159,8 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
 - 4 novembre 2026 (versione 16): "Crea la tua scheda" (scheda su misura da altezza, peso, sesso e obiettivo, piano Pro)
   in cima alle Schede pronte. Aggiornato il testo del passo "presets" (`tutorial.presets.body`); nessun passo nuovo.
   Stessi testi su Android e iOS.
+- 4 novembre 2026 (versione 17): nuova scheda Profilo (dati con l'avatar, muscoli allenati, grafici dell'andamento) tra
+  Esercizi e Impostazioni; l'"Area personale" diventa "Impostazioni" (icona a ingranaggio). Tre passi nuovi subito prima di
+  "infoTab": "profileTab" (`tab.profile`), "profileMuscles" (`profile.muscles`), "profileCharts" (`profile.charts`).
+  Aggiornati i testi che citavano l'Area personale (`tutorial.welcome.body`, `tutorial.infoTab.*`, `tutorial.suggest.body`).
+  27 passi in tutto, 25 mostrati con la Nutrizione spenta. Stessi passi su Android e iOS.

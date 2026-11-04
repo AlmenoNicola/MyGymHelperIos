@@ -38,8 +38,8 @@ enum ConsentStore {
 
 @MainActor
 enum LocalData {
-    /// Cancella tutti i dati sulla salute salvati: storico, profilo, elenchi, schede di allenamento (anche quelle create
-    /// con "Crea la tua scheda") e dell'alimentazione.
+    /// Cancella tutti i dati sulla salute salvati: storico, profilo e pesate, elenchi, schede di allenamento (anche quelle
+    /// create con "Crea la tua scheda") e dell'alimentazione. Vale per "Cancella dati", revoca del consenso ed "Elimina tutto".
     /// Usa il contesto principale, lo stesso letto dalle schermate (@Query), cosi' le liste si aggiornano subito.
     static func deleteHealthData() {
         let context = PersistenceController.container.mainContext
@@ -50,6 +50,7 @@ enum LocalData {
         try? context.delete(model: NutritionPlanRecord.self)
         try? context.delete(model: HealthProfileRecord.self)
         try? context.delete(model: CustomPlanEntity.self)       // schede create con "Crea la tua scheda"
+        try? context.delete(model: WeightEntryRecord.self)      // pesate del Profilo (grafico del peso)
         try? context.save()
         WorkoutListStore.shared.clear()
         MonthlyPlanStore.shared.clear()      // scheda del mese rivista dall'AI (ricavata dallo storico)

@@ -1207,3 +1207,30 @@ File:
   Il file nuovo dell'app entra da solo nel progetto (cartella App sincronizzata; project.yml usa `path: App`).
 - **Non compilato e test non eseguiti** (modifiche fatte senza Xcode e senza Swift): l'equivalenza con il Kotlin è
   ragionata riga per riga, non verificata eseguendo i test.
+
+## 4 novembre 2026 – Scheda Profilo e Impostazioni (iOS)
+Stessa modifica già fatta su Android. Barra delle schede (Nutrizione spenta): Allenamento · Esercizi · **Profilo** ·
+**Impostazioni** (ex Area personale, `InfoView`, icona `gearshape.fill`; foto profilo sempre nell'intestazione).
+- Profilo (`App/ProfileView.swift`, nuovo): senza consenso solo il riquadro `profile.needConsent`; "I tuoi dati" con
+  l'avatar (`AvatarView`), riepilogo, BMI, sesso, età, altezza e peso (salvati subito; il peso salva anche la pesata di
+  oggi); "Muscoli allenati" con il periodo (Free: solo Giorno, nota `profile.period.locked`), figure fronte e retro
+  (`MuscleHeatFigure` in `BodyMapView.swift`) ed elenco con le percentuali; "Andamento" (Pro): quattro totali e cinque
+  grafici disegnati con Canvas (allenamenti, serie, volume, ripetizioni a colonne; peso corporeo a linea e punti), tocco
+  su una colonna per il valore. Free: riquadro con `profile.charts.locked`.
+- Core: `ProfileStats.swift` (nuovo, porta di ProfileStats.kt: `StatsPeriod`, `BucketKind`, `StatsBucket`, `MuscleShare`,
+  `StatsTotals`, `WeightEntry`, `ProfileStats`, `WeightLog`, `AvatarFigure`; in più `StatsSession`/`StatsSet`, la sessione
+  ridotta che su Android è WorkoutSessionRecord del Core). Tempi in millisecondi Int64, fuso come parametro, calendario
+  gregoriano con la settimana da lunedì; confini dalle date (anche nei giorni del cambio d'ora). `Tier.swift`:
+  `Feature.profileStats` (Pro). `Tutorial.swift`: `TutorialTab.profile`, target `tab.profile`, `profile.muscles`,
+  `profile.charts`, tre passi prima di "infoTab", versione 17. Test: `ProfileStatsTests.swift` (stessi casi di Android
+  tranne il codec di AppData: su iOS le pesate stanno in SwiftData) e `TutorialTests.swift` (27 passi, i tre del Profilo).
+- Dati: `WeightEntryRecord` (SwiftData, migrazione leggera) e `ProfileData.setWeight` in `Persistence.swift` (aggiorna il
+  profilo e applica `WeightLog.upsert`); "Cancella dati sulla salute", revoca ed "Elimina tutto" cancellano anche le
+  pesate. "Crea la tua scheda" e il peso della Nutrizione salvano la pesata come su Android (l'importazione da Apple
+  Salute nella Nutrizione no, come prima).
+- Piani: riga `compare.profileStats`. Testi: 43 chiavi nuove e le frasi con "Area personale" → "Impostazioni" (anche
+  `account.deleteMessage`, `lists.needConsent`, `debug.fakeHistory.noConsent`, `tutorial.welcome/suggest/infoTab`).
+  Documenti legali: "Area personale" → "Impostazioni" in `App/Legal`, nella fonte `legal/` e in `site/` (stesse sostituzioni
+  fatte a mano, `tools/build_legal.py` non rieseguito). `docs/TUTORIAL.md` alla versione 17.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui): `swift test` da lanciare sul Mac. Controllata solo la
+  sintassi dei file Swift e, con una copia in Python, la parte dell'avatar (tracciati dentro 240×520, "M120.0 90.0").

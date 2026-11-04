@@ -7,7 +7,7 @@ public enum AppContact {
     public static let email = "mygymhelper@gmail.com"
 }
 
-/// E-mail "Suggerisci una funzione" dell'Area personale: l'utente scrive l'idea o cosa manca nell'app.
+/// E-mail "Suggerisci una funzione" delle Impostazioni: l'utente scrive l'idea o cosa manca nell'app.
 /// In fondo si aggiungono versione dell'app e del telefono (nessun dato personale), utili per capire il contesto.
 /// Segnalazione di un testo generato dall'IA (nota della revisione della scheda), richiesta dalle norme degli store
 /// sui contenuti generati dall'IA. L'e-mail contiene l'invito a descrivere il problema, il testo dell'IA e i dati

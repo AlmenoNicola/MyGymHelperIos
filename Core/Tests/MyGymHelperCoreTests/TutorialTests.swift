@@ -9,10 +9,16 @@ final class TutorialTests: XCTestCase {
         XCTAssertEqual(Set(steps.map(\.id)).count, steps.count)
         XCTAssertEqual(steps.first?.id, "welcome")
         XCTAssertEqual(steps.last?.id, "done")
-        XCTAssertEqual(TutorialGuide.allSteps.count, 24)
+        XCTAssertEqual(TutorialGuide.allSteps.count, 27)
         // Con la Nutrizione disattivata si saltano i suoi 2 passi.
         // Con gli attrezzi in casa nascosti (AppFlags.homeEquipment) si salta anche il loro passo.
-        XCTAssertEqual(steps.count, 24 - (AppFeatures.nutritionEnabled ? 0 : 2) - (AppFlags.homeEquipment ? 0 : 1))
+        XCTAssertEqual(steps.count, 27 - (AppFeatures.nutritionEnabled ? 0 : 2) - (AppFlags.homeEquipment ? 0 : 1))
+        // Scheda Profilo: tre passi di fila (scheda, muscoli, grafici), subito prima delle Impostazioni.
+        let profile = steps.firstIndex { $0.id == "profileTab" }!
+        XCTAssertEqual(steps[profile..<(profile + 4)].map(\.id), ["profileTab", "profileMuscles", "profileCharts", "infoTab"])
+        XCTAssertEqual(steps[profile..<(profile + 3)].map(\.target), [TutorialTarget.tabProfile, TutorialTarget.profileMuscles,
+                                                                    TutorialTarget.profileCharts])
+        for s in steps[profile..<(profile + 3)] { XCTAssertEqual(s.tab, .profile) }
         // Attrezzi in casa: subito dopo i collegamenti di Esercizi, nella stessa scheda (se accesi).
         if AppFlags.homeEquipment {
             let equipment = steps.firstIndex { $0.id == "homeEquipment" }!
@@ -48,11 +54,11 @@ final class TutorialTests: XCTestCase {
         XCTAssertEqual(TutorialGuide.visibleTabs.contains(.nutrition), AppFeatures.nutritionEnabled)
         let replay = steps.first { $0.target == TutorialTarget.infoTutorial }
         XCTAssertEqual(replay?.tab, .info)
-        // I Piani sono una voce dell'Area personale, subito dopo la presentazione della scheda.
+        // I Piani sono una voce delle Impostazioni, subito dopo la presentazione della scheda.
         let plans = steps.firstIndex { $0.target == TutorialTarget.infoPlans }!
         XCTAssertEqual(steps[plans].tab, .info)
         XCTAssertEqual(steps[plans - 1].id, "infoTab")
-        // Avvisi: nell'Area personale, voce "Voce e musica", subito dopo la riga Tutorial.
+        // Avvisi: nelle Impostazioni, voce "Voce e musica", subito dopo la riga Tutorial.
         let cues = steps.firstIndex { $0.id == "cues" }!
         XCTAssertEqual(steps[cues].tab, .info)
         XCTAssertEqual(steps[cues].target, TutorialTarget.infoAudio)

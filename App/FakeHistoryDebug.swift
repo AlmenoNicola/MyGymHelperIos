@@ -68,7 +68,7 @@ enum FakeHistoryDebug {
     }
 }
 
-/// Riquadro di test nell'Area personale e nel dettaglio della scheda.
+/// Riquadro di test nelle Impostazioni e nel dettaglio della scheda.
 struct FakeHistoryCard: View {
     @Environment(CatalogStore.self) private var catalog
     @Environment(SubscriptionManager.self) private var subscriptions

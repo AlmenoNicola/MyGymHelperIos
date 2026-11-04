@@ -1,6 +1,6 @@
 import Foundation
 
-/// Tema grafico scelto nell'Area personale. Equivalente di Appearance.kt: stessi valori salvati.
+/// Tema grafico scelto nelle Impostazioni. Equivalente di Appearance.kt: stessi valori salvati.
 ///
 /// - `system`: colori neutri del telefono (colori di sistema su iOS, Material You su Android 12+) e modalita'
 ///   chiara/scura come il telefono. E' il tema predefinito.

@@ -2,7 +2,7 @@ import SwiftUI
 import PhotosUI
 import UIKit
 
-/// Foto profilo dell'Area personale. Resta solo su questo telefono: file in Application Support escluso dal backup
+/// Foto profilo delle Impostazioni. Resta solo su questo telefono: file in Application Support escluso dal backup
 /// iCloud (come gli altri dati personali) e mai caricato sul server. Equivalente di ProfilePhotoStore.kt.
 /// La foto scelta viene ritagliata al centro (quadrata) e ridotta a `size` pixel: pesa pochi KB.
 @Observable
@@ -85,7 +85,7 @@ struct ProfileAvatar: View {
     }
 }
 
-/// Intestazione dell'Area personale con la foto profilo: toccando il cerchio si sceglie una foto dalla libreria
+/// Intestazione delle Impostazioni con la foto profilo: toccando il cerchio si sceglie una foto dalla libreria
 /// (selettore di sistema, nessun permesso) o la si toglie. Stesso comportamento dell'app Android.
 struct ProfileHeader: View {
     @State private var showPicker = false

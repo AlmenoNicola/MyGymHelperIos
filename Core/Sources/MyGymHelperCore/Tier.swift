@@ -47,6 +47,8 @@ public enum Feature: CaseIterable, Sendable {
     case variedSets             // serie diverse sullo stesso esercizio (ripetizioni e peso di ogni serie)
     case homeEquipment          // attrezzi in casa e filtro degli esercizi fattibili con quegli attrezzi
     case customPlans            // "Crea la tua scheda": scheda su misura da altezza, peso, sesso e obiettivo
+    case profileStats           // scheda Profilo: muscoli di settimana, mese, anno e totale e grafici dell'andamento
+                                // (il giorno di oggi e i dati personali sono per tutti)
 }
 
 /// Funzioni accese o spente in questa versione dell'app (uguale su Android: AppFlags in Basics.kt).
@@ -81,7 +83,7 @@ public enum FeatureGate {
         case .catalogFull, .savedExerciseLists, .muscleSelection,
              .fixedCoaching, .generalNutritionAdvice, .appleWatch, .presetPlans, .monthlyPlan, .variedSets,
              .adaptiveCoaching, .uploadTrainingAndNutritionPlans,
-             .dietPlans, .offlineFull, .cloudSync, .homeEquipment, .customPlans:
+             .dietPlans, .offlineFull, .cloudSync, .homeEquipment, .customPlans, .profileStats:
             return .full
         }
     }

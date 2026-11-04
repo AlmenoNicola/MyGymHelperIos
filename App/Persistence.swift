@@ -151,6 +151,20 @@ final class CustomPlanEntity {
     }
 }
 
+/// Pesata del corpo (scheda Profilo, grafico del peso): una al giorno, l'ultima inserita vale per quel giorno.
+/// Dato sulla salute: si salva solo con il consenso. Modello nuovo (migrazione leggera: i dati di prima non hanno pesate).
+/// Su Android e' "weightLog" in AppData ([{"at": millisecondi, "kg": numero}]).
+@Model
+final class WeightEntryRecord {
+    var at: Date = Date()
+    var kg: Double = 0
+
+    init(at: Date, kg: Double) {
+        self.at = at
+        self.kg = kg
+    }
+}
+
 /// Profilo con dati sulla salute (peso, altezza, eta', obiettivo, dieta). Solo sul telefono.
 @Model
 final class HealthProfileRecord {
@@ -351,11 +365,42 @@ final class CustomPlanStore {
     }
 }
 
+/// Dati del profilo condivisi da Profilo, "Crea la tua scheda" e Nutrizione (come setWeight dell'AppStore su Android).
+@MainActor
+enum ProfileData {
+    private static var context: ModelContext { PersistenceController.container.mainContext }
+    private static var persistent: Bool { UserDefaults.standard.double(forKey: ConsentStore.grantedAtKey) > 0 }
+
+    /// Pesate salvate, dalla piu' vecchia (formato del Core).
+    static func weightLog() -> [WeightEntry] {
+        let rows = (try? context.fetch(FetchDescriptor<WeightEntryRecord>(sortBy: [SortDescriptor(\.at)]))) ?? []
+        return rows.map { WeightEntry(at: ProfileStats.millis($0.at), kg: $0.kg) }
+    }
+
+    /// Peso dal Profilo (o da "Crea la tua scheda", Nutrizione): aggiorna il profilo e la pesata di oggi (grafico del
+    /// peso). Una pesata al giorno (la nuova sostituisce quella di oggi), al massimo WeightLog.maxEntries.
+    static func setWeight(_ kg: Double, profile: HealthProfileRecord, now: Date = Date()) {
+        profile.weightKg = kg
+        guard persistent else { try? context.save(); return }
+        let rows = (try? context.fetch(FetchDescriptor<WeightEntryRecord>(sortBy: [SortDescriptor(\.at)]))) ?? []
+        let old = rows.map { WeightEntry(at: ProfileStats.millis($0.at), kg: $0.kg) }
+        let updated = WeightLog.upsert(old, kg: kg, now: ProfileStats.millis(now), zone: .current)
+        // Si tolgono le pesate che non ci sono piu' (stesso giorno o oltre il limite) e si aggiunge quella nuova.
+        var keep = updated
+        for row in rows {
+            let e = WeightEntry(at: ProfileStats.millis(row.at), kg: row.kg)
+            if let i = keep.firstIndex(of: e) { keep.remove(at: i) } else { context.delete(row) }
+        }
+        for e in keep { context.insert(WeightEntryRecord(at: Date(timeIntervalSince1970: Double(e.at) / 1000), kg: e.kg)) }
+        try? context.save()
+    }
+}
+
 enum PersistenceController {
     static let container: ModelContainer = {
         let schema = Schema([WorkoutSessionRecord.self, SetLogRecord.self, ExerciseListRecord.self,
                              TrainingPlanRecord.self, NutritionPlanRecord.self, HealthProfileRecord.self,
-                             CustomPlanEntity.self])
+                             CustomPlanEntity.self, WeightEntryRecord.self])
         var dir = URL.applicationSupportDirectory.appending(path: "MyGymHelperData", directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         var values = URLResourceValues()

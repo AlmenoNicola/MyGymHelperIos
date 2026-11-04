@@ -82,6 +82,7 @@ private struct PlansMarketing: View {
         Row(id: "compare.import", tiers: [false, true]),
         Row(id: "compare.homeEquipment", tiers: [false, true]),
         Row(id: "compare.customPlans", tiers: [false, true]),
+        Row(id: "compare.profileStats", tiers: [false, true]),
         Row(id: "compare.meals", tiers: [false, true])
     ]
 

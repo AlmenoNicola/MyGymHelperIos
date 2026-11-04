@@ -212,8 +212,9 @@ private struct ProfileCard: View {
                                                              set: { profile.age = $0; try? context.save() }),
                        range: 18...100)
             // Peso scritto a mano (solo numeri, anche con i decimali) oppure con +/- di 1 kg.
+            // Ogni cambio aggiorna anche la pesata di oggi (grafico del peso nel Profilo).
             KgInputRow(title: "bmi.weight",
-                       value: Binding(get: { profile.weightKg }, set: { profile.weightKg = $0; try? context.save() }),
+                       value: Binding(get: { profile.weightKg }, set: { ProfileData.setWeight($0, profile: profile) }),
                        range: 30...250, minus: { $0 - 1 }, plus: { $0 + 1 })
             CounterRow(title: "bmi.height", value: intBinding(\.heightCm), range: 120...230)
             if healthEnabled {

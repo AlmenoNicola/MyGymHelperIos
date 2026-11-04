@@ -72,6 +72,7 @@ private extension TutorialTab {
         case .workout: .workout
         case .exercises: .exercises
         case .nutrition: .nutrition
+        case .profile: .profile
         case .info: .info
         }
     }

@@ -1,7 +1,7 @@
 import SwiftUI
 import MyGymHelperCore
 
-/// Tema grafico scelto nell'Area personale, salvato in UserDefaults con la stessa chiave di Android.
+/// Tema grafico scelto nelle Impostazioni, salvato in UserDefaults con la stessa chiave di Android.
 /// E' osservabile: cambiando tema tutte le schermate si ridisegnano subito.
 @Observable
 final class ThemeStore {

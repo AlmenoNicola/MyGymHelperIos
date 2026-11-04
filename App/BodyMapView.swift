@@ -104,6 +104,56 @@ struct MuscleFigure: View {
     }
 }
 
+/// Figura dei muscoli della scheda Profilo: ogni muscolo è colorato in base a quanto è stato usato nel periodo
+/// (`intensity` da 0 a 1, nil = non usato): più è usato, più il colore è pieno. Il muscolo `selected` ha il bordo
+/// marcato. Con `onTap` il tocco su un muscolo lo restituisce. Come MuscleHeatFigure su Android.
+struct MuscleHeatFigure: View {
+    let front: Bool
+    let intensity: (MuscleGroup) -> Double?
+    var selected: MuscleGroup? = nil
+    var onTap: ((MuscleGroup) -> Void)? = nil
+
+    var body: some View {
+        let bodyGradient = Gradient(colors: Theme.bodyColors)
+        let accent = Theme.accent
+        GeometryReader { geo in
+            let s = geo.size.width / BodyFigure.width
+            Canvas { ctx, _ in
+                ctx.scaleBy(x: s, y: s)
+                let top = CGPoint(x: 100, y: 0), bottom = CGPoint(x: 100, y: BodyFigure.height)
+                for p in FigurePaths.silhouette {
+                    ctx.fill(p, with: .linearGradient(bodyGradient, startPoint: top, endPoint: bottom))
+                }
+                for part in FigurePaths.parts(front: front) {
+                    let m = part.muscle
+                    let v = m.flatMap(intensity)
+                    if m == nil {
+                        ctx.fill(part.path, with: .color(Color.primary.opacity(0.05)))
+                    } else if let v, v > 0 {
+                        // Anche il muscolo meno usato si vede (almeno 25% di opacità).
+                        ctx.fill(part.path, with: .color(accent.opacity(0.25 + 0.75 * min(max(v, 0), 1))))
+                    } else {
+                        ctx.fill(part.path, with: .color(Color.primary.opacity(0.13)))
+                    }
+                    if let m, m == selected {
+                        ctx.stroke(part.path, with: .color(Color.primary), lineWidth: 2)
+                    } else {
+                        ctx.stroke(part.path, with: .color(Color.primary.opacity(0.25)), lineWidth: 0.7)
+                    }
+                }
+            }
+            .contentShape(Rectangle())
+            .onTapGesture { location in
+                guard let onTap, s > 0,
+                      let m = FigurePaths.muscle(at: CGPoint(x: location.x / s, y: location.y / s), front: front) else { return }
+                onTap(m)
+            }
+            .allowsHitTesting(onTap != nil)
+        }
+        .aspectRatio(BodyFigure.width / BodyFigure.height, contentMode: .fit)
+    }
+}
+
 /// Lati della figura da mostrare (true = davanti): solo quelli dove si vede almeno un muscolo indicato.
 func figureSides(_ muscles: Set<MuscleGroup>) -> [Bool] {
     let list = [true, false].filter { !BodyFigure.muscles(front: $0).isDisjoint(with: muscles) }

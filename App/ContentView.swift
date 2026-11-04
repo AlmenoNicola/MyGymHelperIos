@@ -23,9 +23,13 @@ struct ContentView: View {
                     NavigationStack { NutritionView() }
                 }
             }
-            // "Area personale": account, piani e abbonamenti, consensi, documenti legali e dati.
-            // I Piani non sono piu' una scheda: si aprono dall'Area personale (e dalle note "Disponibile con...").
-            Tab("tab.info", systemImage: "person.crop.circle.fill", value: .info) {
+            // Profilo: dati personali con l'avatar, muscoli allenati e grafici dell'andamento.
+            Tab("tab.profile", systemImage: "person.fill", value: .profile) {
+                NavigationStack { ProfileView() }
+            }
+            // "Impostazioni" (ex Area personale): account, piani e abbonamenti, consensi, documenti legali e dati.
+            // I Piani non sono piu' una scheda: si aprono dalle Impostazioni (e dalle note "Disponibile con...").
+            Tab("tab.info", systemImage: "gearshape.fill", value: .info) {
                 NavigationStack { InfoView() }
             }
         }
@@ -43,7 +47,7 @@ struct ContentView: View {
         .overlay { TutorialOverlay() }
         // Finestra "Invia" / "Annulla" per il rapporto di un errore.
         .errorReportAlert()
-        // Primo avvio: finiti disclaimer e consenso, il tutorial parte da solo una volta (poi dall'Area personale).
+        // Primo avvio: finiti disclaimer e consenso, il tutorial parte da solo una volta (poi dalle Impostazioni).
         .onChange(of: disclaimerAccepted && consentDecided, initial: true) { _, ready in
             if ready && TutorialGuide.shouldAutoStart(seenVersion: TutorialController.seenVersion) && !tutorial.isActive {
                 tutorial.start()
