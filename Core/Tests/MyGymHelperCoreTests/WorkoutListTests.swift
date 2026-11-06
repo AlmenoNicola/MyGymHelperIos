@@ -37,6 +37,21 @@ final class WorkoutListTests: XCTestCase {
         XCTAssertNil(ListSearch.match(listName: "Spinta", exercises: pool, query: "stacco"))
     }
 
+    func testDistrictsOfOneExercise() {
+        let d = MuscleDistricts.of([bench])
+        XCTAssertEqual(d.map(\.region), [.arms, .chest, .shoulders])
+        XCTAssertEqual(d[1], MuscleDistrict(region: .chest, primary: [.chest], secondary: []))
+        XCTAssertEqual(d[0], MuscleDistrict(region: .arms, primary: [], secondary: [.triceps]))
+    }
+
+    func testDistrictsOfListPreferPrimary() {
+        let d = MuscleDistricts.of([bench, dips, curl, squat])
+        XCTAssertEqual(d.map(\.region), [.arms, .legs, .glutes, .chest, .shoulders])
+        XCTAssertEqual(d[0], MuscleDistrict(region: .arms, primary: [.biceps, .triceps], secondary: []))
+        XCTAssertEqual(d[2], MuscleDistrict(region: .glutes, primary: [], secondary: [.glutes]))
+        XCTAssertTrue(MuscleDistricts.of([]).isEmpty)
+    }
+
     func testSecondaryOnlyMatchesAreHidden() {
         XCTAssertEqual(WorkoutListLogic.browse(pool, selected: [.glutes]), [])
     }

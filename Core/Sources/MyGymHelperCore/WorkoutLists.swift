@@ -178,6 +178,31 @@ public enum ListSearch {
     }
 }
 
+/// Zona del corpo coinvolta, con i suoi muscoli principali e secondari (nell'ordine fisso dei muscoli).
+public struct MuscleDistrict: Equatable, Sendable {
+    public let region: BodyRegion
+    public let primary: [MuscleGroup]
+    public let secondary: [MuscleGroup]
+    public init(region: BodyRegion, primary: [MuscleGroup], secondary: [MuscleGroup]) {
+        self.region = region; self.primary = primary; self.secondary = secondary
+    }
+}
+
+/// Distretti muscolari coinvolti da uno o più esercizi (scheda Esercizi: per elenco e per esercizio).
+/// Un muscolo principale in almeno un esercizio conta come principale, anche se in altri è secondario.
+/// Zone nell'ordine di BodyRegion.allCases; le zone senza muscoli non compaiono. Uguale su Android (MuscleDistricts).
+public enum MuscleDistricts {
+    public static func of(_ exercises: [CatalogExercise]) -> [MuscleDistrict] {
+        let primary = Set(exercises.flatMap(\.primary))
+        let secondary = Set(exercises.flatMap(\.secondary)).subtracting(primary)
+        return BodyRegion.allCases.compactMap { region in
+            let p = region.muscles.filter(primary.contains)
+            let s = region.muscles.filter(secondary.contains)
+            return p.isEmpty && s.isEmpty ? nil : MuscleDistrict(region: region, primary: p, secondary: s)
+        }
+    }
+}
+
 /// Avviso a voce nella pausa prima dell'ultima serie (uguale su Android: LastSetNotice in WorkoutLists.kt).
 public enum LastSetNotice: Equatable, Sendable {
     /// Solo "la prossima sara' l'ultima serie".

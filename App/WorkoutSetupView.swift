@@ -127,6 +127,10 @@ struct WorkoutSetupView: View {
                 if !list.items.isEmpty {
                     loadedItemsHeader(list)
                     if itemsExpanded {
+                        // Distretti muscolari di tutto l'elenco attuale (esercizi trovati nel catalogo)
+                        MuscleDistrictsBox(title: "ex.listDistricts",
+                                           exercises: list.items.compactMap { catalog.exercise(id: $0.exerciseID) },
+                                           stateKey: "current:\(list.id.uuidString)")
                         ForEach(Array(list.items.enumerated()), id: \.element.id) { index, item in
                             itemRow(number: index + 1, item: item, list: list)
                         }
@@ -167,7 +171,8 @@ struct WorkoutSetupView: View {
     /// Riga dell'elenco: tocco = avvia; matita = modifica; cestino = elimina. Svolto = verde.
     private func itemRow(number: Int, item: WorkoutItem, list: WorkoutListStore.WorkoutList) -> some View {
         let exercise = catalog.exercise(id: item.exerciseID)
-        return HStack(spacing: 10) {
+        return VStack(alignment: .leading, spacing: 8) {
+        HStack(spacing: 10) {
             Button { start(item, in: list) } label: {
                 HStack(spacing: 10) {
                     if item.done {
@@ -207,6 +212,12 @@ struct WorkoutSetupView: View {
             Button { toDelete = item } label: { Image(systemName: "trash") }
                 .buttonStyle(.plain).foregroundStyle(.secondary)
                 .accessibilityLabel(Text("workout.deleteItem"))
+        }
+        // Distretti dell'esercizio: il tocco apre o chiude solo il riquadro, non avvia l'esercizio
+        if let exercise {
+            MuscleDistrictsBox(title: "ex.districts", exercises: [exercise], stateKey: "item:\(item.id.uuidString)")
+                .padding(.trailing, 4).padding(.bottom, 2)
+        }
         }
         .tintedCard(item.done ? Theme.done : nil, padding: 14)
     }

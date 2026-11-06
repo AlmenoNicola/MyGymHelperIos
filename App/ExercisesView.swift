@@ -17,6 +17,7 @@ struct ExercisesView: View {
     @State private var bodyweight = false
     /// Quasi 900 esercizi: se ne mostrano 40 alla volta (si riparte da 40 cambiando i filtri).
     @State private var shown = CatalogFilter.pageSize
+    @AppStorage(ConsentStore.grantedAtKey) private var consentAt = 0.0
 
     private var tier: SubscriptionTier { subscriptions.tier }
     private var pool: [CatalogExercise] { catalog.visible(for: tier) }
@@ -40,6 +41,10 @@ struct ExercisesView: View {
             VStack(spacing: 18) {
                 ScreenHeader(symbol: "figure.strengthtraining.traditional", title: "ex.title", subtitle: "ex.subtitle")
                     .tutorialTarget(TutorialTarget.tabExercises)
+
+                // Tutti gli elenchi in cima, chiusi: pronti per zona e (con piano e consenso) i miei elenchi
+                ExerciseListsSection(pool: pool,
+                                     showMine: FeatureGate.isAvailable(.savedExerciseLists, for: tier) && consentAt > 0)
 
                 HStack(spacing: 12) {
                     NavigationLink { ExerciseListsView() } label: {

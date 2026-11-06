@@ -874,6 +874,108 @@
         }
       }
     },
+    "ex.collapse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapse"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
+        }
+      }
+    },
+    "ex.districts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscle groups involved"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distretti muscolari coinvolti"
+          }
+        }
+      }
+    },
+    "ex.expand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expand"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri"
+          }
+        }
+      }
+    },
+    "ex.listDistricts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscle groups in this list"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distretti muscolari dell'elenco"
+          }
+        }
+      }
+    },
+    "ex.listEmpty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No exercises in this list."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun esercizio in questo elenco."
+          }
+        }
+      }
+    },
+    "ex.listsHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a list to see its exercises."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca un elenco per vedere i suoi esercizi."
+          }
+        }
+      }
+    },
     "lists.none" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13408,13 +13510,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose one or more muscles (you see the exercises that work at least one of them; the chosen muscles appear below the figure, tap the X to remove one) or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
+            "value" : "At the top you find all lists, ready-made and yours, closed: tap a list to open it and see its exercises; \"Muscle groups involved\" shows the body areas and muscles worked by the list and by each exercise. Below is the catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose one or more muscles (you see the exercises that work at least one of them; the chosen muscles appear below the figure, tap the X to remove one) or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli uno o più muscoli (vedi gli esercizi che ne allenano almeno uno; i muscoli scelti compaiono sotto la figura, con la X ne togli uno) o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
+            "value" : "In cima trovi tutti gli elenchi, pronti e tuoi, chiusi: tocca un elenco per aprirlo e vedere i suoi esercizi; con \"Distretti muscolari coinvolti\" vedi le zone del corpo e i muscoli allenati dall'elenco e da ogni esercizio. Sotto c'è il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli uno o più muscoli (vedi gli esercizi che ne allenano almeno uno; i muscoli scelti compaiono sotto la figura, con la X ne togli uno) o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
           }
         }
       }

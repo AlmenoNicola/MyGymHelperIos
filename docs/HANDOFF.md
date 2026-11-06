@@ -1286,3 +1286,16 @@ riga apre il dettaglio. Nessuna stringa nuova, tutorial e Core invariati. **Non 
   2) e `CustomPlansTests` (clamped 1 → 2, 2 allenamenti per ogni livello). Tutorial versione 20.
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui). Controllata la sintassi e, con una copia in Python del
   generatore, che con 2 allenamenti si ottengono 5/6/7 esercizi al giorno senza ripetizioni.
+
+## 6 novembre 2026 – Elenchi in cima a Esercizi e distretti muscolari coinvolti (iOS fatto)
+- Core: `MuscleDistrict` e `MuscleDistricts.of` in `WorkoutLists.swift` (uguali al Kotlin); test
+  `testDistrictsOfOneExercise` e `testDistrictsOfListPreferPrimary` in `WorkoutListTests.swift`.
+- App: nuovo `App/MuscleDistrictsViews.swift` con `DistrictsUIState` (stato aperto/chiuso e pagine solo in memoria),
+  `MuscleDistrictsBox` (riquadro richiudibile con zone, legenda e figura alta 160) ed `ExerciseListsSection` (in cima a
+  Esercizi, sopra i pulsanti Elenchi/Schede: elenchi pronti per zona e, con piano e consenso, i miei elenchi; card chiuse,
+  distretti dell'elenco, esercizi a pagine da 40 con distretti di ogni esercizio). `WorkoutSetupView`: distretti
+  dell'elenco attuale nel riquadro "Esercizi caricati" aperto e di ogni esercizio sotto la sua riga (il tocco sul
+  riquadro non avvia l'esercizio).
+- Stringhe `ex.districts`, `ex.listDistricts`, `ex.listEmpty`, `ex.listsHint`, `ex.expand`, `ex.collapse`; tutorial
+  versione 21 (`tutorial.exercisesTab.body`).
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
