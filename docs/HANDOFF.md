@@ -1250,3 +1250,14 @@ Stessa funzione già fatta su Android, per tutti i piani (Free compreso).
 - Stringhe `calories.*` (6), tutorial versione 18 (`tutorial.list.body`, `tutorial.session.body`).
 - Test: `CaloriesTests.swift` (stessi casi di Android).
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); valori attesi dei test ricontrollati a mano.
+
+## 6 novembre 2026 – "Cerca" in Elenchi e zona Glutei (iOS)
+Stessa modifica già fatta su Android.
+- Core: `BodyRegion.glutes` (zona a sé dopo Gambe; `MuscleGroup.glutes.region` = `.glutes`; `isLowerBody` vero per gambe e
+  glutei); `ListSearch.match` in `WorkoutLists.swift`. Test in `FeatureTests.swift` e `WorkoutListTests.swift`.
+- App: simbolo `figure.step.training` per i glutei (`BodyMapView.swift`); schermata Elenchi (`ExerciseListsView` in
+  `ExercisesView.swift`) con il campo "Cerca" (`ExerciseSearchField` con segnaposto `lists.search`): elenchi pronti e miei
+  elenchi filtrati con i soli esercizi trovati, sezione "I miei elenchi" e "Nuovo elenco" nascosti durante la ricerca se
+  non servono, `lists.none` se non c'è nulla. La zona Glutei compare da sola nei filtri per zona e negli elenchi pronti.
+- Stringhe `region.glutes`, `lists.search`, `lists.none`; tutorial versione 19 (testi del passo "exercisesLinks").
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui).

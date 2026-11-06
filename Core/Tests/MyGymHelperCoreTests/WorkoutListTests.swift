@@ -26,6 +26,17 @@ final class WorkoutListTests: XCTestCase {
         XCTAssertEqual(WorkoutListLogic.browse(pool, selected: [], query: " cur").map(\.name), ["Curl"])
     }
 
+    func testListSearchByListNameShowsAllExercises() {
+        XCTAssertEqual(ListSearch.match(listName: "Gambe e glutei", exercises: pool, query: "  ")?.map(\.id), pool.map(\.id))
+        XCTAssertEqual(ListSearch.match(listName: "Gambe e glutei", exercises: pool, query: "GLUTEI")?.map(\.id), pool.map(\.id))
+    }
+
+    func testListSearchByExerciseShowsOnlyMatches() {
+        XCTAssertEqual(ListSearch.match(listName: "Spinta", exercises: pool, query: "panca")?.map(\.name), ["Panca piana"])
+        XCTAssertEqual(ListSearch.match(listName: "Spinta", exercises: pool, query: "push")?.map(\.name), ["Pushdown"])
+        XCTAssertNil(ListSearch.match(listName: "Spinta", exercises: pool, query: "stacco"))
+    }
+
     func testSecondaryOnlyMatchesAreHidden() {
         XCTAssertEqual(WorkoutListLogic.browse(pool, selected: [.glutes]), [])
     }

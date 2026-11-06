@@ -16,6 +16,10 @@ final class MuscleAndCatalogTests: XCTestCase {
         XCTAssertEqual(BodyRegion.arms.muscles.count, 3)
         XCTAssertTrue(MuscleGroup.quads.isLowerBody)
         XCTAssertFalse(MuscleGroup.chest.isLowerBody)
+        // Glutei: zona a sé, fuori da Gambe, ma sempre parte bassa del corpo.
+        XCTAssertEqual(BodyRegion.glutes.muscles, [.glutes])
+        XCTAssertFalse(BodyRegion.legs.muscles.contains(.glutes))
+        XCTAssertTrue(MuscleGroup.glutes.isLowerBody)
     }
 
     private let catalog = [

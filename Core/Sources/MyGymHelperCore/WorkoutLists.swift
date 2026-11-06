@@ -164,6 +164,20 @@ public enum WorkoutListLogic {
     }
 }
 
+/// Ricerca nella schermata Elenchi (uguale su Android: ListSearch in WorkoutLists.kt).
+/// Un elenco compare se il suo nome contiene il testo cercato (e allora si vedono tutti i suoi esercizi) oppure se
+/// almeno un suo esercizio lo contiene nel nome (e allora si vedono solo quegli esercizi).
+/// Maiuscole/minuscole indifferenti; testo vuoto = tutti gli elenchi con tutti gli esercizi.
+public enum ListSearch {
+    /// Esercizi da mostrare per l'elenco durante la ricerca; nil = l'elenco non corrisponde e va nascosto.
+    public static func match(listName: String, exercises: [CatalogExercise], query: String) -> [CatalogExercise]? {
+        let q = query.trimmingCharacters(in: .whitespaces)
+        if q.isEmpty || listName.localizedCaseInsensitiveContains(q) { return exercises }
+        let found = exercises.filter { $0.name.localizedCaseInsensitiveContains(q) }
+        return found.isEmpty ? nil : found
+    }
+}
+
 /// Avviso a voce nella pausa prima dell'ultima serie (uguale su Android: LastSetNotice in WorkoutLists.kt).
 public enum LastSetNotice: Equatable, Sendable {
     /// Solo "la prossima sara' l'ultima serie".

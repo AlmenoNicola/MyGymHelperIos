@@ -11,6 +11,7 @@ extension BodyRegion {
         switch self {
         case .arms: return "figure.strengthtraining.traditional"
         case .legs: return "figure.walk"
+        case .glutes: return "figure.step.training"
         case .chest: return "heart.fill"
         case .back: return "figure.mind.and.body"
         case .shoulders: return "figure.arms.open"

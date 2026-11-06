@@ -271,6 +271,8 @@ struct ExerciseListsView: View {
     @State private var showNew = false
     private var store: WorkoutListStore { WorkoutListStore.shared }
     @State private var newName = ""
+    /// Testo cercato negli elenchi.
+    @State private var query = ""
 
     private var pool: [CatalogExercise] { catalog.visible(for: subscriptions.tier) }
     private var canSave: Bool { FeatureGate.isAvailable(.savedExerciseLists, for: subscriptions.tier) }
@@ -279,45 +281,71 @@ struct ExerciseListsView: View {
         ScrollView {
             VStack(spacing: 16) {
                 ScreenHeader(symbol: "list.bullet.rectangle", title: "lists.title", subtitle: "lists.subtitle")
+                // "Cerca": nel nome dell'elenco o negli esercizi che contiene (ListSearch nel Core)
+                ExerciseSearchField(query: $query, placeholder: "lists.search")
 
-                Text("lists.presets").font(.headline).frame(maxWidth: .infinity, alignment: .leading)
-                ForEach(BodyRegion.allCases, id: \.self) { region in
+                let searching = !query.trimmingCharacters(in: .whitespaces).isEmpty
+                // Elenchi pronti per zona: con la ricerca solo quelli che corrispondono, con gli esercizi trovati
+                let presets: [(BodyRegion, [CatalogExercise])] = BodyRegion.allCases.compactMap { region in
                     let items = pool.filter { ex in ex.primary.contains { $0.region == region } }
-                    if !items.isEmpty {
-                        NavigationLink { ExerciseCollectionView(title: region.title, exercises: items) } label: {
-                            HStack {
-                                Label(region.title, systemImage: region.symbol).font(.headline)
-                                Spacer()
-                                Text("\(items.count)").foregroundStyle(.secondary)
-                            }
-                            .glassCard(padding: 16)
+                    guard !items.isEmpty, let found = ListSearch.match(listName: region.title, exercises: items, query: query) else { return nil }
+                    return (region, found)
+                }
+                let canShowMine = canSave && consentAt > 0
+                let mine: [(WorkoutListStore.WorkoutList, [CatalogExercise])] = canShowMine ? store.lists.compactMap { list in
+                    let exercises = list.exerciseIDs.compactMap { catalog.exercise(id: $0) }
+                    guard let found = ListSearch.match(listName: list.name, exercises: exercises, query: query) else { return nil }
+                    return (list, found)
+                } : []
+
+                if !presets.isEmpty {
+                    Text("lists.presets").font(.headline).frame(maxWidth: .infinity, alignment: .leading)
+                }
+                ForEach(presets, id: \.0) { region, items in
+                    NavigationLink { ExerciseCollectionView(title: region.title, exercises: items) } label: {
+                        HStack {
+                            Label(region.title, systemImage: region.symbol).font(.headline)
+                            Spacer()
+                            Text("\(items.count)").foregroundStyle(.secondary)
                         }
-                        .buttonStyle(.plain)
+                        .glassCard(padding: 16)
                     }
+                    .buttonStyle(.plain)
                 }
 
-                Text("lists.mine").font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                // Durante la ricerca la sezione si vede solo con risultati; gli avvisi solo quando non si cerca
+                if !searching || !mine.isEmpty {
+                    Text("lists.mine").font(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                }
                 if !canSave {
-                    Label("ex.listsLocked", systemImage: "lock.fill").font(.footnote).foregroundStyle(.secondary)
+                    if !searching { Label("ex.listsLocked", systemImage: "lock.fill").font(.footnote).foregroundStyle(.secondary) }
                 } else if consentAt == 0 {
-                    Label("lists.needConsent", systemImage: "lock.fill").font(.footnote).foregroundStyle(.secondary)
+                    if !searching { Label("lists.needConsent", systemImage: "lock.fill").font(.footnote).foregroundStyle(.secondary) }
                 } else {
-                    ForEach(store.lists) { list in
+                    ForEach(mine, id: \.0.id) { list, found in
                         NavigationLink {
-                            ExerciseCollectionView(title: list.name, exercises: list.exerciseIDs.compactMap { catalog.exercise(id: $0) })
+                            ExerciseCollectionView(title: list.name, exercises: found)
                         } label: {
                             HStack {
                                 Text(verbatim: list.name).font(.headline)
                                 Spacer()
-                                Text("\(list.exerciseIDs.count)").foregroundStyle(.secondary)
+                                Text("\(found.count)").foregroundStyle(.secondary)
                             }
                             .glassCard(padding: 16)
                         }
                         .buttonStyle(.plain)
                         .contextMenu { Button("history.delete", role: .destructive) { store.deleteList(list.id) } }
                     }
-                    Button { showNew = true } label: { Label("lists.new", systemImage: "plus").lineLimit(1).frame(maxWidth: .infinity) }
-                        .buttonStyle(.glass)
+                    if !searching {
+                        Button { showNew = true } label: { Label("lists.new", systemImage: "plus").lineLimit(1).frame(maxWidth: .infinity) }
+                            .buttonStyle(.glass)
+                    }
+                }
+
+                if searching && presets.isEmpty && mine.isEmpty {
+                    Text("lists.none").foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .glassCard(padding: 16)
                 }
             }
             .padding(20)
@@ -419,11 +447,13 @@ struct ExerciseMusclesCard: View {
 /// Come ExerciseSearchField su Android.
 struct ExerciseSearchField: View {
     @Binding var query: String
+    /// Testo segnaposto (Elenchi usa "lists.search").
+    var placeholder: LocalizedStringKey = "ex.search"
 
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
-            TextField("ex.search", text: $query)
+            TextField(placeholder, text: $query)
                 .textFieldStyle(.plain)
                 .autocorrectionDisabled()
             if !query.isEmpty {

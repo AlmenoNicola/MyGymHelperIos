@@ -23,7 +23,7 @@ Differenza voluta: sui passi delle schede Android illumina la voce nella barra i
 non misurabile) illumina il titolo della schermata della scheda. Se un elemento non è sullo schermo (es. profilo
 Nutrizione senza consenso, o una scheda iOS lasciata in una sotto-schermata) il fumetto compare al centro, senza riquadro.
 
-## Passi attuali (versione 18)
+## Passi attuali (versione 19)
 
 I passi 16 e 17 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
 Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 25 passi
@@ -170,3 +170,5 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
 - 6 novembre 2026: selezione di più muscoli con le pillole dei muscoli scelti sotto la mappa (X per toglierne uno), in
   Esercizi, Aggiungi esercizio ed Esercizio alternativo. Aggiornati i testi dei passi "addExercise"
   (`tutorial.addExercise.body`) ed "exercisesTab" (`tutorial.exercisesTab.body`); nessun passo nuovo, versione invariata.
+- 6 novembre 2026 (versione 19): "Cerca" in Elenchi (nome dell'elenco o esercizio) e zona Glutei. Aggiornati i testi del
+  passo "exercisesLinks" (`tutorial.exercisesLinks.body` e `.bodyManual`); nessun passo nuovo. Stessi testi su Android e iOS.

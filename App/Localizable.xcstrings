@@ -874,6 +874,40 @@
         }
       }
     },
+    "lists.none" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No lists or exercises found."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun elenco o esercizio trovato."
+          }
+        }
+      }
+    },
+    "lists.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search lists or exercises"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca negli elenchi o negli esercizi"
+          }
+        }
+      }
+    },
     "profile.back" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1380,6 +1414,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profilo"
+          }
+        }
+      }
+    },
+    "region.glutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glutes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glutei"
           }
         }
       }
@@ -13272,13 +13323,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Lists you find ready-made and saved lists. In Plans (Pro) you upload your gym's plan from a photo: if your phone has AI (Apple Intelligence or Gemini Nano) it recognizes exercises, sets, reps and weights and links the exercises to the catalog, without the text leaving your phone. Data it can't find is shown in orange: you fill it in, or confirm the import as it is."
+            "value" : "In Lists you find ready-made lists (glutes included) and saved ones; use \"Search\" to find a list by its name or by an exercise it contains. In Plans (Pro) you upload your gym's plan from a photo: if your phone has AI (Apple Intelligence or Gemini Nano) it recognizes exercises, sets, reps and weights and links the exercises to the catalog, without the text leaving your phone. Data it can't find is shown in orange: you fill it in, or confirm the import as it is."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Pro) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
+            "value" : "In Elenchi trovi elenchi pronti (anche per i glutei) e quelli salvati; con \"Cerca\" trovi un elenco dal nome o da un esercizio che contiene. In Schede (Pro) carichi la scheda della tua palestra da una foto: se il telefono ha l'AI (Apple Intelligence o Gemini Nano) riconosce esercizi, serie, ripetizioni e pesi e collega gli esercizi al catalogo, senza far uscire il testo dal telefono. I dati che non trova sono in arancione: li completi tu, oppure confermi l'importazione così com'è."
           }
         }
       }
@@ -13289,13 +13340,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Lists you find ready-made and saved lists. In Plans (Pro) you enter your gym's plan manually: exercises, sets, reps and weights."
+            "value" : "In Lists you find ready-made lists (glutes included) and saved ones; use \"Search\" to find a list by its name or by an exercise it contains. In Plans (Pro) you enter your gym's plan manually: exercises, sets, reps and weights."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti e quelli salvati. In Schede (Pro) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi."
+            "value" : "In Elenchi trovi elenchi pronti (anche per i glutei) e quelli salvati; con \"Cerca\" trovi un elenco dal nome o da un esercizio che contiene. In Schede (Pro) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi."
           }
         }
       }
