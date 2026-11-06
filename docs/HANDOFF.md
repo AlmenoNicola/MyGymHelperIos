@@ -1267,3 +1267,8 @@ Come su Android: tolta la nota sotto la spunta "Esercizio successivo" (`workout.
 e la regola sotto le percentuali dei muscoli nel Profilo (`profile.muscles.rule`, `ProfileView.swift`). La spunta, le
 percentuali e la scritta del muscolo selezionato restano; le chiavi restano in `Localizable.xcstrings` (non usate).
 Tutorial invariato. **Non compilato** (controllata solo la sintassi).
+
+## 6 novembre 2026 – Miniatura nei "Consigliati per te" (iOS)
+Come su Android: nella card `ex.recommended` della scheda Esercizi ogni esercizio ha a sinistra la foto della posizione
+iniziale (alta 72 pt, 4:3, angoli da 16, segnaposto `dumbbell.fill`) oppure, senza foto, `MuscleThumbnail`. Tutta la
+riga apre il dettaglio. Nessuna stringa nuova, tutorial e Core invariati. **Non compilato** (controllata solo la sintassi).

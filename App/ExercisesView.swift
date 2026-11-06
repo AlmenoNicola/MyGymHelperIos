@@ -81,11 +81,32 @@ struct ExercisesView: View {
                         Text("ex.recommended").font(.headline)
                         ForEach(recommendations, id: \.exercise.id) { rec in
                             NavigationLink { ExerciseDetailView(exercise: rec.exercise) } label: {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(verbatim: rec.exercise.name).font(.subheadline.bold())
-                                    Text(LocalizedStringKey(rec.reasonKey)).font(.caption).foregroundStyle(Theme.accentSoft)
+                                HStack(alignment: .center, spacing: 12) {
+                                    // Miniatura: foto della posizione iniziale (come nella spiegazione dell'esercizio),
+                                    // alta 72 pt in 4:3; senza foto, i muscoli sulla figura.
+                                    if let link = rec.exercise.images.first {
+                                        Color.primary.opacity(0.1)
+                                            .aspectRatio(4 / 3, contentMode: .fit)
+                                            .overlay {
+                                                AsyncImage(url: URL(string: link)) { phase in
+                                                    if let image = phase.image {
+                                                        image.resizable().scaledToFill()
+                                                    } else {
+                                                        Image(systemName: "dumbbell.fill").font(.title2).foregroundStyle(.secondary)
+                                                    }
+                                                }
+                                            }
+                                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                                            .frame(height: 72)
+                                    } else {
+                                        MuscleThumbnail(exercise: rec.exercise, height: 72)
+                                    }
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(verbatim: rec.exercise.name).font(.subheadline.bold())
+                                        Text(LocalizedStringKey(rec.reasonKey)).font(.caption).foregroundStyle(Theme.accentSoft)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .buttonStyle(.plain)
                         }
