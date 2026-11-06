@@ -167,3 +167,6 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
 - 6 novembre 2026 (versione 18): calorie bruciate (stima) negli esercizi fatti, nel riepilogo e totale in fondo
   all'elenco. Aggiornati i testi dei passi "list" (`tutorial.list.body`) e "session" (`tutorial.session.body`); nessun
   passo nuovo. Stessi testi su Android e iOS.
+- 6 novembre 2026: selezione di più muscoli con le pillole dei muscoli scelti sotto la mappa (X per toglierne uno), in
+  Esercizi, Aggiungi esercizio ed Esercizio alternativo. Aggiornati i testi dei passi "addExercise"
+  (`tutorial.addExercise.body`) ed "exercisesTab" (`tutorial.exercisesTab.body`); nessun passo nuovo, versione invariata.

@@ -5371,6 +5371,24 @@
         }
       }
     },
+    "ex.removeMuscle %@" : {
+      "comment" : "Pillola di un muscolo scelto sotto la mappa: tocco per toglierlo (accessibilità)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Togli %@"
+          }
+        }
+      }
+    },
     "ex.clear" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13050,13 +13068,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add exercise opens the picker: tap the muscles on the body (front and back) or the type to filter (\"Bodyweight\" shows only exercises without equipment), or search by name. Tap an exercise, set sets, reps, weight and rest and add it: a message confirms it has been added. Then you can add more. Those already in the list have a tick and a coloured background."
+            "value" : "Add exercise opens the picker: tap one or more muscles on the body (front and back) to see the exercises that work at least one of them (those that work them all are highlighted); the chosen muscles appear below the figure, tap the X to remove one. You can also filter by type (\"Bodyweight\" shows only exercises without equipment), or search by name. Tap an exercise, set sets, reps, weight and rest and add it: a message confirms it has been added. Then you can add more. Those already in the list have a tick and a coloured background."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con Aggiungi esercizio si apre la scelta: tocca i muscoli sul corpo (fronte e retro) o il tipo per filtrare (\"Corpo libero\" mostra solo gli esercizi senza attrezzi), oppure cerca per nome. Tocca un esercizio, imposta serie, ripetizioni, peso e pausa e aggiungilo: un avviso ti conferma che è stato aggiunto. Poi puoi aggiungerne altri. Quelli già nell'elenco hanno la spunta e lo sfondo colorato."
+            "value" : "Con Aggiungi esercizio si apre la scelta: tocca uno o più muscoli sul corpo (fronte e retro) per vedere gli esercizi che ne allenano almeno uno (in evidenza quelli che li allenano tutti); i muscoli scelti compaiono sotto la figura, tocca la X per toglierne uno. Puoi filtrare anche per tipo (\"Corpo libero\" mostra solo gli esercizi senza attrezzi), oppure cerca per nome. Tocca un esercizio, imposta serie, ripetizioni, peso e pausa e aggiungilo: un avviso ti conferma che è stato aggiunto. Poi puoi aggiungerne altri. Quelli già nell'elenco hanno la spunta e lo sfondo colorato."
           }
         }
       }
@@ -13305,13 +13323,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose muscles or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
+            "value" : "The catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose one or more muscles (you see the exercises that work at least one of them; the chosen muscles appear below the figure, tap the X to remove one) or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli i muscoli o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
+            "value" : "Il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli uno o più muscoli (vedi gli esercizi che ne allenano almeno uno; i muscoli scelti compaiono sotto la figura, con la X ne togli uno) o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
           }
         }
       }

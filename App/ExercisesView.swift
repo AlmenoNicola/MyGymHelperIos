@@ -65,6 +65,8 @@ struct ExercisesView: View {
                     }
                     .pickerStyle(.segmented)
                     BodyMapView(side: side, selected: $selected).frame(height: 300)
+                    // Muscoli scelti (anche quelli dell'altro lato) con la X per toglierne uno
+                    SelectedMuscleChips(selected: $selected)
                     KindChips(kind: $kind)
                     BodyweightChip(on: $bodyweight)
                     EquipmentFilterChip(tier: tier)

@@ -202,6 +202,37 @@ struct BodyMapView: View {
     }
 }
 
+/// Muscoli scelti come pillole sotto la mappa, anche quelli dell'altro lato (fronte/retro) che sulla figura non si vedono.
+/// La X toglie il singolo muscolo dalla selezione. Ordine fisso (quello dei muscoli nel Core), non quello dei tocchi.
+struct SelectedMuscleChips: View {
+    @Binding var selected: Set<MuscleGroup>
+
+    var body: some View {
+        if !selected.isEmpty {
+            FlowLayout(spacing: 8) {
+                ForEach(MuscleGroup.allCases.filter { selected.contains($0) }, id: \.self) { m in
+                    Button {
+                        selected.remove(m)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text(verbatim: m.title)
+                                .font(.footnote.weight(.semibold))
+                            Image(systemName: "xmark")
+                                .font(.caption2.weight(.bold))
+                        }
+                        .padding(.leading, 12).padding(.trailing, 8).padding(.vertical, 6)
+                        .foregroundStyle(Theme.onAccent)
+                        .background(Theme.accentGradient, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text("ex.removeMuscle \(m.title)"))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
 /// Blocchi predefiniti (braccia, gambe, torace...): un tocco seleziona tutti i muscoli della zona.
 struct RegionChips: View {
     @Binding var selected: Set<MuscleGroup>
