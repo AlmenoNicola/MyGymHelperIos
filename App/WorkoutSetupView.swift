@@ -27,21 +27,21 @@ struct WorkoutSetupView: View {
                     .tutorialTarget(TutorialTarget.tabWorkout)
                 listCard.tutorialTarget(TutorialTarget.workoutList)
                 NavigationLink { AddExerciseView() } label: {
-                    Label("workout.addExercise", systemImage: "plus.circle.fill").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Label("workout.addExercise", systemImage: "plus.circle.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
                 .buttonStyle(.glassProminent).tint(Theme.accent)
                 .tutorialTarget(TutorialTarget.workoutAdd)
                 // Schede pronte: card grande come le funzioni principali (prima era un pulsante piccolo)
                 NavigationLink { PresetPlansView() } label: {
                     HStack(spacing: 14) {
-                        Image(systemName: "calendar").font(.title2.weight(.semibold)).foregroundStyle(.white)
+                        Image(systemName: "calendar").appFont(.title2, weight: .semibold).foregroundStyle(.white)
                             .frame(width: 48, height: 48).background(Theme.accentGradient, in: Circle())
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("presets.open").font(.title3.bold())
-                            Text("presets.subtitle").font(.footnote).foregroundStyle(.secondary)
+                            Text("presets.open").appFont(.title3, weight: .bold)
+                            Text("presets.subtitle").appFont(.footnote).foregroundStyle(.secondary)
                         }
                         Spacer(minLength: 0)
-                        Image(systemName: "chevron.right").font(.footnote).foregroundStyle(.secondary)
+                        Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .glassCard(padding: 18)
@@ -89,13 +89,13 @@ struct WorkoutSetupView: View {
             withAnimation(.snappy) { itemsExpanded.toggle() }
         } label: {
             HStack(spacing: 10) {
-                Image(systemName: "list.bullet").font(.headline).foregroundStyle(Theme.accent)
+                Image(systemName: "list.bullet").appFont(.headline).foregroundStyle(Theme.accent)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("workout.itemsLoaded \(total)").font(.subheadline.bold()).lineLimit(1).minimumScaleFactor(0.75)
-                    Text("workout.itemsDone \(done) \(total)").font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    Text("workout.itemsLoaded \(total)").appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
+                    Text("workout.itemsDone \(done) \(total)").appFont(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
                 Spacer(minLength: 0)
-                Image(systemName: "chevron.down").font(.footnote.weight(.semibold)).foregroundStyle(.secondary)
+                Image(systemName: "chevron.down").appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
                     .rotationEffect(.degrees(itemsExpanded ? 180 : 0))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -110,9 +110,9 @@ struct WorkoutSetupView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("workout.list").font(.caption).foregroundStyle(.secondary)
-                    if let list { Text(verbatim: list.name).font(.title3.bold()).lineLimit(1) }
-                    else { Text("workout.todayList").font(.title3.bold()).lineLimit(1) }
+                    Text("workout.list").appFont(.caption).foregroundStyle(.secondary)
+                    if let list { Text(verbatim: list.name).appFont(.title3, weight: .bold).lineLimit(1) }
+                    else { Text("workout.todayList").appFont(.title3, weight: .bold).lineLimit(1) }
                 }
                 Spacer()
                 if canChooseLists {
@@ -120,7 +120,7 @@ struct WorkoutSetupView: View {
                 }
             }
             if list?.items.isEmpty ?? true {
-                Text("workout.emptyList").font(.subheadline).foregroundStyle(.secondary)
+                Text("workout.emptyList").appFont(.subheadline).foregroundStyle(.secondary)
             }
             if let list {
                 // Esercizi già caricati: riquadro chiuso; toccandolo si apre (e si richiude) l'elenco.
@@ -139,11 +139,11 @@ struct WorkoutSetupView: View {
                     if let next = WorkoutListLogic.nextPending(list.items) {
                         Button { start(next, in: list) } label: {
                             Label("workout.startNext \(catalog.exercise(id: next.exerciseID)?.name ?? "")", systemImage: "play.fill")
-                                .font(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
+                                .appFont(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
                         }
                         .buttonStyle(.glassProminent).tint(Theme.accent)
                     } else {
-                        Text("workout.allDone").font(.subheadline).foregroundStyle(.secondary)
+                        Text("workout.allDone").appFont(.subheadline).foregroundStyle(.secondary)
                     }
                     Button { store.reset(list.id) } label: {
                         Label("workout.reset", systemImage: "arrow.counterclockwise").lineLimit(1).frame(maxWidth: .infinity)
@@ -157,7 +157,7 @@ struct WorkoutSetupView: View {
                 }
             }
             if consentAt == 0 {
-                Text("workout.notSavedNote").font(.caption).foregroundStyle(.secondary)
+                Text("workout.notSavedNote").appFont(.caption).foregroundStyle(.secondary)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -171,22 +171,22 @@ struct WorkoutSetupView: View {
             Button { start(item, in: list) } label: {
                 HStack(spacing: 10) {
                     if item.done {
-                        Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.done).font(.title3)
+                        Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.done).appFont(.title3)
                     } else {
-                        Text(verbatim: "\(number)").font(.headline).foregroundStyle(Theme.accent).frame(width: 22)
+                        Text(verbatim: "\(number)").appFont(.headline).foregroundStyle(Theme.accent).frame(width: 22)
                     }
                     if let exercise { MuscleThumbnail(exercise: exercise, height: 42) }
                     VStack(alignment: .leading, spacing: 2) {
-                        if let exercise { Text(verbatim: exercise.name).font(.subheadline.bold()).lineLimit(1) }
-                        else { Text("workout.missingExercise").font(.subheadline.bold()).lineLimit(1) }
-                        Text(verbatim: item.parameters.summaryText).font(.caption).foregroundStyle(.secondary)
+                        if let exercise { Text(verbatim: exercise.name).appFont(.subheadline, weight: .bold).lineLimit(1) }
+                        else { Text("workout.missingExercise").appFont(.subheadline, weight: .bold).lineLimit(1) }
+                        Text(verbatim: item.parameters.summaryText).appFont(.caption).foregroundStyle(.secondary)
                             .lineLimit(1).minimumScaleFactor(0.7)
                         // Esercizio fatto: calorie bruciate (stima) nelle serie fatte
                         let kcal = CalorieEstimator.display(item.kcal)
                         if item.done && kcal > 0 {
                             HStack(spacing: 4) {
-                                Image(systemName: "flame.fill").font(.system(size: 14))
-                                Text("calories.item \(kcal)").font(.system(size: 12, weight: .semibold))
+                                Image(systemName: "flame.fill").font(.system(size: 14 * AppTextScale))
+                                Text("calories.item \(kcal)").font(.system(size: 12 * AppTextScale, weight: .semibold))
                             }
                             .foregroundStyle(Theme.done)
                         }
@@ -268,7 +268,7 @@ struct AddExerciseView: View {
                 if let alternativeFor {
                     ScreenHeader(symbol: "arrow.left.arrow.right.circle.fill", title: "alternative.title",
                                  subtitle: "alternative.subtitle \(alternativeFor.name)")
-                    Text("alternative.note").font(.caption).foregroundStyle(.secondary)
+                    Text("alternative.note").appFont(.caption).foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     ScreenHeader(symbol: "plus.circle.fill", title: "workout.addTitle",
@@ -303,9 +303,9 @@ struct AddExerciseView: View {
             BodyweightChip(on: $bodyweight)
             EquipmentFilterChip(tier: tier)
             Text(LocalizedStringKey(selected.isEmpty ? "workout.allExercises" : "workout.filtered"))
-                .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appFont(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
             if !selected.isEmpty {
-                Button("ex.clear") { selected.removeAll() }.font(.footnote)
+                Button("ex.clear") { selected.removeAll() }.appFont(.footnote)
             }
         }
         .glassCard()
@@ -319,11 +319,11 @@ struct AddExerciseView: View {
         let items = results
         if selected.count >= 2 && items.contains(where: { WorkoutListLogic.coversAll($0, selected: selected) }) {
             Label("workout.highlightNote", systemImage: "star.fill")
-                .font(.caption).foregroundStyle(Theme.highlight).frame(maxWidth: .infinity, alignment: .leading)
+                .appFont(.caption).foregroundStyle(Theme.highlight).frame(maxWidth: .infinity, alignment: .leading)
         }
         if !FeatureGate.isAvailable(.catalogFull, for: tier) {
             Label("ex.freeLimit", systemImage: "lock.fill")
-                .font(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appFont(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
         }
         if items.isEmpty {
             Text("ex.none").foregroundStyle(.secondary).glassCard(padding: 16)
@@ -367,10 +367,10 @@ private struct BrowseRow: View {
         HStack(spacing: 10) {
             MuscleThumbnail(exercise: exercise, height: 46)   // muscoli coinvolti in miniatura
             VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: exercise.name).font(.subheadline.weight(.semibold))
+                Text(verbatim: exercise.name).appFont(.subheadline, weight: .semibold)
                 if full {
                     Label("workout.allMuscles", systemImage: "star.fill")
-                        .font(.caption.weight(.semibold)).foregroundStyle(Theme.highlight)
+                        .appFont(.caption, weight: .semibold).foregroundStyle(Theme.highlight)
                 }
             }
             Spacer()
@@ -378,7 +378,7 @@ private struct BrowseRow: View {
                 Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.accent)
                     .accessibilityLabel(Text("workout.inList"))
             }
-            Image(systemName: symbol).font(.title2).foregroundStyle(Theme.accentSoft)
+            Image(systemName: symbol).appFont(.title2).foregroundStyle(Theme.accentSoft)
         }
         // Già in elenco: spunta e sfondo tinto con l'accento del tema scelto (ha la precedenza sull'ambra di `full`).
         .tintedCard(inList ? Theme.accent : (full ? Theme.highlight : nil), padding: 10)
@@ -397,14 +397,14 @@ private struct ListPickerSheet: View {
             AppBackground()
             ScrollView {
                 VStack(spacing: 14) {
-                    Text("workout.changeList").font(.title3.bold())
+                    Text("workout.changeList").appFont(.title3, weight: .bold)
                     ForEach(store.lists) { list in
                         Button {
                             AppSettings.shared.setCurrentList(list.id)
                             dismiss()
                         } label: {
                             HStack {
-                                Text(verbatim: list.name).font(.headline)
+                                Text(verbatim: list.name).appFont(.headline)
                                 Spacer()
                                 Text(verbatim: "\(list.items.filter(\.done).count)/\(list.items.count)").foregroundStyle(.secondary)
                             }
@@ -424,7 +424,7 @@ private struct ListPickerSheet: View {
                     }
                     .glassCard(padding: 16)
                     if consentAt == 0 {
-                        Text("workout.notSavedNote").font(.caption).foregroundStyle(.secondary)
+                        Text("workout.notSavedNote").appFont(.caption).foregroundStyle(.secondary)
                     }
                     Button("info.cancel") { dismiss() }.buttonStyle(.glass)
                 }
@@ -528,8 +528,8 @@ struct ItemEditorView: View {
                 HStack(spacing: 14) {
                     Image(systemName: "dumbbell.fill").foregroundStyle(Theme.accent).frame(width: 28)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(verbatim: exercise.name).font(.headline)
-                        Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).font(.caption).foregroundStyle(.secondary)
+                        Text(verbatim: exercise.name).appFont(.headline)
+                        Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appFont(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     if !exercise.steps.isEmpty {
@@ -562,7 +562,7 @@ struct ItemEditorView: View {
 
                 Button(action: save) {
                     Label(LocalizedStringKey(item == nil ? "workout.addItem" : "workout.saveItem"), systemImage: item == nil ? "plus" : "checkmark")
-                        .font(.title3.bold()).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                        .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
                 }
                 .buttonStyle(.glassProminent)
                 .tint(Theme.accent)
@@ -580,8 +580,8 @@ struct ItemEditorView: View {
     /// tutto; la pausa e' unica.
     private var variedSetsCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("sets.title").font(.headline)
-            Text("sets.hint").font(.caption).foregroundStyle(.secondary)
+            Text("sets.title").appFont(.headline)
+            Text("sets.hint").appFont(.caption).foregroundStyle(.secondary)
             VStack(spacing: 12) {
                 ForEach(0..<groups.count, id: \.self) { i in
                     let title = rowTitle(i)
@@ -589,7 +589,7 @@ struct ItemEditorView: View {
                     let maxCount = max(1, countBinding(i).wrappedValue + WorkoutParameters.setsRange.upperBound - rows.count)
                     VStack(spacing: 10) {
                         HStack {
-                            Text(verbatim: title).font(.subheadline.bold()).foregroundStyle(Theme.accent)
+                            Text(verbatim: title).appFont(.subheadline, weight: .bold).foregroundStyle(Theme.accent)
                             Spacer()
                             if groups.count > 1 {
                                 Button { withAnimation(.snappy) { _ = groups.remove(at: i) } } label: {
@@ -638,7 +638,7 @@ struct ItemEditorView: View {
             }
         } else if FeatureGate.isAvailable(.fixedCoaching, for: tier) {
             Label("advice.noHistory", systemImage: "sparkles")
-                .font(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appFont(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
         } else {
             LockedNote(key: "advice.locked")
         }
@@ -769,7 +769,7 @@ struct AddedNoticeBanner: View {
     var body: some View {
         if let name = notice.exerciseName {
             Label {
-                Text("workout.added \(name)").font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.7)
+                Text("workout.added \(name)").appFont(.subheadline, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
             } icon: {
                 Image(systemName: "checkmark.circle.fill")
             }

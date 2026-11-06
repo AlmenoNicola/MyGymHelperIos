@@ -44,7 +44,18 @@ final class CustomPlansTests: XCTestCase {
         XCTAssertTrue(ul.days.allSatisfy { $0.items.count == 7 })
         // 5 o più allenamenti non esistono: si torna a 4
         XCTAssertEqual(with { $0.daysPerWeek = 6 }.clamped().daysPerWeek, 4)
-        XCTAssertEqual(with { $0.daysPerWeek = 1 }.clamped().daysPerWeek, 3)
+        XCTAssertEqual(with { $0.daysPerWeek = 1 }.clamped().daysPerWeek, 2)
+    }
+
+    func testTwoDaysIsFullBodyForEveryLevel() {
+        for e in Experience.allCases {
+            let p = CustomPlanGenerator.generate(with { $0.experience = e; $0.daysPerWeek = 2 }, catalog: catalog, seed: "s2")
+            XCTAssertEqual(p.days.map(\.titleKey), ["presets.day.a", "presets.day.b"], "\(e)")
+            XCTAssertEqual(p.daysPerWeek, 2)
+            XCTAssertTrue(p.days.allSatisfy { $0.items.count == CustomPlanGenerator.exercisesPerDay(e) }, "\(e)")
+            let ids = p.days.flatMap { $0.items.map(\.exerciseID) }
+            XCTAssertEqual(ids.count, Set(ids).count, "\(e)")
+        }
     }
 
     func testParametersFollowTheGoal() {

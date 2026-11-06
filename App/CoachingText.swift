@@ -54,7 +54,7 @@ struct ParametersLine: View {
                 Label { Text(verbatim: "\(parameters.restSeconds) s") } icon: { Image(systemName: "timer") }
                     .labelStyle(.titleAndIcon)
             }
-            .font(.subheadline.weight(.semibold))
+            .appFont(.subheadline, weight: .semibold)
         } else {
             uniformLine
         }
@@ -66,7 +66,7 @@ struct ParametersLine: View {
             Label { Text(verbatim: parameters.weightKg > 0 ? parameters.weightKg.kgText : "—") } icon: { Image(systemName: "scalemass") }
             Label { Text(verbatim: "\(parameters.restSeconds) s") } icon: { Image(systemName: "timer") }
         }
-        .font(.subheadline.weight(.semibold))
+        .appFont(.subheadline, weight: .semibold)
         .labelStyle(.titleAndIcon)
     }
 }
@@ -83,16 +83,16 @@ struct AdviceCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label { Text(title).font(.headline) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
+            Label { Text(title).appFont(.headline) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
             ForEach(reasons, id: \.self) { key in
-                Text(LocalizedStringKey(key)).font(.subheadline).foregroundStyle(.secondary)
+                Text(LocalizedStringKey(key)).appFont(.subheadline).foregroundStyle(.secondary)
             }
             ForEach(Array(details.enumerated()), id: \.offset) { _, item in
-                Text(item).font(.subheadline)
+                Text(item).appFont(.subheadline)
             }
             if let before {
                 Text(verbatim: AdviceText.loadChange(before: before, after: parameters))
-                    .font(.subheadline.weight(.semibold)).foregroundStyle(Theme.accent)
+                    .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accent)
             }
             ParametersLine(parameters: parameters)
             if let onApply {
@@ -115,9 +115,9 @@ struct LockedNote: View {
         NavigationLink { PaywallView() } label: {
             HStack {
                 Label(key, systemImage: "lock.fill")
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .appFont(.footnote).foregroundStyle(.secondary)
                 Spacer(minLength: 8)
-                Text("plans.see").font(.footnote.bold()).foregroundStyle(Theme.accentSoft)
+                Text("plans.see").appFont(.footnote, weight: .bold).foregroundStyle(Theme.accentSoft)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

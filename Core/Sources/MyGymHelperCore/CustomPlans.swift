@@ -41,7 +41,7 @@ public struct CustomPlanInput: Equatable, Hashable, Sendable {
     public var weightKg: Double
     public var goal: Goal
     public var experience: Experience
-    /// Sempre 3 o 4 (come tutte le schede dell'app).
+    /// Sempre 2, 3 o 4.
     public var daysPerWeek: Int
     public var place: TrainingPlace
     /// Attrezzi in casa usati se `place` = .home (nomi di `HomeEquipment.choices`).
@@ -60,7 +60,7 @@ public struct CustomPlanInput: Equatable, Hashable, Sendable {
         c.age = min(max(age, 18), 100)
         c.heightCm = min(max(heightCm, 120), 230)
         c.weightKg = min(max(weightKg, 30), 250)
-        c.daysPerWeek = daysPerWeek >= 4 ? 4 : 3
+        c.daysPerWeek = min(max(daysPerWeek, 2), 4)   // Sempre 2, 3 o 4
         c.ownedEquipment = ownedEquipment.filter { HomeEquipment.choices.contains($0) }
         return c
     }
@@ -120,6 +120,8 @@ public enum CustomPlanGenerator {
     static let legs: [MuscleGroup] = [.quads, .hamstrings, .glutes, .quads, .abs, .calves, .hamstrings]
     static let upper: [MuscleGroup] = [.chest, .lats, .shoulders, .traps, .biceps, .triceps, .chest]
     static let lower: [MuscleGroup] = [.quads, .hamstrings, .glutes, .calves, .abs, .quads, .obliques]
+    static let twoA: [MuscleGroup] = [.quads, .chest, .lats, .hamstrings, .abs, .shoulders, .biceps]
+    static let twoB: [MuscleGroup] = [.glutes, .lats, .chest, .quads, .abs, .triceps, .calves]
 
     static let excludedCategories: Set<String> = ["olympic", "strongman"]
 
@@ -130,12 +132,17 @@ public enum CustomPlanGenerator {
 
     /// Divisione della settimana:
     /// - 4 allenamenti → parte alta / parte bassa (A e B);
+    /// - 2 allenamenti → total body A e B (ogni livello di esperienza);
     /// - 3 allenamenti, principiante → total body A/B/C;
     /// - 3 allenamenti, intermedio o avanzato → push / pull / legs.
     public static func split(_ input: CustomPlanInput) -> [(String, [MuscleGroup])] {
         if input.daysPerWeek >= 4 {
             return [("presets.day.upperA", upper), ("presets.day.lowerA", lower),
                     ("presets.day.upperB", upper), ("presets.day.lowerB", lower)]
+        }
+        // 2 allenamenti → total body A e B (ogni livello di esperienza)
+        if input.daysPerWeek <= 2 {
+            return [("presets.day.a", twoA), ("presets.day.b", twoB)]
         }
         if input.experience == .beginner {
             return [("presets.day.a", fullA), ("presets.day.b", fullB), ("presets.day.c", fullC)]

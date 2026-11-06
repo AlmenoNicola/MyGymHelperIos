@@ -76,8 +76,8 @@ struct FakeHistoryCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("debug.fakeHistory.title").font(.headline).foregroundStyle(.orange)
-            Text("debug.fakeHistory.note").font(.caption).foregroundStyle(.secondary)
+            Text("debug.fakeHistory.title").appFont(.headline).foregroundStyle(.orange)
+            Text("debug.fakeHistory.note").appFont(.caption).foregroundStyle(.secondary)
             if subscriptions.tier != .full {
                 Button { subscriptions.setDebugTier(SubscriptionTier.full.rawValue) } label: {
                     Text("debug.fakeHistory.full").frame(maxWidth: .infinity)
@@ -88,7 +88,7 @@ struct FakeHistoryCard: View {
             Button(role: .destructive) {
                 result = String(localized: "debug.fakeHistory.removed \(FakeHistoryDebug.remove())")
             } label: { Text("debug.fakeHistory.remove").frame(maxWidth: .infinity) }.buttonStyle(.glass)
-            if let result { Text(verbatim: result).font(.footnote).foregroundStyle(Theme.accent) }
+            if let result { Text(verbatim: result).appFont(.footnote).foregroundStyle(Theme.accent) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()

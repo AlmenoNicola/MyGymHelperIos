@@ -13,17 +13,17 @@ struct HistoryView: View {
             VStack(spacing: 16) {
                 ScreenHeader(symbol: "clock.arrow.circlepath", title: "history.title", subtitle: "history.subtitle")
                 if consentAt == 0 {
-                    Text("history.noConsent").font(.callout).glassCard()
+                    Text("history.noConsent").appFont(.callout).glassCard()
                 } else if sessions.isEmpty {
-                    Text("history.empty").font(.callout).foregroundStyle(.secondary).glassCard()
+                    Text("history.empty").appFont(.callout).foregroundStyle(.secondary).glassCard()
                 } else {
                     ForEach(sessions) { s in
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 if s.exerciseName.isEmpty {
-                                    Text(SensorPosition.fromLegacy(s.limb).titleKey).font(.headline)
+                                    Text(SensorPosition.fromLegacy(s.limb).titleKey).appFont(.headline)
                                 } else {
-                                    Text(verbatim: s.exerciseName).font(.headline)
+                                    Text(verbatim: s.exerciseName).appFont(.headline)
                                 }
                                 HStack(spacing: 8) {
                                     Text(s.startedAt.formatted(date: .abbreviated, time: .shortened))
@@ -33,10 +33,10 @@ struct HistoryView: View {
                                             .joined(separator: "/") + " kg")
                                     } else if s.weightKg > 0 { Text(verbatim: "· \(s.weightKg.kgText)") }
                                 }
-                                .font(.subheadline).foregroundStyle(.secondary)
+                                .appFont(.subheadline).foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Text("history.sets \(s.sets.count) \(s.plannedSets)").font(.title3.bold())
+                            Text("history.sets \(s.sets.count) \(s.plannedSets)").appFont(.title3, weight: .bold)
                         }
                         .glassCard(padding: 18)
                         .contextMenu {

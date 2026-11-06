@@ -20,13 +20,13 @@ final class PresetsTests: XCTestCase {
     func testEveryPresetExerciseIsInTheCatalog() {
         let ids = Set(catalog.map(\.id))
         for p in PresetPlans.all { for d in p.days { for i in d.items { XCTAssertTrue(ids.contains(i.exerciseID), i.exerciseID) } } }
-        XCTAssertEqual(PresetPlans.all.count, 5)
+        XCTAssertEqual(PresetPlans.all.count, 6)
         XCTAssertEqual(PresetPlans.all.first?.id, PresetPlans.freeID)
     }
 
     func testFreeSeesOnlyTheBasePlan() {
         XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .free) }.map(\.id), [PresetPlans.freeID])
-        XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .full) }.count, 5)
+        XCTAssertEqual(PresetPlans.all.filter { PresetPlans.isAvailable($0, for: .full) }.count, 6)
         XCTAssertFalse(FeatureGate.isAvailable(.monthlyPlan, for: .free))
     }
 
@@ -79,8 +79,15 @@ final class PresetsTests: XCTestCase {
         XCTAssertEqual(m.plan.daysPerWeek, 3)   // ma sempre almeno 3 a settimana (A e B alternati)
     }
 
-    func testEveryPlanHasThreeOrFourWorkoutsAWeek() {
-        for p in PresetPlans.all { XCTAssertTrue((3...4).contains(p.daysPerWeek), p.id) }
+    func testEveryPlanHasTwoToFourWorkoutsAWeek() {
+        for p in PresetPlans.all { XCTAssertTrue((2...4).contains(p.daysPerWeek), p.id) }
+        // Full body in 2 allenamenti: giorni A e B, nessun esercizio ripetuto
+        let two = PresetPlans.plan("two-day-full-body")!
+        XCTAssertEqual(two.daysPerWeek, 2)
+        XCTAssertEqual(two.days.map(\.titleKey), ["presets.day.a", "presets.day.b"])
+        let ids = two.days.flatMap { $0.items.map(\.exerciseID) }
+        XCTAssertEqual(ids.count, Set(ids).count)
+        // La consigliata del mese resta da 3 o 4 allenamenti
         XCTAssertEqual(MonthlyPlanner.generate(catalog: catalog, sessions: [], now: date(2026, 10, 15)).plan.daysPerWeek, 3)
     }
 }

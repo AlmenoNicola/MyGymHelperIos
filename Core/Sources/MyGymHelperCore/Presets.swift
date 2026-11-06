@@ -87,6 +87,27 @@ public enum PresetPlans {
         ])
     ])
 
+    public static let twoDayFullBody = PresetPlan(id: "two-day-full-body", titleKey: "presets.twoDay", level: "beginner", daysPerWeek: 2, days: [
+        PresetDay(titleKey: "presets.day.a", items: [
+            PresetItem("seed-squat", sets: 3, reps: 10, restSeconds: 120),
+            PresetItem("seed-bench-press", sets: 3, reps: 10, restSeconds: 120),
+            PresetItem("seed-bent-row", sets: 3, reps: 10, restSeconds: 90),
+            PresetItem("seed-overhead-press", sets: 3, reps: 10, restSeconds: 90),
+            PresetItem("seed-leg-curl", sets: 3, reps: 12, restSeconds: 75),
+            PresetItem("seed-biceps-curl", sets: 3, reps: 12, restSeconds: 60),
+            PresetItem("seed-crunch", sets: 3, reps: 15, restSeconds: 60)
+        ]),
+        PresetDay(titleKey: "presets.day.b", items: [
+            PresetItem("seed-rdl", sets: 3, reps: 10, restSeconds: 120),
+            PresetItem("seed-leg-press", sets: 3, reps: 12, restSeconds: 120),
+            PresetItem("seed-lat-pulldown", sets: 3, reps: 10, restSeconds: 90),
+            PresetItem("fedb-Incline_Dumbbell_Press", sets: 3, reps: 10, restSeconds: 90),
+            PresetItem("seed-lateral-raise", sets: 3, reps: 12, restSeconds: 60),
+            PresetItem("seed-triceps-pushdown", sets: 3, reps: 12, restSeconds: 60),
+            PresetItem("fedb-Dead_Bug", sets: 3, reps: 12, restSeconds: 60)
+        ])
+    ])
+
     public static let pushPullLegs = PresetPlan(id: "push-pull-legs", titleKey: "presets.ppl", level: "intermediate", daysPerWeek: 3, days: [
         PresetDay(titleKey: "presets.day.push", items: [
             PresetItem("seed-bench-press", sets: 4, reps: 8, restSeconds: 150),
@@ -173,7 +194,7 @@ public enum PresetPlans {
     ])
 
     /// Tutte le schede pronte, la base (Free) per prima.
-    public static let all: [PresetPlan] = [freeTotalBody, beginnerFullBody, pushPullLegs, upperLower, bodyweightStretching]
+    public static let all: [PresetPlan] = [freeTotalBody, beginnerFullBody, twoDayFullBody, pushPullLegs, upperLower, bodyweightStretching]
     // GENERATO-FINE
 
     public static func plan(_ id: String) -> PresetPlan? { all.first { $0.id == id } }

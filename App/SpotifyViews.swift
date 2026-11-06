@@ -48,8 +48,8 @@ struct SpotifyItemRow: View {
         HStack(spacing: 12) {
             CoverImage(url: item.imageURL, round: item.kind == .artist)
             VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: item.name).font(.subheadline.bold()).lineLimit(1)
-                Text(verbatim: subtitle(item)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                Text(verbatim: item.name).appFont(.subheadline, weight: .bold).lineLimit(1)
+                Text(verbatim: subtitle(item)).appFont(.caption).foregroundStyle(.secondary).lineLimit(1)
             }
             Spacer(minLength: 0)
             if selected { Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.accent) }
@@ -68,16 +68,16 @@ struct SpotifySection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if !spotify.configured {
-                Text("music.spotifyMissing").font(.caption).foregroundStyle(.secondary)
+                Text("music.spotifyMissing").appFont(.caption).foregroundStyle(.secondary)
             } else {
                 account
-                Text("spotify.chosen").font(.subheadline.weight(.semibold))
+                Text("spotify.chosen").appFont(.subheadline, weight: .semibold)
                 if let choice = settings.spotifyChoice {
                     SpotifyItemRow(item: choice, selected: true)
                 } else if !settings.spotifyURI.isEmpty {
-                    Text(verbatim: settings.spotifyURI).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    Text(verbatim: settings.spotifyURI).appFont(.caption).foregroundStyle(.secondary).lineLimit(1)
                 } else {
-                    Text("spotify.noChoice").font(.caption).foregroundStyle(.secondary)
+                    Text("spotify.noChoice").appFont(.caption).foregroundStyle(.secondary)
                 }
                 if spotify.loggedIn {
                     NavigationLink { SpotifyPickerView() } label: {
@@ -87,12 +87,12 @@ struct SpotifySection: View {
                     }
                     .buttonStyle(.glass)
                     if settings.spotifyChoice != nil || !settings.spotifyURI.isEmpty {
-                        Button("spotify.clear") { settings.setSpotifyChoice(nil) }.font(.footnote)
+                        Button("spotify.clear") { settings.setSpotifyChoice(nil) }.appFont(.footnote)
                     }
                 } else {
                     linkField          // senza accesso si puo' ancora incollare il link, come su Android
                 }
-                Text("music.spotifyNote").font(.caption).foregroundStyle(.secondary)
+                Text("music.spotifyNote").appFont(.caption).foregroundStyle(.secondary)
             }
         }
         .alert("Spotify", isPresented: Binding(get: { spotify.errorKey != nil }, set: { if !$0 { spotify.errorKey = nil } })) {
@@ -107,26 +107,26 @@ struct SpotifySection: View {
             HStack(spacing: 12) {
                 CoverImage(url: spotify.user?.imageURL, size: 44, round: true, placeholder: "person.fill")
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("spotify.loggedAs").font(.caption).foregroundStyle(.secondary)
-                    Text(verbatim: spotify.user?.name ?? "…").font(.headline).lineLimit(1)
+                    Text("spotify.loggedAs").appFont(.caption).foregroundStyle(.secondary)
+                    Text(verbatim: spotify.user?.name ?? "…").appFont(.headline).lineLimit(1)
                     if let user = spotify.user {
-                        Text(verbatim: user.premium ? "Spotify Premium" : "Spotify Free").font(.caption).foregroundStyle(.secondary)
+                        Text(verbatim: user.premium ? "Spotify Premium" : "Spotify Free").appFont(.caption).foregroundStyle(.secondary)
                     }
                 }
                 Spacer(minLength: 0)
-                Button("spotify.logout") { spotify.logout() }.font(.subheadline)
+                Button("spotify.logout") { spotify.logout() }.appFont(.subheadline)
             }
             if let user = spotify.user, !user.premium {
-                Text("spotify.freeNote").font(.caption).foregroundStyle(.secondary)
+                Text("spotify.freeNote").appFont(.caption).foregroundStyle(.secondary)
             }
         } else {
             Button { Task { await spotify.login() } } label: {
                 Label("spotify.login", systemImage: "person.crop.circle.badge.checkmark")
-                    .font(.headline).frame(maxWidth: .infinity).padding(.vertical, 4)
+                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 4)
             }
             .buttonStyle(.glassProminent).tint(Theme.accent)
             .disabled(spotify.busy)
-            Text("spotify.loginNote").font(.caption).foregroundStyle(.secondary)
+            Text("spotify.loginNote").appFont(.caption).foregroundStyle(.secondary)
         }
         if spotify.busy { ProgressView().frame(maxWidth: .infinity) }
     }
@@ -143,7 +143,7 @@ struct SpotifySection: View {
                     if text.isEmpty || SpotifyLinks.toURI(text) != nil { settings.setSpotifyLink(text) }
                 }
             Text(valid ? LocalizedStringKey("music.playlistHint") : LocalizedStringKey("music.playlistInvalid"))
-                .font(.caption).foregroundStyle(valid ? Color.secondary : Color.red)
+                .appFont(.caption).foregroundStyle(valid ? Color.secondary : Color.red)
         }
     }
 }
@@ -167,7 +167,7 @@ struct SpotifyPickerView: View {
             VStack(spacing: 18) {
                 ScreenHeader(symbol: "music.note.list", title: "spotify.choose", subtitle: "spotify.pickerSubtitle")
                 if !spotify.loggedIn {
-                    Text("spotify.needLogin").font(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
+                    Text("spotify.needLogin").appFont(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
                 } else {
                     HStack {
                         Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
@@ -205,7 +205,7 @@ struct SpotifyPickerView: View {
         } else if let list = playlists, !list.isEmpty {
             section("spotify.myPlaylists", list)
         } else {
-            Text("spotify.noPlaylists").font(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
+            Text("spotify.noPlaylists").appFont(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
         }
     }
 
@@ -217,13 +217,13 @@ struct SpotifyPickerView: View {
             if !r.albums.isEmpty { section("spotify.albums", r.albums) }
             if !r.tracks.isEmpty { section("spotify.songs", r.tracks) }
         } else {
-            Text("spotify.noResults").font(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
+            Text("spotify.noResults").appFont(.callout).frame(maxWidth: .infinity, alignment: .leading).glassCard()
         }
     }
 
     private func section(_ title: LocalizedStringKey, _ items: [SpotifyItem]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title).font(.headline)
+            Text(title).appFont(.headline)
             ForEach(items) { item in
                 Button {
                     settings.setSpotifyChoice(item)

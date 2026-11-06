@@ -17,6 +17,9 @@ struct MyGymHelperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                // Testi senza un carattere esplicito (pulsanti, interruttori, campi, testi semplici): body -20%,
+                // anche nei fogli e nel tutorial (AppTextScale in Theme.swift)
+                .appFont(.body)
                 .environment(subscriptions)
                 .environment(catalog)
                 .environment(account)

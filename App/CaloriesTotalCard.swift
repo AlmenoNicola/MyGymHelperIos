@@ -13,18 +13,18 @@ struct CaloriesTotalCard: View {
         let allDone = !items.isEmpty && items.allSatisfy(\.done)
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 12) {
-                Image(systemName: "flame.fill").font(.system(size: 26)).foregroundStyle(Theme.done)
+                Image(systemName: "flame.fill").font(.system(size: 26 * AppTextScale)).foregroundStyle(Theme.done)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(allDone ? "calories.totalTitle" : "calories.partialTitle")
-                        .font(.system(size: 12)).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.7)
+                        .font(.system(size: 12 * AppTextScale)).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.7)
                     Text("calories.item \(total)")
-                        .font(.system(size: 24, weight: .heavy)).lineLimit(1).minimumScaleFactor(16.0 / 24.0)
+                        .font(.system(size: 24 * AppTextScale, weight: .heavy)).lineLimit(1).minimumScaleFactor(16.0 / 24.0)
                 }
                 Spacer(minLength: 0)
             }
-            Text("calories.disclaimer").font(.system(size: 12)).foregroundStyle(.secondary)
+            Text("calories.disclaimer").font(.system(size: 12 * AppTextScale)).foregroundStyle(.secondary)
             if ProfileData.bodyWeightKg() == nil {
-                Text("calories.defaultWeight").font(.system(size: 12))
+                Text("calories.defaultWeight").font(.system(size: 12 * AppTextScale))
             }
         }
         .padding(14)

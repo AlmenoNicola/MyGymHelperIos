@@ -1,6 +1,68 @@
 import SwiftUI
 import MyGymHelperCore
 
+/// Scala dei testi di tutta l'app (uguale ad APP_TEXT_SCALE su Android): -20% rispetto agli stili di sistema.
+/// Restano della dimensione di prima solo i numeri grandi (contatore e timer della sessione, conteggio di prova
+/// della calibrazione, BMI) e la nota delle foto, già ridotta.
+let AppTextScale: CGFloat = 0.8
+
+extension Font.TextStyle {
+    /// Dimensione dello stile con la dimensione del carattere predefinita del telefono (Dynamic Type "Grande").
+    var appBaseSize: CGFloat {
+        switch self {
+        case .largeTitle: return 34
+        case .title: return 28
+        case .title2: return 22
+        case .title3: return 20
+        case .headline: return 17
+        case .body: return 17
+        case .callout: return 16
+        case .subheadline: return 15
+        case .footnote: return 13
+        case .caption: return 12
+        case .caption2: return 11
+        @unknown default: return 17
+        }
+    }
+
+    /// Peso predefinito dello stile (il titolo di sezione "headline" è semibold, come quello di sistema).
+    var appDefaultWeight: Font.Weight { self == .headline ? .semibold : .regular }
+}
+
+/// Carattere dell'app: stile di sistema ridotto di AppTextScale. Con @ScaledMetric segue la dimensione del carattere
+/// scelta nel telefono (Dynamic Type), anche se cambia mentre l'app è aperta.
+private struct AppFontModifier: ViewModifier {
+    @ScaledMetric private var size: CGFloat
+    let style: Font.TextStyle
+    let weight: Font.Weight?
+    let design: Font.Design?
+    let monospacedDigit: Bool
+    let monospaced: Bool
+
+    init(style: Font.TextStyle, weight: Font.Weight?, design: Font.Design?, monospacedDigit: Bool, monospaced: Bool) {
+        self.style = style; self.weight = weight; self.design = design
+        self.monospacedDigit = monospacedDigit; self.monospaced = monospaced
+        _size = ScaledMetric(wrappedValue: style.appBaseSize * AppTextScale, relativeTo: style)
+    }
+
+    func body(content: Content) -> some View {
+        var font = Font.system(size: size, weight: weight ?? style.appDefaultWeight, design: design ?? .default)
+        if monospacedDigit { font = font.monospacedDigit() }
+        if monospaced { font = font.monospaced() }
+        return content.font(font)
+    }
+}
+
+extension View {
+    /// Al posto di `.font(.caption)` / `.font(.subheadline.bold())`: stesso stile e peso, testo più piccolo del 20%
+    /// (AppTextScale) e sempre legato al Dynamic Type.
+    func appFont(_ style: Font.TextStyle, weight: Font.Weight? = nil, design: Font.Design? = nil,
+                 monospacedDigit: Bool = false, monospaced: Bool = false) -> some View {
+        modifier(AppFontModifier(style: style, weight: weight, design: design,
+                                 monospacedDigit: monospacedDigit, monospaced: monospaced))
+    }
+}
+
 /// Tema grafico scelto nelle Impostazioni, salvato in UserDefaults con la stessa chiave di Android.
 /// E' osservabile: cambiando tema tutte le schermate si ridisegnano subito.
 @Observable
@@ -136,14 +198,14 @@ struct ScreenHeader: View {
     var body: some View {
         HStack(spacing: 16) {
             Image(systemName: symbol)
-                .font(.system(size: 28, weight: .semibold))
+                .font(.system(size: 28 * AppTextScale, weight: .semibold))
                 .foregroundStyle(.white)
                 .frame(width: 60, height: 60)
                 .background(Theme.accentGradient, in: Circle())
                 .shadow(color: Theme.accent.opacity(0.5), radius: 14, y: 6)
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.title.bold()).lineLimit(1)     // rimpicciolisce invece di andare a capo
-                Text(subtitle).font(.subheadline).foregroundStyle(.secondary)
+                Text(title).appFont(.title, weight: .bold).lineLimit(1)     // rimpicciolisce invece di andare a capo
+                Text(subtitle).appFont(.subheadline).foregroundStyle(.secondary)
             }
             Spacer(minLength: 0)
         }
@@ -159,13 +221,13 @@ struct CounterRow: View {
 
     var body: some View {
         HStack {
-            Text(title).font(.headline)
+            Text(title).appFont(.headline)
             Spacer()
             HStack(spacing: 14) {
                 Button { value = max(range.lowerBound, value - step) } label: { Image(systemName: "minus") }
                     .buttonStyle(.glass).buttonBorderShape(.circle)
                 Text("\(value)")
-                    .font(.title2.bold().monospacedDigit())
+                    .appFont(.title2, weight: .bold, monospacedDigit: true)
                     .frame(minWidth: 56)
                     .contentTransition(.numericText())
                 Button { value = min(range.upperBound, value + step) } label: { Image(systemName: "plus") }
@@ -198,7 +260,7 @@ struct RepRing: View {
                     .font(.system(size: 88, weight: .heavy, design: .rounded).monospacedDigit())
                     .contentTransition(.numericText())
                     .animation(.snappy, value: count)
-                Text("/ \(target)").font(.title3.weight(.semibold)).foregroundStyle(.secondary)
+                Text("/ \(target)").appFont(.title3, weight: .semibold).foregroundStyle(.secondary)
             }
         }
         .frame(width: 270, height: 270)
@@ -246,7 +308,7 @@ struct KgInputRow: View {
 
     var body: some View {
         HStack {
-            Text(title).font(.headline)
+            Text(title).appFont(.headline)
             Spacer()
             HStack(spacing: 10) {
                 Button { value = min(max(minus(value), lowest), range.upperBound) } label: { Image(systemName: "minus") }
@@ -256,10 +318,10 @@ struct KgInputRow: View {
                     TextField("", text: $text, prompt: placeholder.map { Text($0) })
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(.center)
-                        .font(.title3.bold().monospacedDigit())
+                        .appFont(.title3, weight: .bold, monospacedDigit: true)
                         .minimumScaleFactor(0.6)
                         .focused($focused)
-                    Text(verbatim: "kg").font(.footnote).foregroundStyle(.secondary)
+                    Text(verbatim: "kg").appFont(.footnote).foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 8).padding(.vertical, 6)
                 .frame(width: 104)

@@ -102,22 +102,22 @@ private struct PlansMarketing: View {
             ScreenHeader(symbol: "star.fill", title: "plans.title", subtitle: "plans.subtitle")
 
             HStack {
-                Text("plans.current").font(.subheadline).foregroundStyle(.secondary)
+                Text("plans.current").appFont(.subheadline).foregroundStyle(.secondary)
                 Spacer()
                 Text(tier.titleKey)
-                    .font(.headline)
+                    .appFont(.headline)
                     .padding(.horizontal, 14).padding(.vertical, 6)
                     .background(Theme.accentGradient, in: Capsule())
             }
             if let freeLicenseUntil {
                 // Licenza gratuita assegnata a mano: si mostra l'ultimo giorno compreso (la scadenza e' la mezzanotte dopo).
                 Text("plans.freeLicense \(freeLicenseUntil.addingTimeInterval(-1).formatted(date: .abbreviated, time: .omitted))")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .appFont(.caption).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             if let renewal {
                 Text("plans.renews \(renewal.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .appFont(.caption).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
 
@@ -125,13 +125,13 @@ private struct PlansMarketing: View {
                 HStack {
                     Spacer()
                     ForEach([SubscriptionTier.free, .full], id: \.self) { t in
-                        Text(t.titleKey).font(.caption.bold()).frame(width: 44)
+                        Text(t.titleKey).appFont(.caption, weight: .bold).frame(width: 44)
                             .foregroundStyle(t == .full ? Theme.accentSoft : .primary)
                     }
                 }
                 ForEach(rows) { row in
                     HStack(alignment: .firstTextBaseline) {
-                        Text(LocalizedStringKey(row.id)).font(.footnote)
+                        Text(LocalizedStringKey(row.id)).appFont(.footnote)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         ForEach(0..<2, id: \.self) { i in
                             Image(systemName: row.tiers[i] ? "checkmark.circle.fill" : "minus")
@@ -144,7 +144,7 @@ private struct PlansMarketing: View {
             }
             .glassCard(padding: 16)
 
-            Text("plans.disclaimer").font(.caption2).foregroundStyle(.secondary)
+            Text("plans.disclaimer").appFont(.caption2).foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 20)

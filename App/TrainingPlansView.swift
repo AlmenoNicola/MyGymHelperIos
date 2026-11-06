@@ -26,7 +26,7 @@ struct TrainingPlansView: View {
                     LockedNote(key: "plans.list.locked").glassCard(padding: 16)
                 } else if consentAt == 0 {
                     VStack(spacing: 12) {
-                        Label("plans.list.needConsent", systemImage: "lock.fill").font(.callout)
+                        Label("plans.list.needConsent", systemImage: "lock.fill").appFont(.callout)
                         Button("consent.open") { showConsent = true }.buttonStyle(.glassProminent).tint(Theme.accent)
                     }
                     .frame(maxWidth: .infinity)
@@ -35,27 +35,27 @@ struct TrainingPlansView: View {
                     ImportButtons(model: importer, kind: .training)
 
                     if plans.isEmpty {
-                        Text("plans.list.empty").font(.callout).foregroundStyle(.secondary)
+                        Text("plans.list.empty").appFont(.callout).foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading).glassCard(padding: 16)
                     } else {
-                        Text("plans.list.activeNote").font(.footnote).foregroundStyle(.secondary)
+                        Text("plans.list.activeNote").appFont(.footnote).foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     ForEach(plans) { record in
                         NavigationLink { TrainingPlanDetailView(record: record) } label: {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(verbatim: record.name).font(.headline)
+                                    Text(verbatim: record.name).appFont(.headline)
                                     Text(record.createdAt.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption).foregroundStyle(.secondary)
+                                        .appFont(.caption).foregroundStyle(.secondary)
                                 }
                                 Spacer()
                                 if record.id == plans.first?.id {
-                                    Text("plans.list.active").font(.caption.bold())
+                                    Text("plans.list.active").appFont(.caption, weight: .bold)
                                         .padding(.horizontal, 10).padding(.vertical, 4)
                                         .background(Theme.accent.opacity(0.35), in: Capsule())
                                 }
-                                Image(systemName: "chevron.right").font(.footnote).foregroundStyle(.secondary)
+                                Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
                             }
                             .glassCard(padding: 16)
                         }
@@ -191,7 +191,7 @@ struct ImportButtons: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // Caricamento schede spento (file e foto): la card serve solo a inserire la scheda a mano.
-            Text(LocalizedStringKey(AppFeatures.planImportEnabled ? "import.title" : "import.titleManual")).font(.headline)
+            Text(LocalizedStringKey(AppFeatures.planImportEnabled ? "import.title" : "import.titleManual")).appFont(.headline)
             if AppFeatures.planImportEnabled {
                 HStack(spacing: 10) {
                     // Importazione da file disattivata per ora (AppFeatures.planFileImportEnabled): resta solo la foto.
@@ -215,18 +215,18 @@ struct ImportButtons: View {
             .buttonStyle(.glass)
 
             if model.isWorking {
-                HStack(spacing: 10) { ProgressView(); Text("import.reading").font(.footnote) }
+                HStack(spacing: 10) { ProgressView(); Text("import.reading").appFont(.footnote) }
             }
 
             // Lettura con Apple Intelligence sul telefono: interruttore e stato
             if kind == .training && AppFeatures.planImportEnabled {
                 Toggle(isOn: $useAI) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("import.ai").font(.subheadline)
-                        Text("import.aiNote").font(.caption).foregroundStyle(.secondary)
+                        Text("import.ai").appFont(.subheadline)
+                        Text("import.aiNote").appFont(.caption).foregroundStyle(.secondary)
                         if useAI {
                             Text(LocalizedStringKey(PlanImportAI.isAvailable ? "import.aiReady" : "import.aiUnavailable"))
-                                .font(.caption).foregroundStyle(.secondary)
+                                .appFont(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -234,8 +234,8 @@ struct ImportButtons: View {
             }
             // Con l'operatore ?: le stringhe vanno passate come chiavi (LocalizedStringKey), altrimenti non si traducono.
             if AppFeatures.planImportEnabled {
-                Text(LocalizedStringKey(AppFeatures.planFileImportEnabled ? "import.formats" : "import.formatsPhoto")).font(.caption).foregroundStyle(.secondary)
-                Text(LocalizedStringKey(AppFeatures.planFileImportEnabled ? "import.privacy" : "import.privacyPhoto")).font(.caption).foregroundStyle(.secondary)
+                Text(LocalizedStringKey(AppFeatures.planFileImportEnabled ? "import.formats" : "import.formatsPhoto")).appFont(.caption).foregroundStyle(.secondary)
+                Text(LocalizedStringKey(AppFeatures.planFileImportEnabled ? "import.privacy" : "import.privacyPhoto")).appFont(.caption).foregroundStyle(.secondary)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -304,7 +304,7 @@ struct TrainingPlanDetailView: View {
                 if let plan {
                     ForEach(plan.days) { day in
                         VStack(alignment: .leading, spacing: 12) {
-                            Text(verbatim: day.title.isEmpty ? String(localized: "plans.review.day") : day.title).font(.headline)
+                            Text(verbatim: day.title.isEmpty ? String(localized: "plans.review.day") : day.title).appFont(.headline)
                             ForEach(day.entries) { entry in
                                 entryRow(entry)
                             }
@@ -349,18 +349,18 @@ struct TrainingPlanDetailView: View {
         let match = PlanAI.exercise(for: entry, in: catalog.all)
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(verbatim: entry.name).font(.subheadline.bold())
+                Text(verbatim: entry.name).appFont(.subheadline, weight: .bold)
                 Spacer()
                 if let match {
                     NavigationLink { ItemEditorView(exercise: match, switchToWorkout: true) } label: {
-                        Image(systemName: "play.circle.fill").font(.title2).foregroundStyle(Theme.accent)
+                        Image(systemName: "play.circle.fill").appFont(.title2).foregroundStyle(Theme.accent)
                     }
                     .accessibilityLabel(Text("ex.train"))
                 }
             }
-            Text(verbatim: entry.summary).font(.caption).foregroundStyle(.secondary)
+            Text(verbatim: entry.summary).appFont(.caption).foregroundStyle(.secondary)
             if let match, match.name != entry.name {
-                Text("plans.detail.matched \(match.name)").font(.caption2).foregroundStyle(Theme.accentSoft)
+                Text("plans.detail.matched \(match.name)").appFont(.caption2).foregroundStyle(Theme.accentSoft)
             }
         }
     }
@@ -412,18 +412,18 @@ struct TrainingPlanReviewView: View {
                 Section {
                     TextField("plans.review.name", text: $draft.name)
                     Label("plans.review.check", systemImage: "exclamationmark.triangle.fill")
-                        .font(.footnote).foregroundStyle(.orange)
+                        .appFont(.footnote).foregroundStyle(.orange)
                     if let note = draft.readNote {
-                        Text(LocalizedStringKey(note)).font(.footnote).foregroundStyle(.secondary)
+                        Text(LocalizedStringKey(note)).appFont(.footnote).foregroundStyle(.secondary)
                     }
                     if !gaps.isEmpty {
                         Label("plans.review.missingCount \(gaps.count)", systemImage: "exclamationmark.circle.fill")
-                            .font(.footnote).foregroundStyle(.orange)
+                            .appFont(.footnote).foregroundStyle(.orange)
                     }
                 }
                 ForEach($draft.plan.days) { $day in
                     Section {
-                        TextField("plans.review.dayTitle", text: $day.title).font(.headline)
+                        TextField("plans.review.dayTitle", text: $day.title).appFont(.headline)
                         ForEach($day.entries) { $entry in
                             EntryEditor(entry: $entry, match: PlanAI.exercise(for: entry, in: catalog.all),
                                         missing: draft.checkMissing && !entry.name.trimmingCharacters(in: .whitespaces).isEmpty
@@ -452,7 +452,7 @@ struct TrainingPlanReviewView: View {
                 if !draft.sourceText.isEmpty {
                     Section {
                         DisclosureGroup("plans.review.source") {
-                            Text(verbatim: draft.sourceText).font(.caption.monospaced()).textSelection(.enabled)
+                            Text(verbatim: draft.sourceText).appFont(.caption, monospaced: true).textSelection(.enabled)
                         }
                     }
                 }
@@ -522,7 +522,7 @@ private struct EntryEditor: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            TextField("plans.review.exercise", text: $entry.name).font(.subheadline.bold())
+            TextField("plans.review.exercise", text: $entry.name).appFont(.subheadline, weight: .bold)
                 // Nome cambiato a mano: il collegamento al catalogo si rifa' dal nome
                 .onChange(of: entry.name) { _, _ in entry.exerciseID = nil }
             if !entry.perSet.isEmpty {
@@ -539,12 +539,12 @@ private struct EntryEditor: View {
                 }
             }
             if !missing.isEmpty {
-                Text("plans.review.missingFields \(missingText(missing))").font(.caption2).foregroundStyle(.orange)
+                Text("plans.review.missingFields \(missingText(missing))").appFont(.caption2).foregroundStyle(.orange)
             }
             if let match {
-                Text("plans.detail.matched \(match.name)").font(.caption2).foregroundStyle(Theme.accentSoft)
+                Text("plans.detail.matched \(match.name)").appFont(.caption2).foregroundStyle(Theme.accentSoft)
             } else if !entry.name.isEmpty {
-                Text("plans.review.noMatch").font(.caption2).foregroundStyle(.secondary)
+                Text("plans.review.noMatch").appFont(.caption2).foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 4)
@@ -553,10 +553,10 @@ private struct EntryEditor: View {
     /// Serie diverse (righe della scheda con lo stesso esercizio): una riga per serie con ripetizioni e peso.
     private var variedSets: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("plans.review.variedSets").font(.caption2).foregroundStyle(.secondary)
+            Text("plans.review.variedSets").appFont(.caption2).foregroundStyle(.secondary)
             ForEach(0..<entry.perSet.count, id: \.self) { i in
                 HStack(spacing: 8) {
-                    Text(verbatim: "\(i + 1)").font(.subheadline.bold()).foregroundStyle(Theme.accent).frame(width: 20)
+                    Text(verbatim: "\(i + 1)").appFont(.subheadline, weight: .bold).foregroundStyle(Theme.accent).frame(width: 20)
                     numberField("plans.review.reps", value: setReps(i),
                                 missing: missing.contains(.reps) && i < entry.perSet.count && entry.perSet[i].reps == nil)
                     weightField("plans.review.weight", value: setWeight(i),
@@ -573,7 +573,7 @@ private struct EntryEditor: View {
             .id(entry.perSet.count)
             HStack(spacing: 8) {
                 Button { if let last = entry.perSet.last { entry = entry.withSets(entry.perSet + [last]) } } label: {
-                    Label("sets.add", systemImage: "plus").font(.subheadline).lineLimit(1)
+                    Label("sets.add", systemImage: "plus").appFont(.subheadline).lineLimit(1)
                 }
                 .buttonStyle(.borderless)
                 Spacer()
@@ -594,7 +594,7 @@ private struct EntryEditor: View {
 
     private func weightField(_ title: LocalizedStringKey, value: Binding<Double?>, missing: Bool) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.caption2)
+            Text(title).appFont(.caption2)
                 .foregroundStyle(missing ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
             TextField(LocalizedStringKey(missing ? "?" : "—"), value: value, format: .number).keyboardType(.decimalPad)
         }
@@ -603,7 +603,7 @@ private struct EntryEditor: View {
     /// missing: dato non trovato nella scheda importata, si evidenzia in arancione.
     private func numberField(_ title: LocalizedStringKey, value: Binding<Int?>, missing: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.caption2).foregroundStyle(missing ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
+            Text(title).appFont(.caption2).foregroundStyle(missing ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
             TextField(LocalizedStringKey(missing ? "?" : "—"), value: value, format: .number).keyboardType(.numberPad)
         }
     }

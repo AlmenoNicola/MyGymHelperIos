@@ -35,13 +35,13 @@ struct ConsentView: View {
                         privacyDisclosure
                     }
                 }
-                Toggle(isOn: $checked) { Text("consent.check").font(.subheadline) }
+                Toggle(isOn: $checked) { Text("consent.check").appFont(.subheadline) }
                     .tint(Theme.accent)
                     .glassCard(padding: 16)
                 Button {
                     ConsentStore.grant(); onFinish(); dismiss()
                 } label: {
-                    Text("consent.accept").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Text("consent.accept").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
                 .buttonStyle(.glassProminent).tint(Theme.accent)
                 .disabled(!checked)

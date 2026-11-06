@@ -135,12 +135,12 @@ private struct ReadyView: View {
                         // Esercizio alternativo: quello dell'elenco che sostituisce, solo per questa sessione.
                         if let replacing {
                             Label("alternative.instead \(replacing.name)", systemImage: "arrow.left.arrow.right")
-                                .font(.subheadline.weight(.semibold)).foregroundStyle(Theme.accentSoft)
+                                .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accentSoft)
                                 .lineLimit(1).minimumScaleFactor(0.7)
                         }
                         Text(verbatim: exercise.primary.map(\.title).joined(separator: ", "))
-                            .font(.subheadline).foregroundStyle(.secondary)
-                        Text(verbatim: parameters.summaryText).font(.headline)
+                            .appFont(.subheadline).foregroundStyle(.secondary)
+                        Text(verbatim: parameters.summaryText).appFont(.headline)
                     } else {
                         // Conteggio libero: serie, ripetizioni e pausa si scelgono qui.
                         CounterRow(title: "counter.sets", value: $parameters.sets, range: WorkoutParameters.setsRange)
@@ -176,17 +176,17 @@ private struct ReadyView: View {
                     Button(action: onRestore) {
                         Text("alternative.restore \(replacing.name)").lineLimit(1).minimumScaleFactor(0.7)
                     }
-                    .font(.footnote).tint(Theme.accent)
+                    .appFont(.footnote).tint(Theme.accent)
                 }
                 PositionPicker(selected: $position)
                 CalibrationSummary(position: position)
                 Label("workout.pocketWarning", systemImage: "iphone.gen3.radiowaves.left.and.right")
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .appFont(.footnote).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Button(action: onStart) {
                     Label("ready.start", systemImage: "play.fill")
-                        .font(.title3.bold()).frame(maxWidth: .infinity).padding(.vertical, 8)
+                        .appFont(.title3, weight: .bold).frame(maxWidth: .infinity).padding(.vertical, 8)
                 }
                 .buttonStyle(.glassProminent)
                 .tint(Theme.accent)
@@ -264,15 +264,15 @@ private struct SessionContent: View {
             progressBar
             VStack(spacing: 4) {
                 if let exercise = controller.exercise {
-                    Text(verbatim: exercise.name).font(.title3.bold())
+                    Text(verbatim: exercise.name).appFont(.title3, weight: .bold)
                 }
                 Text("session.set \(controller.currentSetNumber) \(controller.totalSets)")
-                    .font(.headline).foregroundStyle(.secondary)
+                    .appFont(.headline).foregroundStyle(.secondary)
                 // Peso della serie in corso (serie diverse: cambia da una serie all'altra).
                 let setWeight = controller.currentTarget.weightKg
                 if setWeight > 0 {
                     Text(verbatim: setWeight.kgText)
-                        .font(controller.isVaried ? .title3.bold() : .subheadline).foregroundStyle(Theme.accentSoft)
+                        .appFont(controller.isVaried ? .title3 : .subheadline, weight: controller.isVaried ? .bold : nil).foregroundStyle(Theme.accentSoft)
                 }
             }
 
@@ -280,49 +280,49 @@ private struct SessionContent: View {
 
             if !controller.motion.isAvailable {
                 Label("session.noSensor", systemImage: "exclamationmark.triangle.fill")
-                    .font(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
+                    .appFont(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
             } else if controller.motion.isCalibrating {
                 Label("session.calibrating", systemImage: "waveform.path")
-                    .font(.subheadline).glassCard(padding: 14)
+                    .appFont(.subheadline).glassCard(padding: 14)
             } else if controller.motion.lowConfidence {
                 Label("workout.pocketWarning", systemImage: "exclamationmark.triangle.fill")
-                    .font(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
+                    .appFont(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
             }
 
             Spacer(minLength: 0)
 
             Button { showStop = true } label: {
                 Label("session.stopped", systemImage: "hand.raised.fill")
-                    .font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
             .buttonStyle(.glass).tint(.red)
 
             // Tutte le ripetizioni della serie fatte (se il conteggio non le ha prese tutte): serie completa, senza scrivere il numero.
             Button { controller.stop(doneReps: controller.targetReps) } label: {
                 Label("session.setDone", systemImage: "checkmark.circle.fill")
-                    .font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
             .buttonStyle(.glass)
 
             Button("session.end") { controller.endEarly() }
-                .font(.subheadline).foregroundStyle(.secondary)
+                .appFont(.subheadline).foregroundStyle(.secondary)
         }
     }
 
     private func restView(afterSet: Int, remaining: Int) -> some View {
         VStack(spacing: 26) {
             progressBar
-            Text("session.rest").font(.headline).foregroundStyle(.secondary)
+            Text("session.rest").appFont(.headline).foregroundStyle(.secondary)
             CountdownRing(remaining: remaining, total: controller.restSeconds)
-            Text("session.next \(afterSet + 1)").font(.title3.bold())
+            Text("session.next \(afterSet + 1)").appFont(.title3, weight: .bold)
             // Prossima serie: ripetizioni e peso (con le serie diverse cambiano da una serie all'altra).
             let next = controller.target(afterSet + 1)
             Text(verbatim: String(localized: "session.nextTarget \(next.reps)") + (next.weightKg > 0 ? " · " + next.weightKg.kgText : ""))
-                .font(.headline).foregroundStyle(Theme.accentSoft)
+                .appFont(.headline).foregroundStyle(Theme.accentSoft)
             Spacer(minLength: 0)
             Button { controller.skipRest() } label: {
                 Label("session.skipRest", systemImage: "forward.fill")
-                    .font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
             .buttonStyle(.glassProminent).tint(Theme.accent)
             if controller.hasExplanation {
@@ -332,7 +332,7 @@ private struct SessionContent: View {
                 .buttonStyle(.glass)
             }
             Button("session.end") { controller.endEarly() }
-                .font(.subheadline).foregroundStyle(.secondary)
+                .appFont(.subheadline).foregroundStyle(.secondary)
         }
     }
 
@@ -340,10 +340,10 @@ private struct SessionContent: View {
     private var explanationView: some View {
         let speaking = VoiceEngine.shared.speakingID
         return VStack(alignment: .leading, spacing: 16) {
-            Text("explain.title").font(.headline).foregroundStyle(.secondary)
+            Text("explain.title").appFont(.headline).foregroundStyle(.secondary)
             if let exercise = controller.exercise {
-                Text(verbatim: exercise.name).font(.title.bold())
-                Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).font(.subheadline).foregroundStyle(.secondary)
+                Text(verbatim: exercise.name).appFont(.title, weight: .bold)
+                Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appFont(.subheadline).foregroundStyle(.secondary)
                 ScrollView {
                     VStack(spacing: 10) {
                         // Foto della posizione iniziale e finale (se ci sono), sopra i passaggi
@@ -357,7 +357,7 @@ private struct SessionContent: View {
                                                 if let image = phase.image {
                                                     image.resizable().scaledToFill()
                                                 } else {
-                                                    Image(systemName: "dumbbell.fill").font(.title2).foregroundStyle(.secondary)
+                                                    Image(systemName: "dumbbell.fill").appFont(.title2).foregroundStyle(.secondary)
                                                 }
                                             }
                                         }
@@ -368,7 +368,7 @@ private struct SessionContent: View {
                         }
                         ForEach(Array(exercise.steps.enumerated()), id: \.offset) { i, step in
                             HStack(alignment: .top, spacing: 12) {
-                                Text(verbatim: "\(i + 1)").font(.headline).foregroundStyle(Theme.accent)
+                                Text(verbatim: "\(i + 1)").appFont(.headline).foregroundStyle(Theme.accent)
                                 Text(verbatim: step).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(14)
@@ -379,10 +379,10 @@ private struct SessionContent: View {
                 }
             }
             if let countdown = controller.startCountdown {
-                Text("explain.startsIn \(countdown)").font(.title2.bold()).frame(maxWidth: .infinity)
+                Text("explain.startsIn \(countdown)").appFont(.title2, weight: .bold).frame(maxWidth: .infinity)
             }
             Button { controller.startNow() } label: {
-                Label("explain.startNow", systemImage: "play.fill").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                Label("explain.startNow", systemImage: "play.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
             .buttonStyle(.glassProminent).tint(Theme.accent)
             Button { controller.explain() } label: {
@@ -470,12 +470,12 @@ struct StopSheet: View {
         ZStack {
             AppBackground()
             VStack(spacing: 22) {
-                Text("stop.title").font(.title3.bold())
+                Text("stop.title").appFont(.title3, weight: .bold)
                 CounterRow(title: "counter.reps", value: $reps, range: 0...target).glassCard()
                 Button {
                     onConfirm(reps); dismiss()
                 } label: {
-                    Text("stop.confirm").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Text("stop.confirm").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
                 .buttonStyle(.glassProminent).tint(Theme.accent)
                 Button("info.cancel") { dismiss() }.buttonStyle(.glass)

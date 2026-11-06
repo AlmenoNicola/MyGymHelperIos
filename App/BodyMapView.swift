@@ -217,9 +217,9 @@ struct SelectedMuscleChips: View {
                     } label: {
                         HStack(spacing: 4) {
                             Text(verbatim: m.title)
-                                .font(.footnote.weight(.semibold))
+                                .appFont(.footnote, weight: .semibold)
                             Image(systemName: "xmark")
-                                .font(.caption2.weight(.bold))
+                                .appFont(.caption2, weight: .bold)
                         }
                         .padding(.leading, 12).padding(.trailing, 8).padding(.vertical, 6)
                         .foregroundStyle(Theme.onAccent)
@@ -248,7 +248,7 @@ struct RegionChips: View {
                         if on { selected.subtract(all) } else { selected.formUnion(all) }
                     } label: {
                         Label(region.title, systemImage: region.symbol)
-                            .font(.subheadline.weight(.semibold))
+                            .appFont(.subheadline, weight: .semibold)
                             .padding(.horizontal, 14).padding(.vertical, 9)
                             .foregroundStyle(on ? Color.white : Color.primary)
                             .background(on ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.primary.opacity(0.10)), in: Capsule())

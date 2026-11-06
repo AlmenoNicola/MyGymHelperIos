@@ -74,7 +74,7 @@ struct ProfileAvatar: View {
                 Image(uiImage: photo).resizable().scaledToFill()
             } else {
                 Image(systemName: "person.crop.circle.fill")
-                    .font(.system(size: size * 0.5, weight: .semibold))
+                    .font(.system(size: (size * 0.5) * AppTextScale, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Theme.accentGradient)
@@ -98,7 +98,7 @@ struct ProfileHeader: View {
             .shadow(color: Theme.accent.opacity(0.5), radius: 14, y: 6)
             .overlay(alignment: .bottomTrailing) {
                 // Piccola macchina fotografica: fa capire che la foto si puo' cambiare.
-                Image(systemName: "camera.fill").font(.system(size: 11, weight: .bold)).foregroundStyle(.white)
+                Image(systemName: "camera.fill").font(.system(size: 11 * AppTextScale, weight: .bold)).foregroundStyle(.white)
                     .frame(width: 26, height: 26)
                     .background(Theme.accent, in: Circle())
                     .overlay(Circle().stroke(Theme.bgTop, lineWidth: 2))
@@ -122,12 +122,12 @@ struct ProfileHeader: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text("profile.photo.change"))
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("info.title").font(.title.bold()).lineLimit(1)
-                    Text("info.subtitle").font(.subheadline).foregroundStyle(.secondary)
+                    Text("info.title").appFont(.title, weight: .bold).lineLimit(1)
+                    Text("info.subtitle").appFont(.subheadline).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 0)
             }
-            if failed { Text("profile.photo.error").font(.footnote).foregroundStyle(.orange) }
+            if failed { Text("profile.photo.error").appFont(.footnote).foregroundStyle(.orange) }
         }
         .photosPicker(isPresented: $showPicker, selection: $item, matching: .images)
         .onChange(of: item) { _, new in

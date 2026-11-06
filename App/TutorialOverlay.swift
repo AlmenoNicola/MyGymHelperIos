@@ -122,7 +122,7 @@ struct TutorialOverlay: View {
                         if layout.handFits {
                             // Mano che indica l'elemento (punta in alto; capovolta se il fumetto e' sopra).
                             Image(systemName: "hand.point.up.left.fill")
-                                .font(.system(size: 38))
+                                .font(.system(size: 38 * AppTextScale))
                                 .foregroundStyle(.white)
                                 .rotationEffect(.degrees(layout.above ? 180 : 0))
                                 .position(x: min(max(hole.midX, 40), screen.width - 40),
@@ -211,18 +211,18 @@ private struct TutorialBubble: View {
                 StepDots(index: index)
                 Spacer(minLength: 4)
                 Text("tutorial.step \(index + 1) \(TutorialGuide.steps.count)")
-                    .font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                    .appFont(.caption).foregroundStyle(.secondary).monospacedDigit()
                 if !isLast {
                     Button("tutorial.skip") { tutorial.finish() }
-                        .font(.subheadline.weight(.semibold)).foregroundStyle(Theme.accentSoft)
+                        .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accentSoft)
                 }
             }
             VStack(alignment: .leading, spacing: 8) {
                 if showArt, let art = step.art {
                     TutorialArtwork(art: art).frame(maxWidth: .infinity)
                 }
-                Text(LocalizedStringKey(step.titleKey)).font(.title3.bold()).lineLimit(1)
-                Text(LocalizedStringKey(step.bodyKey)).font(.subheadline).foregroundStyle(Color.primary.opacity(0.88))
+                Text(LocalizedStringKey(step.titleKey)).appFont(.title3, weight: .bold).lineLimit(1)
+                Text(LocalizedStringKey(step.bodyKey)).appFont(.subheadline).foregroundStyle(Color.primary.opacity(0.88))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .id(step.id)
@@ -238,7 +238,7 @@ private struct TutorialBubble: View {
                     if let next = TutorialGuide.next(index) { tutorial.go(to: next) } else { tutorial.finish() }
                 } label: {
                     Text(LocalizedStringKey(isLast ? "tutorial.done" : "tutorial.next"))
-                        .font(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 4)
+                        .appFont(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 4)
                 }
                 .buttonStyle(.glassProminent).tint(Theme.accent)
                 .layoutPriority(1)
@@ -277,13 +277,13 @@ private struct TutorialArtwork: View {
                 .shadow(color: Theme.accent.opacity(0.5), radius: 14, y: 6)
             switch art {
             case .welcome:
-                Image(systemName: "dumbbell.fill").font(.system(size: 56, weight: .bold)).foregroundStyle(.white)
+                Image(systemName: "dumbbell.fill").font(.system(size: 56 * AppTextScale, weight: .bold)).foregroundStyle(.white)
                     .rotationEffect(.degrees(phase ? 20 : -20))
             case .strap:
                 ZStack(alignment: .topTrailing) {
-                    Image(systemName: "figure.strengthtraining.functional").font(.system(size: 76)).foregroundStyle(.white)
+                    Image(systemName: "figure.strengthtraining.functional").font(.system(size: 76 * AppTextScale)).foregroundStyle(.white)
                     // Telefono legato al braccio che oscilla come durante una ripetizione.
-                    Image(systemName: "iphone.gen3").font(.system(size: 26, weight: .bold)).foregroundStyle(Theme.accent)
+                    Image(systemName: "iphone.gen3").font(.system(size: 26 * AppTextScale, weight: .bold)).foregroundStyle(Theme.accent)
                         .padding(4).background(.white, in: .rect(cornerRadius: 7))
                         .rotationEffect(.degrees(phase ? 15 : -15))
                         .offset(x: 8, y: phase ? 22 : 12)
@@ -295,14 +295,14 @@ private struct TutorialArtwork: View {
                         .stroke(.white, style: StrokeStyle(lineWidth: 9, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                     VStack(spacing: 0) {
-                        Image(systemName: "timer").font(.caption.bold())
-                        Text(verbatim: "10").font(.system(size: 30, weight: .black, design: .rounded))
+                        Image(systemName: "timer").appFont(.caption, weight: .bold)
+                        Text(verbatim: "10").font(.system(size: 30 * AppTextScale, weight: .black, design: .rounded))
                     }
                     .foregroundStyle(.white)
                 }
                 .frame(width: 96, height: 96)
             case .done:
-                Image(systemName: "checkmark.circle.fill").font(.system(size: 64)).foregroundStyle(.white)
+                Image(systemName: "checkmark.circle.fill").font(.system(size: 64 * AppTextScale)).foregroundStyle(.white)
                     .scaleEffect(phase ? 1.12 : 0.95)
             }
         }

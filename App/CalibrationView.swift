@@ -20,13 +20,13 @@ struct PositionPicker: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("position.title").font(.headline)
+            Text("position.title").appFont(.headline)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)], spacing: 10) {
                 ForEach(SensorPosition.allCases) { item in
                     Button { withAnimation(.snappy) { selected = item } } label: {
                         HStack(spacing: 10) {
-                            Image(systemName: item.symbol).font(.title3.weight(.semibold))
-                            Text(item.titleKey).font(.subheadline.bold()).multilineTextAlignment(.leading)
+                            Image(systemName: item.symbol).appFont(.title3, weight: .semibold)
+                            Text(item.titleKey).appFont(.subheadline, weight: .bold).multilineTextAlignment(.leading)
                             Spacer(minLength: 0)
                         }
                         .padding(.horizontal, 14).padding(.vertical, 16)
@@ -43,7 +43,7 @@ struct PositionPicker: View {
                     .buttonStyle(.plain)
                 }
             }
-            Text(selected.hintKey).font(.caption).foregroundStyle(.secondary)
+            Text(selected.hintKey).appFont(.caption).foregroundStyle(.secondary)
         }
         .sensoryFeedback(.selection, trigger: selected)
     }
@@ -60,7 +60,7 @@ struct CalibrationSummary: View {
             HStack(spacing: 14) {
                 Image(systemName: "slider.horizontal.3").foregroundStyle(Theme.accent).frame(width: 28)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("calib.open").font(.headline)
+                    Text("calib.open").appFont(.headline)
                     HStack(spacing: 4) {
                         Text(tuning.isCalibrated ? "calib.setupCalibrated" : "calib.setupDefault")
                         if tuning.sensitivity != 1 {
@@ -68,10 +68,10 @@ struct CalibrationSummary: View {
                             Text("calib.setupSensitivity \(tuning.sensitivity.formatted(.number.precision(.fractionLength(1))))")
                         }
                     }
-                    .font(.caption).foregroundStyle(.secondary)
+                    .appFont(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").font(.footnote).foregroundStyle(.secondary)
+                Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
             }
             .glassCard(padding: 16)
         }
@@ -154,13 +154,13 @@ struct CalibrationView: View {
                         ForEach(SensorPosition.allCases) { Text($0.titleKey).tag($0) }
                     }
                     .pickerStyle(.menu)
-                    Text(position.hintKey).font(.caption).foregroundStyle(.secondary)
+                    Text(position.hintKey).appFont(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard()
 
                 if !motion.isAvailable {
-                    Text("calib.noSensor").font(.footnote).foregroundStyle(.orange)
+                    Text("calib.noSensor").appFont(.footnote).foregroundStyle(.orange)
                 }
 
                 calibrationCard
@@ -170,7 +170,7 @@ struct CalibrationView: View {
                     testCard
                 }
 
-                Text("calib.footnote").font(.caption2).foregroundStyle(.secondary)
+                Text("calib.footnote").appFont(.caption2).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(20)
@@ -214,38 +214,38 @@ struct CalibrationView: View {
         VStack(alignment: .leading, spacing: 12) {
             switch mode {
             case .countdown:
-                Text("calib.getReady \(countdown)").font(.title3.bold())
+                Text("calib.getReady \(countdown)").appFont(.title3, weight: .bold)
                 Button("calib.cancel") { idle() }.buttonStyle(.glass)
             case .recording:
-                Text("calib.doReps \(Self.reps)").font(.title3.bold())
-                Text("calib.progress \(progress) \(Self.reps)").font(.title.bold()).foregroundStyle(Theme.accentSoft)
+                Text("calib.doReps \(Self.reps)").appFont(.title3, weight: .bold)
+                Text("calib.progress \(progress) \(Self.reps)").appFont(.title, weight: .bold).foregroundStyle(Theme.accentSoft)
                 Button("calib.finishNow") { box?.requestStop() }.buttonStyle(.glass)
                 Button("calib.cancel") { idle() }.buttonStyle(.glass)
             case .result:
                 if let r = result {
-                    Text("calib.resultTitle").font(.headline)
-                    Text(r.signal == .tilt ? "calib.resultSignalTilt" : "calib.resultSignalMove").font(.subheadline).foregroundStyle(.secondary)
-                    Text("calib.resultReps \(r.reps)").font(.subheadline).foregroundStyle(.secondary)
-                    Text(r.isReliable ? "calib.resultRegular" : "calib.resultIrregular").font(.subheadline).foregroundStyle(.secondary)
+                    Text("calib.resultTitle").appFont(.headline)
+                    Text(r.signal == .tilt ? "calib.resultSignalTilt" : "calib.resultSignalMove").appFont(.subheadline).foregroundStyle(.secondary)
+                    Text("calib.resultReps \(r.reps)").appFont(.subheadline).foregroundStyle(.secondary)
+                    Text(r.isReliable ? "calib.resultRegular" : "calib.resultIrregular").appFont(.subheadline).foregroundStyle(.secondary)
                     Button("calib.save") {
                         settings.setTuning(r.toTuning(sensitivity: tuning.sensitivity, now: Date().timeIntervalSince1970), for: position)
                         justSaved = true; result = nil; idle()
                     }
                     .buttonStyle(.glassProminent).tint(Theme.accent)
                 } else {
-                    Text("calib.needMore").font(.subheadline).foregroundStyle(.secondary)
+                    Text("calib.needMore").appFont(.subheadline).foregroundStyle(.secondary)
                 }
                 Button("calib.redo") { startCountdown() }.buttonStyle(.glass)
                 Button("calib.cancel") { idle() }.buttonStyle(.glass)
             case .idle, .testing:
                 if tuning.isCalibrated {
                     Text("calib.statusDone \(Date(timeIntervalSince1970: tuning.calibratedAt).formatted(date: .abbreviated, time: .omitted))")
-                        .font(.subheadline).foregroundStyle(.secondary)
+                        .appFont(.subheadline).foregroundStyle(.secondary)
                 } else {
-                    Text("calib.statusNone").font(.subheadline).foregroundStyle(.secondary)
+                    Text("calib.statusNone").appFont(.subheadline).foregroundStyle(.secondary)
                 }
-                if justSaved { Text("calib.saved").font(.subheadline.bold()).foregroundStyle(Theme.accentSoft) }
-                Text("calib.intro \(Self.reps)").font(.caption).foregroundStyle(.secondary)
+                if justSaved { Text("calib.saved").appFont(.subheadline, weight: .bold).foregroundStyle(Theme.accentSoft) }
+                Text("calib.intro \(Self.reps)").appFont(.caption).foregroundStyle(.secondary)
                 Button(tuning.isCalibrated ? "calib.redo" : "calib.start") { justSaved = false; startCountdown() }
                     .buttonStyle(.glassProminent).tint(Theme.accent)
                     .disabled(!motion.isAvailable)
@@ -259,7 +259,7 @@ struct CalibrationView: View {
 
     private var sensitivityCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("calib.sensitivityTitle").font(.headline)
+            Text("calib.sensitivityTitle").appFont(.headline)
             HStack {
                 Slider(value: $sensitivity, in: PositionTuning.minSensitivity...PositionTuning.maxSensitivity, step: 0.1) { editing in
                     if !editing {
@@ -273,8 +273,8 @@ struct CalibrationView: View {
             HStack {
                 Text("calib.less"); Spacer(); Text("calib.more")
             }
-            .font(.caption).foregroundStyle(.secondary)
-            Text("calib.sensitivityNote").font(.caption).foregroundStyle(.secondary)
+            .appFont(.caption).foregroundStyle(.secondary)
+            Text("calib.sensitivityNote").appFont(.caption).foregroundStyle(.secondary)
             Button("calib.reset") {
                 settings.resetTuning(for: position); sensitivity = 1; justSaved = false
             }
@@ -287,10 +287,10 @@ struct CalibrationView: View {
 
     private var testCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("calib.testTitle").font(.headline)
-            Text("calib.testNote").font(.caption).foregroundStyle(.secondary)
+            Text("calib.testTitle").appFont(.headline)
+            Text("calib.testNote").appFont(.caption).foregroundStyle(.secondary)
             if mode == .testing {
-                Text("calib.testCount").font(.footnote).foregroundStyle(.secondary)
+                Text("calib.testCount").appFont(.footnote).foregroundStyle(.secondary)
                 Text("\(testCount)")
                     .font(.system(size: 64, weight: .heavy, design: .rounded).monospacedDigit())
                     .frame(maxWidth: .infinity)

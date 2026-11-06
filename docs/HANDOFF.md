@@ -1272,3 +1272,17 @@ Tutorial invariato. **Non compilato** (controllata solo la sintassi).
 Come su Android: nella card `ex.recommended` della scheda Esercizi ogni esercizio ha a sinistra la foto della posizione
 iniziale (alta 72 pt, 4:3, angoli da 16, segnaposto `dumbbell.fill`) oppure, senza foto, `MuscleThumbnail`. Tutta la
 riga apre il dettaglio. Nessuna stringa nuova, tutorial e Core invariati. **Non compilato** (controllata solo la sintassi).
+
+## 6 novembre 2026 – Testi −20% e schede da 2 allenamenti (iOS fatto)
+- Testi: `AppTextScale = 0.8` in `Theme.swift` (come APP_TEXT_SCALE su Android) e modificatore `.appFont(stile, weight:,
+  design:, monospacedDigit:, monospaced:)` con `@ScaledMetric` (segue il Dynamic Type anche ad app aperta). Sostituiti tutti
+  i `.font(.stile...)` dell'app (467 righe + 2 condizionali); `.font(.system(size: X))` → `X * AppTextScale`, icone
+  comprese. Carattere predefinito `.appFont(.body)` alla radice (`MyGymHelperApp.swift`): anche pulsanti, interruttori,
+  campi, fogli e tutorial. Restano della dimensione di prima (scelta dell'utente): contatore 88 pt e timer 92 pt della
+  sessione, conteggio di prova della Calibrazione 64 pt, BMI della Nutrizione 64 pt e nota delle foto 8,8 pt.
+- Schede da 2 allenamenti: `CustomPlanInput.clamped()` 2-4; liste `twoA`/`twoB` e `split` con 2 allenamenti → total body
+  A e B per ogni livello; selettore 2/3/4 nel modulo. Nuova scheda pronta `twoDayFullBody` ("two-day-full-body", Pro)
+  in `Presets.swift`; stringhe `presets.twoDay` e `.summary`. Test: `PresetsTests` (6 schede, 2-4 allenamenti, scheda da
+  2) e `CustomPlansTests` (clamped 1 → 2, 2 allenamenti per ogni livello). Tutorial versione 20.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui). Controllata la sintassi e, con una copia in Python del
+  generatore, che con 2 allenamenti si ottengono 5/6/7 esercizi al giorno senza ripetizioni.

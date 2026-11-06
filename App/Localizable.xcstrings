@@ -908,6 +908,40 @@
         }
       }
     },
+    "presets.twoDay" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full body in 2 workouts"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full body in 2 allenamenti"
+          }
+        }
+      }
+    },
+    "presets.twoDay.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two full-body workouts, A and B: 2 workouts a week, for when you have little time."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due allenamenti per tutto il corpo, A e B: 2 allenamenti a settimana, per chi ha poco tempo."
+          }
+        }
+      }
+    },
     "profile.back" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13731,13 +13765,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ready-made workouts: choose your workout plan and a day and it becomes your list. At the top, with the Pro subscription, \"Create your plan\": enter height, weight, sex, age, goal (lose weight, maintain or build muscle), experience, workouts a week and where you train, and the app builds a plan for you; you can create more than one, rename them and redo them. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate, red for Expert. Everyone gets the basic total body plan; Pro adds Beginner, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching and the recommended plan, which changes every month based on your workouts."
+            "value" : "Ready-made workouts: choose your workout plan and a day and it becomes your list. At the top, with the Pro subscription, \"Create your plan\": enter height, weight, sex, age, goal (lose weight, maintain or build muscle), experience, workouts a week (2, 3 or 4) and where you train, and the app builds a plan for you; you can create more than one, rename them and redo them. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate, red for Expert. Everyone gets the basic total body plan; Pro adds Beginner, Full body in 2 workouts, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching and the recommended plan, which changes every month based on your workouts."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allenamenti già organizzati: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. In cima, con l'abbonamento Pro, \"Crea la tua scheda\": inserisci altezza, peso, sesso, età, obiettivo (dimagrire, mantenere o massa), esperienza, allenamenti a settimana e dove ti alleni, e l'app prepara una scheda su misura; puoi crearne più di una, rinominarle e rifarle. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio, rosso per Esperto. Per tutti c'è la scheda base total body; con il Pro anche Principiante, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching e la scheda consigliata, che cambia ogni mese in base ai tuoi allenamenti."
+            "value" : "Allenamenti già organizzati: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. In cima, con l'abbonamento Pro, \"Crea la tua scheda\": inserisci altezza, peso, sesso, età, obiettivo (dimagrire, mantenere o massa), esperienza, allenamenti a settimana (2, 3 o 4) e dove ti alleni, e l'app prepara una scheda su misura; puoi crearne più di una, rinominarle e rifarle. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio, rosso per Esperto. Per tutti c'è la scheda base total body; con il Pro anche Principiante, Full body in 2 allenamenti, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching e la scheda consigliata, che cambia ogni mese in base ai tuoi allenamenti."
           }
         }
       }

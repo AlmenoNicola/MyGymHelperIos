@@ -62,7 +62,7 @@ public enum TutorialTarget {
 public enum TutorialGuide {
     /// Versione del tutorial: aumentarla a ogni aggiornamento dei passi. Viene salvata quando l'utente lo
     /// completa o lo salta; il tutorial parte da solo solo se non e' mai stato visto (valore salvato 0).
-    public static let version = 19  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
+    public static let version = 20  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
                                     // 4: passi della Nutrizione nascosti mentre la scheda e' disattivata;
                                     // 5: i Piani passano dalla barra delle schede all'Area personale;
                                     // 6: "Suggerisci una funzione" (ultima voce dell'Area personale);
@@ -79,6 +79,7 @@ public enum TutorialGuide {
                                     // 17: nuova scheda Profilo (dati, avatar, muscoli, grafici); 'Area personale' diventa 'Impostazioni'
                                     // 18: calorie bruciate (stima) negli esercizi fatti, nel riepilogo e totale in fondo all'elenco
                                     // 19: "Cerca" in Elenchi (nome dell'elenco o esercizio) e zona Glutei, nel passo "exercisesLinks"
+                                    // 20: schede da 2 allenamenti a settimana ("Crea la tua scheda" e "Full body in 2 allenamenti") nel passo "presets"
 
     /// Tutti i passi, compresi quelli delle funzioni disattivate.
     public static let allSteps: [TutorialStep] = [

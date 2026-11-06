@@ -76,20 +76,20 @@ struct LegalDocumentView: View {
         VStack(alignment: .leading, spacing: 12) {
             if fallback {
                 Label("legal.itOnly", systemImage: "globe")
-                    .font(.footnote).foregroundStyle(Theme.accentSoft)
+                    .appFont(.footnote).foregroundStyle(Theme.accentSoft)
             }
             ForEach(blocks) { block in
                 switch block.kind {
                 case .title:
-                    if showsTitle { Text(verbatim: block.text).font(.title3.bold()) }
+                    if showsTitle { Text(verbatim: block.text).appFont(.title3, weight: .bold) }
                 case .heading:
-                    Text(verbatim: block.text).font(.headline).padding(.top, 8)
+                    Text(verbatim: block.text).appFont(.headline).padding(.top, 8)
                 case .paragraph:
-                    Text(verbatim: block.text).font(.callout).foregroundStyle(.primary.opacity(0.9))
+                    Text(verbatim: block.text).appFont(.callout).foregroundStyle(.primary.opacity(0.9))
                 case .bullet:
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(verbatim: "•").foregroundStyle(Theme.accent)
-                        Text(verbatim: block.text).font(.callout).foregroundStyle(.primary.opacity(0.9))
+                        Text(verbatim: block.text).appFont(.callout).foregroundStyle(.primary.opacity(0.9))
                     }
                 }
             }
