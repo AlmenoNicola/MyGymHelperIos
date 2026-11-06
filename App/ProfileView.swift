@@ -280,7 +280,6 @@ private struct MuscleUsage: View {
                     .buttonStyle(.plain)
                 }
             }
-            Text("profile.muscles.rule").font(.caption2).foregroundStyle(.secondary)
         }
     }
 }

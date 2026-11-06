@@ -136,7 +136,6 @@ struct WorkoutSetupView: View {
                 if !list.items.isEmpty {
                     Toggle("workout.autoNext", isOn: Binding(get: { list.autoNext }, set: { store.setAutoNext($0, for: list.id) }))
                         .tint(Theme.accent)
-                    Text("workout.autoNextNote").font(.caption).foregroundStyle(.secondary)
                     if let next = WorkoutListLogic.nextPending(list.items) {
                         Button { start(next, in: list) } label: {
                             Label("workout.startNext \(catalog.exercise(id: next.exerciseID)?.name ?? "")", systemImage: "play.fill")

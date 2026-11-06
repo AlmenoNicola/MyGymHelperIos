@@ -1261,3 +1261,9 @@ Stessa modifica già fatta su Android.
   non servono, `lists.none` se non c'è nulla. La zona Glutei compare da sola nei filtri per zona e negli elenchi pronti.
 - Stringhe `region.glutes`, `lists.search`, `lists.none`; tutorial versione 19 (testi del passo "exercisesLinks").
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui).
+
+## 6 novembre 2026 – Due testi esplicativi tolti (iOS)
+Come su Android: tolta la nota sotto la spunta "Esercizio successivo" (`workout.autoNextNote`, `WorkoutSetupView.swift`)
+e la regola sotto le percentuali dei muscoli nel Profilo (`profile.muscles.rule`, `ProfileView.swift`). La spunta, le
+percentuali e la scritta del muscolo selezionato restano; le chiavi restano in `Localizable.xcstrings` (non usate).
+Tutorial invariato. **Non compilato** (controllata solo la sintassi).
