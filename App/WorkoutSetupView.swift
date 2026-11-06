@@ -151,6 +151,10 @@ struct WorkoutSetupView: View {
                     }
                     .buttonStyle(.glass)
                     .disabled(!list.items.contains { $0.done })
+                    // Totale delle calorie (stima) degli esercizi fatti, dopo Reset
+                    if list.items.contains(where: \.done) {
+                        CaloriesTotalCard(items: list.items)
+                    }
                 }
             }
             if consentAt == 0 {
@@ -178,6 +182,15 @@ struct WorkoutSetupView: View {
                         else { Text("workout.missingExercise").font(.subheadline.bold()).lineLimit(1) }
                         Text(verbatim: item.parameters.summaryText).font(.caption).foregroundStyle(.secondary)
                             .lineLimit(1).minimumScaleFactor(0.7)
+                        // Esercizio fatto: calorie bruciate (stima) nelle serie fatte
+                        let kcal = CalorieEstimator.display(item.kcal)
+                        if item.done && kcal > 0 {
+                            HStack(spacing: 4) {
+                                Image(systemName: "flame.fill").font(.system(size: 14))
+                                Text("calories.item \(kcal)").font(.system(size: 12, weight: .semibold))
+                            }
+                            .foregroundStyle(Theme.done)
+                        }
                     }
                     Spacer(minLength: 0)
                 }

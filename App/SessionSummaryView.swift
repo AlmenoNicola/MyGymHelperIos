@@ -10,6 +10,8 @@ struct SessionSummaryView: View {
     let saved: Bool
     /// Testo del pulsante finale ("Fine" o "Torna all'elenco").
     var doneKey: LocalizedStringKey = "session.done"
+    /// Elenco della sessione: quando tutti i suoi esercizi sono fatti si mostra il totale delle calorie.
+    var listID: UUID? = nil
     /// Esercizio successivo dell'elenco da proporre (nil = nessuno).
     var nextName: String? = nil
     var onNext: (() -> Void)? = nil
@@ -26,6 +28,13 @@ struct SessionSummaryView: View {
     private var records: [SetRecord] { controller.records }
 
     private var current: WorkoutParameters { controller.parameters }
+
+    /// Calorie stimate di questo esercizio (stesso calcolo salvato nell'elenco).
+    private var sessionKcal: Double {
+        CalorieEstimator.exerciseKcal(sets: records, restSeconds: controller.restSeconds,
+                                      isCompound: controller.exercise?.isCompound ?? false,
+                                      bodyWeightKg: ProfileData.bodyWeightKg())
+    }
 
     /// Regole fisse: con l'esercizio si usano multiarticolare/gambe reali; senza, si deduce dall'arto scelto.
     private var fixed: CoachingResult? {
@@ -77,6 +86,15 @@ struct SessionSummaryView: View {
                         }
                     }
                     if records.isEmpty { Text("summary.empty").foregroundStyle(.secondary) }
+                    // Calorie bruciate (stima) delle serie fatte
+                    let kcal = CalorieEstimator.display(sessionKcal)
+                    if kcal > 0 {
+                        HStack(spacing: 8) {
+                            Image(systemName: "flame.fill").font(.system(size: 18)).foregroundStyle(Theme.done)
+                            Text("calories.session \(kcal)").font(.subheadline.weight(.semibold))
+                                .lineLimit(1).minimumScaleFactor(0.7)
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard()
@@ -117,6 +135,11 @@ struct SessionSummaryView: View {
                 if !saved {
                     Label("session.notSaved", systemImage: "info.circle")
                         .font(.footnote).foregroundStyle(.secondary)
+                }
+
+                // Ultimo esercizio dell'elenco appena finito: totale delle calorie di tutto l'allenamento
+                if let list = WorkoutListStore.shared.list(listID), !list.items.isEmpty, list.items.allSatisfy(\.done) {
+                    CaloriesTotalCard(items: list.items)
                 }
 
                 if let nextName, let onNext {

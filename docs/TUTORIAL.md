@@ -23,7 +23,7 @@ Differenza voluta: sui passi delle schede Android illumina la voce nella barra i
 non misurabile) illumina il titolo della schermata della scheda. Se un elemento non è sullo schermo (es. profilo
 Nutrizione senza consenso, o una scheda iOS lasciata in una sotto-schermata) il fumetto compare al centro, senza riquadro.
 
-## Passi attuali (versione 17)
+## Passi attuali (versione 18)
 
 I passi 16 e 17 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
 Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 25 passi
@@ -164,3 +164,6 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
   "infoTab": "profileTab" (`tab.profile`), "profileMuscles" (`profile.muscles`), "profileCharts" (`profile.charts`).
   Aggiornati i testi che citavano l'Area personale (`tutorial.welcome.body`, `tutorial.infoTab.*`, `tutorial.suggest.body`).
   27 passi in tutto, 25 mostrati con la Nutrizione spenta. Stessi passi su Android e iOS.
+- 6 novembre 2026 (versione 18): calorie bruciate (stima) negli esercizi fatti, nel riepilogo e totale in fondo
+  all'elenco. Aggiornati i testi dei passi "list" (`tutorial.list.body`) e "session" (`tutorial.session.body`); nessun
+  passo nuovo. Stessi testi su Android e iOS.

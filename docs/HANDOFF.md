@@ -1234,3 +1234,19 @@ Stessa modifica già fatta su Android. Barra delle schede (Nutrizione spenta): A
   fatte a mano, `tools/build_legal.py` non rieseguito). `docs/TUTORIAL.md` alla versione 17.
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui): `swift test` da lanciare sul Mac. Controllata solo la
   sintassi dei file Swift e, con una copia in Python, la parte dell'avatar (tracciati dentro 240×520, "M120.0 90.0").
+
+## 6 novembre 2026 – Calorie bruciate per esercizio e totale dell'allenamento (iOS)
+Stessa funzione già fatta su Android, per tutti i piani (Free compreso).
+- Calcolo (Core `Calories.swift`, nuovo, `CalorieEstimator` uguale a Calories.kt): kcal = MET × peso corporeo × ore;
+  solo serie con almeno una ripetizione; tempo = durata di ogni serie fatta (tra 1,5 e 8 s a ripetizione, 3 s se 0) +
+  (serie fatte − 1) × pausa; MET 6,0 multiarticolari, 3,5 gli altri e il conteggio libero. Peso: ultima pesata del
+  Profilo, altrimenti il peso del profilo salute, altrimenti 70 kg (con `calories.defaultWeight`). Su iOS non c'è AppData:
+  `bodyWeight(weights:profileWeightKg:)` e `ProfileData.bodyWeightKg()` nell'app. Valore mostrato: `.rounded()`, negativi a 0.
+- Dati: `WorkoutItem.kcal` (default 0, decodifica tollerante per gli elenchi di prima). `WorkoutListStore.setDone(_:in:kcal:)`
+  a fine sessione (rifacendo l'esercizio il valore si sostituisce); `reset` azzera fatto e calorie.
+- Schermate: riga "≈ N kcal" sotto gli esercizi fatti dell'elenco (`WorkoutSetupView`); riga `calories.session` nel
+  riepilogo (`SessionSummaryView`); nuovo `CaloriesTotalCard` (in fondo all'elenco dopo Reset, se almeno un esercizio è
+  fatto; nel riepilogo quando tutti gli esercizi dell'elenco sono fatti, prima dei pulsanti).
+- Stringhe `calories.*` (6), tutorial versione 18 (`tutorial.list.body`, `tutorial.session.body`).
+- Test: `CaloriesTests.swift` (stessi casi di Android).
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); valori attesi dei test ricontrollati a mano.

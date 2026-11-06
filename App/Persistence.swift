@@ -251,8 +251,14 @@ final class WorkoutListStore {
     func setDone(_ itemID: UUID, in id: UUID, done: Bool = true) {
         update(id) { l in if let i = l.items.firstIndex(where: { $0.id == itemID }) { l.items[i].done = done } }
     }
-    /// "Reset": tutti gli esercizi tornano da fare.
-    func reset(_ id: UUID) { update(id) { l in for i in l.items.indices { l.items[i].done = false } } }
+    /// Esercizio fatto a fine sessione con le calorie stimate: rifacendolo il valore si sostituisce (non si somma).
+    func setDone(_ itemID: UUID, in id: UUID, kcal: Double) {
+        update(id) { l in
+            if let i = l.items.firstIndex(where: { $0.id == itemID }) { l.items[i].done = true; l.items[i].kcal = kcal }
+        }
+    }
+    /// "Reset": tutti gli esercizi tornano da fare, senza calorie.
+    func reset(_ id: UUID) { update(id) { l in for i in l.items.indices { l.items[i].done = false; l.items[i].kcal = 0 } } }
     func setAutoNext(_ on: Bool, for id: UUID) { update(id) { $0.autoNext = on } }
     /// Sostituisce gli esercizi di un elenco (scheda pronta usata sull'elenco attuale).
     func replaceItems(_ items: [WorkoutItem], in id: UUID) { update(id) { $0.items = items } }
@@ -370,6 +376,13 @@ final class CustomPlanStore {
 enum ProfileData {
     private static var context: ModelContext { PersistenceController.container.mainContext }
     private static var persistent: Bool { UserDefaults.standard.double(forKey: ConsentStore.grantedAtKey) > 0 }
+
+    /// Peso corporeo per la stima delle calorie: ultima pesata del Profilo, altrimenti il peso del profilo salute;
+    /// nil se non c'e' (si usano 70 kg e si avvisa con calories.defaultWeight).
+    static func bodyWeightKg() -> Double? {
+        let profile = (try? context.fetch(FetchDescriptor<HealthProfileRecord>()))?.first
+        return CalorieEstimator.bodyWeight(weights: weightLog(), profileWeightKg: profile?.weightKg)
+    }
 
     /// Pesate salvate, dalla piu' vecchia (formato del Core).
     static func weightLog() -> [WeightEntry] {

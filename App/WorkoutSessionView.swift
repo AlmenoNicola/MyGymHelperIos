@@ -400,13 +400,13 @@ private struct SessionContent: View {
         let nextExercise = next.flatMap { catalog.exercise(id: $0.exerciseID) }
         if let list, let next, let nextExercise {
             SessionSummaryView(controller: controller, tier: subscriptions.tier, saved: saved, doneKey: "workout.backToList",
-                               nextName: nextExercise.name,
+                               listID: list.id, nextName: nextExercise.name,
                                onNext: { onNext(SessionTarget(exercise: nextExercise, parameters: next.parameters, listID: list.id, itemID: next.id)) }) {
                 dismiss()
             }
         } else {
             SessionSummaryView(controller: controller, tier: subscriptions.tier, saved: saved,
-                               doneKey: list != nil ? "workout.backToList" : "session.done") { dismiss() }
+                               doneKey: list != nil ? "workout.backToList" : "session.done", listID: list?.id) { dismiss() }
         }
     }
 
@@ -414,7 +414,11 @@ private struct SessionContent: View {
     /// L'esercizio dell'elenco svolto (almeno una serie) diventa verde, anche senza consenso (solo in memoria).
     private func save() {
         if let listID = target.listID, let itemID = target.itemID, !controller.records.isEmpty {
-            WorkoutListStore.shared.setDone(itemID, in: listID)
+            // Con le calorie stimate delle serie fatte (sostituiscono quelle della volta prima)
+            let kcal = CalorieEstimator.exerciseKcal(sets: controller.records, restSeconds: controller.restSeconds,
+                                                     isCompound: controller.exercise?.isCompound ?? false,
+                                                     bodyWeightKg: ProfileData.bodyWeightKg())
+            WorkoutListStore.shared.setDone(itemID, in: listID, kcal: kcal)
         }
         guard !saved, consentAt > 0, !controller.records.isEmpty else { return }
         saved = true

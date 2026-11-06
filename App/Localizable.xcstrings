@@ -7,6 +7,108 @@
     " " : {
 
     },
+    "calories.defaultWeight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight not entered: 70 kg used. Enter it in Profile for a better estimate."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peso corporeo non inserito: sono stati usati 70 kg. Inseriscilo nel Profilo per una stima migliore."
+          }
+        }
+      }
+    },
+    "calories.disclaimer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is only a rough estimate, not a measurement: it is based on the sets you actually did (length of sets and rests), your body weight and average values for weight training. Real calorie burn depends on intensity, loads and your metabolism and may differ. It does not replace advice from doctors, nutritionists or personal trainers."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È solo una stima indicativa, non una misura: si basa sulle serie che hai fatto davvero (durata di serie e pause), sul tuo peso corporeo e su valori medi dell'allenamento con i pesi. Il consumo reale dipende da intensità, carichi e metabolismo e può essere diverso. Non sostituisce il parere di medici, nutrizionisti o personal trainer."
+          }
+        }
+      }
+    },
+    "calories.item %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %lld kcal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %lld kcal"
+          }
+        }
+      }
+    },
+    "calories.partialTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories burned so far (exercises done)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate finora (esercizi fatti)"
+          }
+        }
+      }
+    },
+    "calories.session %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories burned (estimate): ≈ %lld kcal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate (stima): ≈ %lld kcal"
+          }
+        }
+      }
+    },
+    "calories.totalTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total calories burned in this workout"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate in tutto l'allenamento"
+          }
+        }
+      }
+    },
     "compare.customPlans" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13373,13 +13475,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green; Reset clears them. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Change list). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
+            "value" : "Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green and show the calories burned (an estimate, counting only the sets you did); at the bottom you find the total with a note. Reset clears them. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Change list). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi; Reset li azzera. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Cambia elenco). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
+            "value" : "Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi e mostrano le calorie bruciate (una stima, calcolata solo sulle serie fatte); in fondo trovi il totale con un avviso. Reset li azzera. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Cambia elenco). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
           }
         }
       }
@@ -13628,13 +13730,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose where the phone is and press Start. The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\". During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary and tips."
+            "value" : "Choose where the phone is and press Start. The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\". During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary with the estimated calories burned, and tips."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scegli dove hai il telefono e premi Avvia. Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\". Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo e i consigli."
+            "value" : "Scegli dove hai il telefono e premi Avvia. Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\". Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo con la stima delle calorie bruciate e i consigli."
           }
         }
       }

@@ -12,18 +12,21 @@ public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
     public var weightKg: Double
     public var done: Bool
     public var perSet: [SetTarget]
+    /// Calorie bruciate (stima) nelle serie fatte l'ultima volta; si azzerano con Reset.
+    public var kcal: Double
 
     /// Parametri di partenza di un esercizio nuovo (poi precompilati da scheda e ultima sessione).
     public static let defaultParameters = WorkoutParameters(sets: 3, reps: 10, restSeconds: 90, weightKg: 0)
 
     public init(id: UUID = UUID(), exerciseID: String, sets: Int = WorkoutItem.defaultParameters.sets,
                 reps: Int = WorkoutItem.defaultParameters.reps, restSeconds: Int = WorkoutItem.defaultParameters.restSeconds,
-                weightKg: Double = WorkoutItem.defaultParameters.weightKg, done: Bool = false, perSet: [SetTarget] = []) {
+                weightKg: Double = WorkoutItem.defaultParameters.weightKg, done: Bool = false, perSet: [SetTarget] = [],
+                kcal: Double = 0) {
         self.id = id; self.exerciseID = exerciseID; self.sets = sets; self.reps = reps
-        self.restSeconds = restSeconds; self.weightKg = weightKg; self.done = done; self.perSet = perSet
+        self.restSeconds = restSeconds; self.weightKg = weightKg; self.done = done; self.perSet = perSet; self.kcal = kcal
     }
 
-    /// Lettura dei dati salvati: gli elenchi salvati prima delle serie diverse non hanno "perSet".
+    /// Lettura dei dati salvati: gli elenchi salvati prima delle serie diverse non hanno "perSet" (e prima delle calorie "kcal").
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(UUID.self, forKey: .id)
@@ -34,6 +37,8 @@ public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
         weightKg = try c.decode(Double.self, forKey: .weightKg)
         done = try c.decode(Bool.self, forKey: .done)
         perSet = try c.decodeIfPresent([SetTarget].self, forKey: .perSet) ?? []
+        // Elenchi salvati prima delle calorie: nessun valore
+        kcal = try c.decodeIfPresent(Double.self, forKey: .kcal) ?? 0
     }
 
     public var parameters: WorkoutParameters {
