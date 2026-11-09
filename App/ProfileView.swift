@@ -47,6 +47,12 @@ struct ProfileView: View {
                 } else {
                     ProgressView().onAppear(perform: createProfile)
                 }
+                // Storico allenamenti (prima era in Allenamento): dopo i grafici o, senza consenso, sotto l'invito
+                NavigationLink { HistoryView() } label: {
+                    Label("history.open", systemImage: "clock.arrow.circlepath").lineLimit(1).frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.glass)
+                .tutorialTarget(TutorialTarget.profileHistory)
             }
             .padding(20)
         }

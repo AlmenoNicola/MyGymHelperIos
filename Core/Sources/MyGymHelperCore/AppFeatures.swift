@@ -18,6 +18,11 @@ public enum AppFeatures {
     /// (tornano il pulsante, l'interruttore dell'AI, i testi su formati e privacy, il sottotitolo e il testo del tutorial).
     public static let planPhotoImportEnabled = false
 
+    /// Collegamento con Health Connect (Android) e Apple Salute (iOS): scrittura degli allenamenti completati.
+    /// Nascosto e spento per ora (9 novembre 2026): niente riquadro nelle Impostazioni, nessuna scrittura e, su
+    /// Android, nessun permesso nel manifest. Il codice resta: rimettere `true` per riattivarlo.
+    public static let healthSyncEnabled = false
+
     /// Vero se e' attivo almeno un modo per caricare una scheda (file o foto).
     public static var planImportEnabled: Bool { planFileImportEnabled || planPhotoImportEnabled }
 }

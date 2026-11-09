@@ -35,7 +35,7 @@ final class AppSettings {
     private(set) var explainExercise = true
     /// Elenco scelto nella scheda Allenamento (nil = nessuno: al primo esercizio si crea "Allenamento odierno").
     private(set) var currentListID: UUID?
-    /// Attrezzi che l'utente ha in casa (solo piano Pro) e filtro "Solo i miei attrezzi" acceso o spento.
+    /// Attrezzi che l'utente ha a disposizione (solo piano Pro) e filtro "Solo attrezzi disponibili" acceso o spento.
     private(set) var ownedEquipment: Set<String> = []
     private(set) var equipmentFilter = false
 

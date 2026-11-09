@@ -3,8 +3,9 @@ import CoreMotion
 import Observation
 import MyGymHelperCore
 
-/// Legge gravita' e accelerazione dell'utente a 50 Hz e conta le ripetizioni con il RepCounter del core:
+/// Legge gravita', accelerazione dell'utente e giroscopio a 50 Hz e conta le ripetizioni con il RepCounter del core:
 /// una ripetizione vale solo con andata e ritorno completi dell'arto (come MotionService.kt su Android).
+/// L'asse del movimento (su/giu' o sinistra/destra) e' in `config.axis` e si puo' cambiare durante la serie.
 /// Richiede NSMotionUsageDescription in Info.plist.
 /// Il lavoro sui sensori avviene su una coda seriale; lo stato per la UI viene pubblicato sul thread principale.
 @Observable
@@ -13,8 +14,10 @@ final class MotionService {
     @ObservationIgnored private let queue: OperationQueue = {
         let q = OperationQueue(); q.maxConcurrentOperationCount = 1; q.qualityOfService = .userInitiated; return q
     }()
-    @ObservationIgnored private let config: RepCounterConfig
+    @ObservationIgnored private var config: RepCounterConfig
     @ObservationIgnored private var counter: RepCounter
+    /// Ripetizioni contate nella serie prima di un cambio d'asse (il contatore riparte da zero con il nuovo asse).
+    @ObservationIgnored private var baseCount = 0
     @ObservationIgnored private var counting = false
     @ObservationIgnored private var lastCount = -1
     @ObservationIgnored private var lastLow = false
@@ -45,7 +48,9 @@ final class MotionService {
         manager.startDeviceMotionUpdates(to: queue) { [weak self] motion, _ in
             guard let self, let m = motion else { return }
             let g = m.gravity, a = m.userAcceleration   // in g; userAcceleration e' gia' senza gravita'
-            self.handle(t: m.timestamp, gravity: Vector3(g.x, g.y, g.z), linear: Vector3(a.x, a.y, a.z))
+            let r = m.rotationRate                      // rad/s, stesso sistema di riferimento di gravity
+            self.handle(t: m.timestamp, gravity: Vector3(g.x, g.y, g.z), linear: Vector3(a.x, a.y, a.z),
+                        rotation: Vector3(r.x, r.y, r.z))
         }
     }
 
@@ -61,6 +66,7 @@ final class MotionService {
         queue.addOperation { [weak self] in
             guard let self else { return }
             self.counter = RepCounter(config: self.config)
+            self.baseCount = 0
             self.counting = true
             self.lastCount = -1
             self.lastLow = false
@@ -69,16 +75,29 @@ final class MotionService {
         }
     }
 
+    /// Cambia l'asse del movimento (pulsante durante il conteggio): le ripetizioni già contate nella serie restano,
+    /// il contatore riparte con il nuovo asse (nuova calibrazione dei primi secondi). Vale anche per le serie dopo.
+    func setAxis(_ axis: MovementAxis) {
+        queue.addOperation { [weak self] in
+            guard let self, self.config.axis != axis else { return }
+            self.baseCount += self.counter.count
+            self.config.axis = axis
+            self.counter = RepCounter(config: self.config)
+            self.lastCalibrated = false
+            self.publish(count: self.baseCount, low: false, peak: 0, calibrated: false)
+        }
+    }
+
     /// Smette di contare (durante la pausa).
     func pauseCounting() {
         queue.addOperation { [weak self] in self?.counting = false }
     }
 
-    private func handle(t: Double, gravity: Vector3, linear: Vector3) {
-        rawSink?(t, gravity, linear)
+    private func handle(t: Double, gravity: Vector3, linear: Vector3, rotation: Vector3) {
+        rawSink?(t, gravity, linear)       // calibrazione e prova: senza giroscopio, come prima
         guard counting else { return }
-        counter.process(t: t, gravity: gravity, linear: linear)
-        let count = counter.count
+        counter.process(t: t, gravity: gravity, linear: linear, rotation: rotation)
+        let count = baseCount + counter.count
         let low = counter.signalConfidence < 0.4
         let calibrated = counter.isCalibrated
         guard count != lastCount || low != lastLow || calibrated != lastCalibrated else { return }

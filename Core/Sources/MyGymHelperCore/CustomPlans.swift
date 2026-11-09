@@ -41,7 +41,7 @@ public struct CustomPlanInput: Equatable, Hashable, Sendable {
     public var weightKg: Double
     public var goal: Goal
     public var experience: Experience
-    /// Sempre 2, 3 o 4.
+    /// Da 1 a 7 (le schede pronte restano da 2, 3 o 4).
     public var daysPerWeek: Int
     public var place: TrainingPlace
     /// Attrezzi in casa usati se `place` = .home (nomi di `HomeEquipment.choices`).
@@ -60,10 +60,14 @@ public struct CustomPlanInput: Equatable, Hashable, Sendable {
         c.age = min(max(age, 18), 100)
         c.heightCm = min(max(heightCm, 120), 230)
         c.weightKg = min(max(weightKg, 30), 250)
-        c.daysPerWeek = min(max(daysPerWeek, 2), 4)   // Sempre 2, 3 o 4
+        c.daysPerWeek = min(max(daysPerWeek, Self.minDays), Self.maxDays)   // Da 1 a 7
         c.ownedEquipment = ownedEquipment.filter { HomeEquipment.choices.contains($0) }
         return c
     }
+
+    /// Allenamenti a settimana possibili per "Crea la tua scheda".
+    public static let minDays = 1
+    public static let maxDays = 7
 
     public var bmi: BMIResult? { BMICalculator.calculate(weightKg: weightKg, heightCm: heightCm) }
 
@@ -104,6 +108,13 @@ public struct CustomPlanNotes: Equatable, Sendable {
     public let lowImpact: Bool
     /// Pause più lunghe e ripetizioni non sotto 10: età da 50 anni.
     public let gentleLoads: Bool
+    /// Principiante con 5 o più allenamenti a settimana: invito a riposare.
+    public let manyDaysBeginner: Bool
+
+    public init(bmi: BMIResult?, dailyCalories: Int, lowImpact: Bool, gentleLoads: Bool, manyDaysBeginner: Bool = false) {
+        self.bmi = bmi; self.dailyCalories = dailyCalories; self.lowImpact = lowImpact
+        self.gentleLoads = gentleLoads; self.manyDaysBeginner = manyDaysBeginner
+    }
 }
 
 public enum CustomPlanGenerator {
@@ -122,6 +133,11 @@ public enum CustomPlanGenerator {
     static let lower: [MuscleGroup] = [.quads, .hamstrings, .glutes, .calves, .abs, .quads, .obliques]
     static let twoA: [MuscleGroup] = [.quads, .chest, .lats, .hamstrings, .abs, .shoulders, .biceps]
     static let twoB: [MuscleGroup] = [.glutes, .lats, .chest, .quads, .abs, .triceps, .calves]
+    /// 1 allenamento: total body unico.
+    static let one: [MuscleGroup] = [.quads, .chest, .lats, .hamstrings, .shoulders, .abs, .glutes]
+
+    /// Giorno di stretching aggiunto in fondo con 7 allenamenti.
+    public static let stretchingDayKey = "presets.day.stretching"
 
     static let excludedCategories: Set<String> = ["olympic", "strongman"]
 
@@ -131,18 +147,35 @@ public enum CustomPlanGenerator {
     }
 
     /// Divisione della settimana:
+    /// - 6 o 7 allenamenti → push / pull / legs due volte (A e B; con 7 si aggiunge lo stretching in `generate`);
+    /// - 5 allenamenti → parte alta / parte bassa + push / pull / legs;
     /// - 4 allenamenti → parte alta / parte bassa (A e B);
     /// - 2 allenamenti → total body A e B (ogni livello di esperienza);
+    /// - 1 allenamento → total body unico;
     /// - 3 allenamenti, principiante → total body A/B/C;
     /// - 3 allenamenti, intermedio o avanzato → push / pull / legs.
     public static func split(_ input: CustomPlanInput) -> [(String, [MuscleGroup])] {
-        if input.daysPerWeek >= 4 {
+        // 6 o 7 allenamenti → push / pull / legs ripetuto (A e B)
+        if input.daysPerWeek >= 6 {
+            return [("presets.day.pushA", push), ("presets.day.pullA", pull), ("presets.day.legsA", legs),
+                    ("presets.day.pushB", push), ("presets.day.pullB", pull), ("presets.day.legsB", legs)]
+        }
+        // 5 allenamenti → parte alta / parte bassa + push / pull / legs
+        if input.daysPerWeek == 5 {
+            return [("presets.day.upper", upper), ("presets.day.lower", lower),
+                    ("presets.day.push", push), ("presets.day.pull", pull), ("presets.day.legs", legs)]
+        }
+        if input.daysPerWeek == 4 {
             return [("presets.day.upperA", upper), ("presets.day.lowerA", lower),
                     ("presets.day.upperB", upper), ("presets.day.lowerB", lower)]
         }
         // 2 allenamenti → total body A e B (ogni livello di esperienza)
-        if input.daysPerWeek <= 2 {
+        if input.daysPerWeek == 2 {
             return [("presets.day.a", twoA), ("presets.day.b", twoB)]
+        }
+        // 1 allenamento → total body unico
+        if input.daysPerWeek <= 1 {
+            return [("presets.day.single", one)]
         }
         if input.experience == .beginner {
             return [("presets.day.a", fullA), ("presets.day.b", fullB), ("presets.day.c", fullC)]
@@ -157,6 +190,11 @@ public enum CustomPlanGenerator {
 
     /// Dai 50 anni: pause più lunghe e mai meno di 10 ripetizioni.
     public static func gentleLoads(_ input: CustomPlanInput) -> Bool { input.age >= 50 }
+
+    /// Principiante con 5 o più allenamenti a settimana: si consiglia di riposare (2-4 bastano per iniziare).
+    public static func isManyDaysBeginner(_ input: CustomPlanInput) -> Bool {
+        input.experience == .beginner && input.daysPerWeek >= 5
+    }
 
     /// L'esercizio si può fare dove si allena l'utente?
     public static func isDoable(_ ex: CatalogExercise, _ input: CustomPlanInput) -> Bool {
@@ -180,10 +218,12 @@ public enum CustomPlanGenerator {
 
     public static func notes(_ input: CustomPlanInput) -> CustomPlanNotes {
         let i = input.clamped()
-        let activity: ActivityLevel = i.daysPerWeek >= 4 ? .moderate : .light
+        // Attività dagli allenamenti a settimana: da 6 alta, da 4 moderata, altrimenti leggera
+        let activity: ActivityLevel = i.daysPerWeek >= 6 ? .high : i.daysPerWeek >= 4 ? .moderate : .light
         let kcal = NutritionCalculator.targets(sex: i.sex, weightKg: i.weightKg, heightCm: i.heightCm,
                                                ageYears: i.age, activity: activity, goal: i.goal).calories
-        return CustomPlanNotes(bmi: i.bmi, dailyCalories: kcal, lowImpact: isLowImpact(i), gentleLoads: gentleLoads(i))
+        return CustomPlanNotes(bmi: i.bmi, dailyCalories: kcal, lowImpact: isLowImpact(i), gentleLoads: gentleLoads(i),
+                               manyDaysBeginner: isManyDaysBeginner(i))
     }
 
     /// Ordinamento stabile con criteri in sequenza (come sortedWith(compareBy ... thenBy ...) in Kotlin):
@@ -207,7 +247,9 @@ public enum CustomPlanGenerator {
     ///   esercizi base dell'app; mai lo stesso esercizio due volte nella scheda (se non ce ne sono altri si ripete,
     ///   ma mai nello stesso giorno);
     /// - serie, ripetizioni e pausa secondo obiettivo ed esperienza (`parametersFor`);
-    /// - dimagrimento: in fondo a ogni allenamento un esercizio pliometrico (a meno che sia a basso impatto).
+    /// - dimagrimento: in fondo a ogni allenamento un esercizio pliometrico (a meno che sia a basso impatto);
+    /// - 7 allenamenti: in fondo il giorno di stretching e mobilità della scheda pronta "Corpo libero e stretching"
+    ///   (solo gli esercizi presenti nel catalogo; niente finale pliometrico).
     public static func generate(_ input: CustomPlanInput, catalog: [CatalogExercise], seed: String,
                                 planID: String? = nil) -> PresetPlan {
         let i = input.clamped()
@@ -249,6 +291,13 @@ public enum CustomPlanGenerator {
                 }
             }
             if !items.isEmpty { days.append(PresetDay(titleKey: key, items: items)) }
+        }
+        // 7 allenamenti: un giorno di stretching e mobilità (esercizi della scheda pronta presenti nel catalogo)
+        if i.daysPerWeek >= 7 {
+            let ids = Set(catalog.map(\.id))
+            let stretch = PresetPlans.bodyweightStretching.days.first { $0.titleKey == stretchingDayKey }?.items
+                .filter { ids.contains($0.exerciseID) } ?? []
+            if !stretch.isEmpty { days.append(PresetDay(titleKey: stretchingDayKey, items: stretch)) }
         }
         let level: String
         switch i.experience { case .beginner: level = "beginner"; case .intermediate: level = "intermediate"; case .advanced: level = "expert" }

@@ -25,32 +25,32 @@ Nutrizione senza consenso, o una scheda iOS lasciata in una sotto-schermata) il 
 
 ## Passi attuali (versione 21)
 
-I passi 16 e 17 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
+I passi 14 e 15 (Nutrizione) restano nell'elenco completo (`allSteps`) ma **non vengono mostrati** finché la scheda
 Nutrizione è disattivata (`AppFeatures.NUTRITION_ENABLED` / `AppFeatures.nutritionEnabled` = false): l'utente vede 25 passi
-(il passo 15, attrezzi in casa, si nasconde solo con `AppFlags.HOME_EQUIPMENT` / `AppFlags.homeEquipment` = false).
+(il passo 13, attrezzi in casa, si nasconde solo con `AppFlags.HOME_EQUIPMENT` / `AppFlags.homeEquipment` = false).
 
 | # | id | Scheda | Elemento illuminato | Contenuto |
 | --- | --- | --- | --- | --- |
 | 1 | welcome | – | disegno | Benvenuto, si può saltare e rivedere dalle Impostazioni |
 | 2 | strap | – | disegno | Telefono legato a braccio/avambraccio/coscia/stinco/addome; in tasca meno preciso |
 | 3 | workoutTab | Allenamento | scheda | A cosa serve la scheda |
-| 4 | list | Allenamento | elenco attuale | Esercizi con parametri, avvio/modifica/elimina, verde, Reset, "Esercizio successivo", più elenchi (Mid/Full) |
-| 5 | addExercise | Allenamento | Aggiungi esercizio | Schermata di scelta: mappa, zone, tipo, ricerca; aggiunta con i parametri |
+| 4 | list | Allenamento | elenco attuale (senza elenchi, Pro: «Crea la tua scheda») | Esercizi con parametri, avvio/modifica/elimina, verde, Reset, "Esercizio successivo", più elenchi (Mid/Full) |
+| 5 | addExercise | Allenamento | Aggiungi esercizio (dentro l'elenco; il riquadro degli esercizi si apre da solo) | Schermata di scelta: mappa, zone, tipo, ricerca; aggiunta con i parametri |
 | 6 | variedSets | Allenamento | elenco attuale | Serie diverse (Mid/Full): dalla matita righe con numero di serie, ripetizioni e peso (serie uguali in una riga sola); in allenamento si vedono e si sentono quelli della serie successiva; nelle schede caricate le righe con lo stesso esercizio nello stesso giorno diventano un esercizio solo |
-| 7 | presets | Allenamento | Schede pronte | "Scegli la tua scheda di esercizi"; in cima "Crea la tua scheda" (Pro: scheda su misura da altezza, peso, sesso, età, obiettivo, esperienza, allenamenti e luogo; più schede, rinomina e rifai); difficoltà in pastiglia colorata (verde, arancione, rosso per Esperto); base total body (tutti), altre schede e consigliata del mese (Pro) |
+| 7 | presets | Allenamento | riquadro «Le tue schede» sotto l'elenco | "Scegli la tua scheda di esercizi"; in cima "Crea la tua scheda" (Pro: scheda su misura da altezza, peso, sesso, età, obiettivo, esperienza, allenamenti e luogo; più schede, rinomina e rifai); difficoltà in pastiglia colorata (verde, arancione, rosso per Esperto); base total body (tutti), altre schede e consigliata del mese (Pro) |
 | 8 | session | – | disegno | Pronto (posizione, Avvia), spiegazione saltabile, conteggio, pausa, "Mi sono fermato", "Ripetizioni completate", riepilogo |
 | 9 | alternative | – | disegno | "Fai esercizio alternativo" nella schermata Pronto: elenco esercizi con i filtri, già sugli stessi muscoli; l'alternativa vale solo per questa sessione (l'esercizio diventa verde) oppure, con "Sostituisci nell'elenco", diventa definitiva |
 | 10 | free | Allenamento | Conteggio libero | Contare senza esercizio |
-| 11 | history | Allenamento | Storico | Solo sul telefono, solo con consenso |
-| 12 | planReview | Allenamento | Storico | Full: ogni due settimane, a fine allenamento, domanda "troppo leggero / giusto / troppo pesante"; controllo delle ripetizioni dello Storico, nuovi carichi in "Consiglio per oggi", Applica aggiorna scheda ed elenchi, si può tornare alla scheda precedente |
-| 13 | exercisesTab | Esercizi | scheda | Catalogo (quasi 900 esercizi), "Cerca esercizio" come primo filtro, filtro per tipo e "Corpo libero", foto, spiegazioni, consigli (Mid/Full) |
-| 14 | exercisesLinks | Esercizi | Elenchi / Schede | Elenchi pronti e salvati; scheda (Full) inserita a mano (`bodyManual`: caricamento da file e foto disattivato per ora). Con il caricamento attivo: import da foto con l'AI, dati mancanti da completare o confermare |
-| 15 | homeEquipment | Esercizi | riquadro Attrezzi in casa | (nascosto, funzione spenta) Full: segnare gli attrezzi di casa (vedere, aggiungere, togliere) e filtro "Solo i miei attrezzi" in Esercizi e Aggiungi esercizio; corpo libero sempre visibile |
-| 16 | nutritionTab | Nutrizione | scheda | (nascosto, Nutrizione disattivata) Indicazioni generali, non sostituisce il nutrizionista |
-| 17 | nutritionProfile | Nutrizione | profilo | (nascosto, Nutrizione disattivata) Dati, BMI, fabbisogno; Full: pasti e scheda del nutrizionista; serve consenso |
-| 18 | profileTab | Profilo | titolo della scheda | Età, sesso, altezza e peso con l'avatar che cambia con i dati; servono anche per "Crea la tua scheda"; solo sul telefono, con il consenso |
-| 19 | profileMuscles | Profilo | riquadro Muscoli allenati | Periodo (giorno, settimana, mese, anno, totale), figure fronte e retro colorate in base all'uso con le percentuali; Free: solo oggi |
-| 20 | profileCharts | Profilo | primo riquadro Andamento | Pro: grafici di allenamenti, serie, kg sollevati, ripetizioni e peso corporeo nel periodo; tocco su una colonna per il valore |
+| 11 | exercisesTab | Esercizi | scheda | Catalogo (quasi 900 esercizi), "Cerca esercizio" come primo filtro, filtro per tipo e "Corpo libero", foto, spiegazioni, consigli (Mid/Full) |
+| 12 | exercisesLinks | Esercizi | Elenchi / Schede | Elenchi pronti e salvati; scheda (Full) inserita a mano (`bodyManual`: caricamento da file e foto disattivato per ora). Con il caricamento attivo: import da foto con l'AI, dati mancanti da completare o confermare |
+| 13 | homeEquipment | Esercizi | sezione Attrezzi a disposizione (nei filtri, sotto la figura) | (nascosto, funzione spenta) Full: segnare gli attrezzi di casa (vedere, aggiungere, togliere) e filtro "Solo i miei attrezzi" in Esercizi e Aggiungi esercizio; corpo libero sempre visibile |
+| 14 | nutritionTab | Nutrizione | scheda | (nascosto, Nutrizione disattivata) Indicazioni generali, non sostituisce il nutrizionista |
+| 15 | nutritionProfile | Nutrizione | profilo | (nascosto, Nutrizione disattivata) Dati, BMI, fabbisogno; Full: pasti e scheda del nutrizionista; serve consenso |
+| 16 | profileTab | Profilo | titolo della scheda | Età, sesso, altezza e peso con l'avatar che cambia con i dati; servono anche per "Crea la tua scheda"; solo sul telefono, con il consenso |
+| 17 | profileMuscles | Profilo | riquadro Muscoli allenati | Periodo (giorno, settimana, mese, anno, totale), figure fronte e retro colorate in base all'uso con le percentuali; Free: solo oggi |
+| 18 | profileCharts | Profilo | primo riquadro Andamento | Pro: grafici di allenamenti, serie, kg sollevati, ripetizioni e peso corporeo nel periodo; tocco su una colonna per il valore |
+| 19 | history | Profilo | Storico allenamenti (in fondo) | Solo sul telefono, solo con consenso |
+| 20 | planReview | Profilo | Storico allenamenti (in fondo) | Full: ogni due settimane, a fine allenamento, domanda "troppo leggero / giusto / troppo pesante"; controllo delle ripetizioni dello Storico, nuovi carichi in "Consiglio per oggi", Applica aggiorna scheda ed elenchi, si può tornare alla scheda precedente |
 | 21 | infoTab | Impostazioni | scheda | Foto profilo (tocco sul cerchio), account, piani e abbonamenti, consenso, Salute/Health Connect, voce, calibrazione, documenti, cancellazione |
 | 22 | plans | Impostazioni | voce Piani e abbonamenti | Free/Mid/Full, ripristino, 7 giorni di prova, scadenza della licenza gratuita |
 | 23 | appearance | Impostazioni | scheda Aspetto | Tema: neutro del telefono (predefinito), scuro oppure originale arancio e viola |
@@ -177,3 +177,29 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
   Testi dell'app -20% (AppTextScale), tutorial in sovraimpressione compreso.
 - 6 novembre 2026 (versione 21), iOS fatto: elenchi in cima a Esercizi (chiusi) e distretti muscolari coinvolti;
   aggiornato il testo del passo "exercisesTab" (`tutorial.exercisesTab.body`), nessun passo nuovo.
+- 6 novembre 2026 (versione 22), iOS fatto: tutte le schede in fondo ad Allenamento (tue "Fatta da te", create
+  "Creata dall'app", pronte); il passo "presets" punta al titolo dell'elenco in fondo alla pagina
+  (`tutorial.presets.body`). Nessun passo nuovo.
+- 6 novembre 2026 (versione 23), iOS fatto: "Crea la tua scheda" da 1 a 7 allenamenti a settimana (con 7 uno è di
+  stretching); aggiornato il testo del passo "presets" (`tutorial.presets.body`), nessun passo nuovo.
+- 6 novembre 2026 (versione 24), iOS fatto: Allenamento riorganizzato («Seleziona scheda», «Aggiungi esercizio» dentro
+  l'elenco, senza elenchi e con il Pro «Crea la tua scheda» al posto della card, riquadro «Le tue schede» sotto
+  l'elenco); «history» e «planReview» passano alla scheda Profilo (pulsante «Storico allenamenti» in fondo, target
+  `profile.history`). Aggiornati `tutorial.list.body`, `tutorial.addExercise.body`, `tutorial.presets.title/.body`,
+  `tutorial.history.body`; numero dei passi invariato (27).
+- 9 novembre 2026 (versione 25), iOS fatto: "Consigliati per te" spostato da Esercizi ad Aggiungi esercizio (riquadro
+  chiuso, tocco = aggiungi); aggiornati `tutorial.exercisesTab.body` e `tutorial.addExercise.body`. Nessun passo nuovo.
+- 9 novembre 2026 (versione 26), iOS fatto: Allenamento con "Le mie schede" sotto Esercizi caricati, "Crea la tua
+  scheda" sotto Reset e "Schede pronte" in un riquadro a parte (passo "presets"); "Consigliati per te" nascosto.
+  Aggiornati `tutorial.presets.title/.body`, `tutorial.list.body`, `tutorial.addExercise.body`. Nessun passo nuovo.
+- 9 novembre 2026 (versione 27), iOS fatto: esercizio alternativo con scelta + parametri, poi "Solo per questa sessione"
+  o "Sostituisci nell'elenco" (`tutorial.alternative.body`, passo "alternative"). Nessun passo nuovo.
+- 9 novembre 2026 (versione 28), iOS fatto: elenchi dell'utente in cima a Esercizi rinominati "Le mie schede";
+  aggiornato l'inizio di `tutorial.exercisesTab.body`. Nessun passo nuovo.
+- 9 novembre 2026 (versione 29), iOS fatto: "Attrezzi in casa" diventa "Attrezzi a disposizione", dentro i filtri sotto
+  la figura; filtro "Solo attrezzi disponibili" con gli attrezzi segnati in evidenza (passo "homeEquipment",
+  `tutorial.homeEquipment.title/.body`). Nessun passo nuovo.
+- 9 novembre 2026 (versione 30), iOS fatto: asse del movimento (su/giù o sinistra/destra) nel passo "session"
+  (`tutorial.session.body`); tolto Apple Salute/Health Connect da "infoTab" (`tutorial.infoTab.body`). Nessun passo nuovo.
+- 9 novembre 2026 (versione 31), iOS fatto: Esercizi senza "Le mie schede" in cima e con "Cerca esercizio" sotto la
+  figura (`tutorial.exercisesTab.body`). Nessun passo nuovo.

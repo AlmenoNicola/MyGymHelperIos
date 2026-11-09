@@ -2,13 +2,13 @@ import SwiftUI
 import SwiftData
 import MyGymHelperCore
 
-/// Catalogo: mappa del corpo (fronte/retro) e blocchi per scegliere i muscoli, consigli (Pro) ed elenco esercizi.
+/// Catalogo: mappa del corpo (fronte/retro) e blocchi per scegliere i muscoli ed elenco esercizi
+/// (i "Consigliati per te" sono in Allenamento > Aggiungi esercizio; le schede in Allenamento e in Elenchi).
 /// Piano Free: un esercizio per tipologia.
 struct ExercisesView: View {
     @Environment(CatalogStore.self) private var catalog
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(AccountService.self) private var account
-    @Query(sort: \WorkoutSessionRecord.startedAt) private var sessions: [WorkoutSessionRecord]
     @State private var side: BodySide = .front
     @State private var selected: Set<MuscleGroup> = []
     @State private var query = ""
@@ -17,7 +17,6 @@ struct ExercisesView: View {
     @State private var bodyweight = false
     /// Quasi 900 esercizi: se ne mostrano 40 alla volta (si riparte da 40 cambiando i filtri).
     @State private var shown = CatalogFilter.pageSize
-    @AppStorage(ConsentStore.grantedAtKey) private var consentAt = 0.0
 
     private var tier: SubscriptionTier { subscriptions.tier }
     private var pool: [CatalogExercise] { catalog.visible(for: tier) }
@@ -29,22 +28,13 @@ struct ExercisesView: View {
         }
     }
 
-    private var recommendations: [Recommendation] {
-        guard FeatureGate.isAvailable(.fixedCoaching, for: tier) else { return [] }
-        return ExerciseRecommender.recommend(from: pool, targets: selected,
-                                             history: CoachingService.historyEntries(from: sessions, catalog: catalog.all),
-                                             limit: 3)
-    }
-
     var body: some View {
         ScrollView {
             VStack(spacing: 18) {
                 ScreenHeader(symbol: "figure.strengthtraining.traditional", title: "ex.title", subtitle: "ex.subtitle")
                     .tutorialTarget(TutorialTarget.tabExercises)
 
-                // Tutti gli elenchi in cima, chiusi: pronti per zona e (con piano e consenso) i miei elenchi
-                ExerciseListsSection(pool: pool,
-                                     showMine: FeatureGate.isAvailable(.savedExerciseLists, for: tier) && consentAt > 0)
+                // 9 novembre 2026: tolta da qui la sezione "Le mie schede" (le schede restano in Allenamento e in Elenchi).
 
                 HStack(spacing: 12) {
                     NavigationLink { ExerciseListsView() } label: {
@@ -57,21 +47,21 @@ struct ExercisesView: View {
                 .buttonStyle(.glass)
                 .tutorialTarget(TutorialTarget.exercisesLinks)
 
-                if AppFlags.homeEquipment {
-                    HomeEquipmentCard(tier: tier)
-                        .tutorialTarget(TutorialTarget.exercisesEquipment)
-                }
-
                 VStack(spacing: 14) {
-                    // Primo filtro: ricerca per nome
-                    ExerciseSearchField(query: $query)
                     Picker("", selection: $side) {
                         ForEach(BodySide.allCases) { Text($0.titleKey).tag($0) }
                     }
                     .pickerStyle(.segmented)
                     BodyMapView(side: side, selected: $selected).frame(height: 300)
+                    // "Cerca esercizio" subito sotto la figura (9 novembre 2026; prima era il primo filtro).
+                    ExerciseSearchField(query: $query)
                     // Muscoli scelti (anche quelli dell'altro lato) con la X per toglierne uno
                     SelectedMuscleChips(selected: $selected)
+                    // Attrezzi a disposizione sotto la figura, dentro i filtri (9 novembre 2026).
+                    if AppFlags.homeEquipment {
+                        HomeEquipmentSection(tier: tier)
+                            .tutorialTarget(TutorialTarget.exercisesEquipment)
+                    }
                     KindChips(kind: $kind)
                     BodyweightChip(on: $bodyweight)
                     EquipmentFilterChip(tier: tier)
@@ -81,44 +71,7 @@ struct ExercisesView: View {
                 }
                 .glassCard()
 
-                if !recommendations.isEmpty {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("ex.recommended").appFont(.headline)
-                        ForEach(recommendations, id: \.exercise.id) { rec in
-                            NavigationLink { ExerciseDetailView(exercise: rec.exercise) } label: {
-                                HStack(alignment: .center, spacing: 12) {
-                                    // Miniatura: foto della posizione iniziale (come nella spiegazione dell'esercizio),
-                                    // alta 72 pt in 4:3; senza foto, i muscoli sulla figura.
-                                    if let link = rec.exercise.images.first {
-                                        Color.primary.opacity(0.1)
-                                            .aspectRatio(4 / 3, contentMode: .fit)
-                                            .overlay {
-                                                AsyncImage(url: URL(string: link)) { phase in
-                                                    if let image = phase.image {
-                                                        image.resizable().scaledToFill()
-                                                    } else {
-                                                        Image(systemName: "dumbbell.fill").appFont(.title2).foregroundStyle(.secondary)
-                                                    }
-                                                }
-                                            }
-                                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                                            .frame(height: 72)
-                                    } else {
-                                        MuscleThumbnail(exercise: rec.exercise, height: 72)
-                                    }
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(verbatim: rec.exercise.name).appFont(.subheadline, weight: .bold)
-                                        Text(LocalizedStringKey(rec.reasonKey)).appFont(.caption).foregroundStyle(Theme.accentSoft)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .glassCard()
-                }
+                // "Consigliati per te" spostato in Allenamento > Aggiungi esercizio (9 novembre 2026).
 
                 if !FeatureGate.isAvailable(.catalogFull, for: tier) {
                     Label("ex.freeLimit", systemImage: "lock.fill")
@@ -468,7 +421,8 @@ struct ExerciseMusclesCard: View {
     }
 }
 
-/// Filtro testuale "Cerca esercizio", primo dei filtri: mostra solo gli esercizi il cui nome
+/// Filtro testuale "Cerca esercizio" (in Esercizi sotto la figura dei muscoli; in Aggiungi esercizio, Esercizio
+/// alternativo ed Elenchi primo dei filtri): mostra solo gli esercizi il cui nome
 /// contiene il testo (maiuscole/minuscole indifferenti). La X svuota il campo.
 /// Come ExerciseSearchField su Android.
 struct ExerciseSearchField: View {
@@ -541,10 +495,10 @@ struct BodyweightChip: View {
     }
 }
 
-// MARK: - Attrezzi in casa (solo piano Pro)
+// MARK: - Attrezzi a disposizione (solo piano Pro)
 // Si possono spegnere con AppFlags.homeEquipment = false.
 
-/// Esercizi filtrati per gli attrezzi in casa: solo se la funzione e' accesa, il filtro e' attivo e il piano e' Pro.
+/// Esercizi filtrati per gli attrezzi a disposizione: solo se la funzione e' accesa, il filtro e' attivo e il piano e' Pro.
 @MainActor
 func equipmentFiltered(_ list: [CatalogExercise], tier: SubscriptionTier) -> [CatalogExercise] {
     let settings = AppSettings.shared
@@ -553,18 +507,21 @@ func equipmentFiltered(_ list: [CatalogExercise], tier: SubscriptionTier) -> [Ca
                                     && FeatureGate.isAvailable(.homeEquipment, for: tier))
 }
 
-/// Riquadro "Attrezzi in casa", sopra i filtri degli esercizi (schede Esercizi e Aggiungi esercizio).
-/// Piano Pro: mostra gli attrezzi segnati e apre l'elenco per aggiungerli o toglierli. Altri piani: invito ai piani.
-/// Come HomeEquipmentCard su Android.
-struct HomeEquipmentCard: View {
+/// Sezione "Attrezzi a disposizione" (prima card "Attrezzi in casa"), dentro il riquadro dei filtri sotto le pillole
+/// dei muscoli scelti (Esercizi, Aggiungi esercizio ed Esercizio alternativo), senza card propria.
+/// Piano Pro: mostra gli attrezzi segnati (in evidenza con il filtro "Solo attrezzi disponibili" acceso) e apre
+/// l'elenco per aggiungerli o toglierli. Altri piani: invito ai piani. Come HomeEquipmentSection su Android.
+struct HomeEquipmentSection: View {
     let tier: SubscriptionTier
     @State private var editing = false
     private var settings: AppSettings { AppSettings.shared }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("equipment.home.title", systemImage: "house.fill")
-                .appFont(.headline).lineLimit(1).minimumScaleFactor(0.6)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Image(systemName: "house.fill").appFont(.footnote).foregroundStyle(Theme.accent)
+                Text("equipment.home.title").appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
+            }
             if !FeatureGate.isAvailable(.homeEquipment, for: tier) {
                 LockedNote(key: "equipment.home.locked")
             } else {
@@ -572,11 +529,14 @@ struct HomeEquipmentCard: View {
                 if owned.isEmpty {
                     Text("equipment.home.none").appFont(.footnote).foregroundStyle(.secondary)
                 } else {
+                    // Filtro acceso: attrezzi segnati in evidenza (accento pieno, testo onAccent); spento: accento tenue
+                    let lit = settings.equipmentFilter
                     FlowLayout(spacing: 8) {
                         ForEach(owned, id: \.self) { name in
                             Text(verbatim: equipmentTitle(name)).appFont(.caption, weight: .bold)
+                                .foregroundStyle(lit ? Theme.onAccent : Color.primary)
                                 .padding(.horizontal, 12).padding(.vertical, 6)
-                                .background(Theme.accent.opacity(0.35), in: Capsule())
+                                .background(lit ? Theme.accent : Theme.accent.opacity(0.35), in: Capsule())
                         }
                     }
                 }
@@ -587,12 +547,11 @@ struct HomeEquipmentCard: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassCard()
         .sheet(isPresented: $editing) { HomeEquipmentSheet() }
     }
 }
 
-/// Elenco di tutti gli attrezzi: un tocco aggiunge o toglie l'attrezzo da quelli che si hanno in casa.
+/// Elenco di tutti gli attrezzi: un tocco aggiunge o toglie l'attrezzo da quelli a disposizione.
 private struct HomeEquipmentSheet: View {
     @Environment(\.dismiss) private var dismiss
     private var settings: AppSettings { AppSettings.shared }
@@ -627,7 +586,7 @@ private struct HomeEquipmentSheet: View {
     }
 }
 
-/// Filtro "Solo i miei attrezzi" accanto agli altri filtri: compare solo con il piano Pro (come EquipmentFilterChip su Android).
+/// Filtro "Solo attrezzi disponibili" accanto agli altri filtri: compare solo con il piano Pro (come EquipmentFilterChip su Android).
 struct EquipmentFilterChip: View {
     let tier: SubscriptionTier
     private var settings: AppSettings { AppSettings.shared }

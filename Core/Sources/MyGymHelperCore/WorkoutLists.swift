@@ -14,6 +14,8 @@ public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
     public var perSet: [SetTarget]
     /// Calorie bruciate (stima) nelle serie fatte l'ultima volta; si azzerano con Reset.
     public var kcal: Double
+    /// Asse del movimento scelto dall'utente per la riga; nil = quello del catalogo (MovementRules.forItem).
+    public var movement: MovementAxis?
 
     /// Parametri di partenza di un esercizio nuovo (poi precompilati da scheda e ultima sessione).
     public static let defaultParameters = WorkoutParameters(sets: 3, reps: 10, restSeconds: 90, weightKg: 0)
@@ -21,9 +23,10 @@ public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
     public init(id: UUID = UUID(), exerciseID: String, sets: Int = WorkoutItem.defaultParameters.sets,
                 reps: Int = WorkoutItem.defaultParameters.reps, restSeconds: Int = WorkoutItem.defaultParameters.restSeconds,
                 weightKg: Double = WorkoutItem.defaultParameters.weightKg, done: Bool = false, perSet: [SetTarget] = [],
-                kcal: Double = 0) {
+                kcal: Double = 0, movement: MovementAxis? = nil) {
         self.id = id; self.exerciseID = exerciseID; self.sets = sets; self.reps = reps
         self.restSeconds = restSeconds; self.weightKg = weightKg; self.done = done; self.perSet = perSet; self.kcal = kcal
+        self.movement = movement
     }
 
     /// Lettura dei dati salvati: gli elenchi salvati prima delle serie diverse non hanno "perSet" (e prima delle calorie "kcal").
@@ -39,6 +42,8 @@ public struct WorkoutItem: Codable, Equatable, Identifiable, Sendable {
         perSet = try c.decodeIfPresent([SetTarget].self, forKey: .perSet) ?? []
         // Elenchi salvati prima delle calorie: nessun valore
         kcal = try c.decodeIfPresent(Double.self, forKey: .kcal) ?? 0
+        // Elenchi salvati prima dell'asse del movimento: quello del catalogo
+        movement = try c.decodeIfPresent(MovementAxis.self, forKey: .movement)
     }
 
     public var parameters: WorkoutParameters {
@@ -158,7 +163,9 @@ public enum WorkoutListLogic {
     /// "Sostituisci nell'elenco": l'alternativa diventa definitiva. La riga resta la stessa (stesso id e stato
     /// "svolto") ma con il nuovo esercizio e i suoi parametri.
     public static func replaceExercise(_ item: WorkoutItem, exerciseID: String, parameters: WorkoutParameters) -> WorkoutItem {
-        var copy = item.with(parameters)
+        var copy = item
+        copy.movement = nil              // la scelta dell'asse era per l'esercizio di prima
+        copy = copy.with(parameters)
         copy.exerciseID = exerciseID
         return copy
     }

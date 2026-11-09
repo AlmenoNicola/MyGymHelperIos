@@ -47,6 +47,8 @@ public struct PositionTuning: Sendable, Equatable, Codable {
     public static let maxTilt = 1.2
     public static let minTranslation = 0.04
     public static let maxTranslation = 0.8
+    public static let minYaw = 0.12
+    public static let maxYaw = 1.2
 
     public init(sensitivity: Double = 1, typicalSwing: Double? = nil, signal: RepSignal? = nil, calibratedAt: Double = 0) {
         self.sensitivity = sensitivity; self.typicalSwing = typicalSwing; self.signal = signal; self.calibratedAt = calibratedAt
@@ -62,11 +64,16 @@ public struct PositionTuning: Sendable, Equatable, Codable {
         var translation = base.minTranslationSwing
         if let swing = typicalSwing, let signal {
             let threshold = base.adaptiveFraction * swing
-            if signal == .tilt { tilt = threshold } else { translation = threshold }
+            switch signal {
+            case .tilt: tilt = threshold
+            case .translation: translation = threshold
+            case .yaw: break   // la calibrazione della posizione è su/giù: la rotazione orizzontale usa la soglia predefinita
+            }
         }
         var c = base
         c.minTiltSwing = Self.clamp(tilt / s, Self.minTilt, Self.maxTilt)
         c.minTranslationSwing = Self.clamp(translation / s, Self.minTranslation, Self.maxTranslation)
+        c.minYawSwing = Self.clamp(base.minYawSwing / s, Self.minYaw, Self.maxYaw)
         c.forcedSignal = signal
         return c
     }

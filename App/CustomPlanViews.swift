@@ -19,9 +19,10 @@ func bmiKey(_ c: BMICategory) -> String {
     }
 }
 
-/// "Mantenere · 3 allenamenti a settimana".
+/// "Mantenere · 3 allenamenti a settimana" (con 1: "Mantenere · 1 allenamento a settimana").
 func customFacts(_ r: CustomPlanRecord) -> String {
-    String(format: loc("custom.facts %@ %lld"), loc(goalKey(r.input.goal)), r.plan.daysPerWeek)
+    if r.plan.daysPerWeek == 1 { return String(format: loc("custom.facts.one %@"), loc(goalKey(r.input.goal))) }
+    return String(format: loc("custom.facts %@ %lld"), loc(goalKey(r.input.goal)), r.plan.daysPerWeek)
 }
 
 /// Peso con al massimo un decimale, nel formato del telefono (75 / 75,5).
@@ -35,41 +36,32 @@ struct CustomPlansSection: View {
     var body: some View {
         let available = FeatureGate.isAvailable(.customPlans, for: tier)
         VStack(spacing: 16) {
-            if available {
-                NavigationLink { CustomPlanEditorView(editID: nil) } label: { createCard(available: true) }
-                    .buttonStyle(.plain)
-            } else {
-                createCard(available: false)
-            }
-
+            CreatePlanCard(tier: tier)
             if available && !store.plans.isEmpty {
                 Text("custom.mine").appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                ForEach(store.plans) { r in
-                    NavigationLink { PresetPlanView(planID: r.plan.id) } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(verbatim: r.name).appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
-                                    Text(verbatim: customFacts(r)).appFont(.caption).foregroundStyle(.secondary)
-                                        .lineLimit(1).minimumScaleFactor(0.7)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right").foregroundStyle(.secondary)
-                            }
-                            DifficultyBadge(level: r.plan.level)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .glassCard()
-                    }
-                    .buttonStyle(.plain)
-                }
+                CustomPlanCards(tier: tier)
             }
         }
         .task { store.reload() }
     }
+}
 
-    private func createCard(available: Bool) -> some View {
+/// Card "Crea la tua scheda": apre l'editor della scheda su misura (Pro); nel Free con lucchetto e invito ai piani.
+/// Usata nella schermata Schede pronte e in Allenamento (sotto la card dell'elenco).
+struct CreatePlanCard: View {
+    let tier: SubscriptionTier
+
+    var body: some View {
+        if FeatureGate.isAvailable(.customPlans, for: tier) {
+            NavigationLink { CustomPlanEditorView(editID: nil) } label: { card(available: true) }
+                .buttonStyle(.plain)
+        } else {
+            card(available: false)
+        }
+    }
+
+    private func card(available: Bool) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 10) {
                 Image(systemName: "slider.horizontal.3").foregroundStyle(Theme.highlight).appFont(.title3)
@@ -83,6 +75,38 @@ struct CustomPlansSection: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
+    }
+}
+
+/// Card delle schede fatte con "Crea la tua scheda" (solo Pro), senza titolo: nome, obiettivo · allenamenti
+/// a settimana ed etichette "Creata dall'app" + difficoltà. Usata nella schermata Schede pronte e in
+/// Allenamento nel riquadro "Le mie schede".
+struct CustomPlanCards: View {
+    let tier: SubscriptionTier
+    private var store: CustomPlanStore { CustomPlanStore.shared }
+
+    var body: some View {
+        if FeatureGate.isAvailable(.customPlans, for: tier) {
+            ForEach(store.plans) { r in
+                NavigationLink { PresetPlanView(planID: r.plan.id) } label: {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(verbatim: r.name).appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                                Text(verbatim: customFacts(r)).appFont(.caption).foregroundStyle(.secondary)
+                                    .lineLimit(1).minimumScaleFactor(0.7)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                        }
+                        PlanBadges(origin: .app, level: r.plan.level)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .glassCard()
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 }
 
@@ -109,6 +133,8 @@ struct CustomPlanNotesView: View {
                 .appFont(.subheadline).foregroundStyle(.secondary)
             if n.lowImpact { Text("custom.note.lowImpact").appFont(.footnote).foregroundStyle(.secondary) }
             if n.gentleLoads { Text("custom.note.gentle").appFont(.footnote).foregroundStyle(.secondary) }
+            // Principiante con 5 o più allenamenti: invito a riposare
+            if n.manyDaysBeginner { Text("custom.note.manyDays").appFont(.footnote).foregroundStyle(.secondary) }
             Text("custom.note.rules").appFont(.caption).foregroundStyle(.secondary)
         }
     }
@@ -277,12 +303,17 @@ struct CustomPlanEditorView: View {
             }
             .pickerStyle(.segmented)
             Text("custom.days").appFont(.subheadline, weight: .bold)
+            // Da 1 a 7 allenamenti a settimana (con 7 uno è di stretching)
             Picker("custom.days", selection: field(\.daysPerWeek, 3)) {
-                Text(verbatim: "2").tag(2)
-                Text(verbatim: "3").tag(3)
-                Text(verbatim: "4").tag(4)
+                ForEach(CustomPlanInput.minDays...CustomPlanInput.maxDays, id: \.self) { d in
+                    Text(verbatim: "\(d)").tag(d)
+                }
             }
             .pickerStyle(.segmented)
+            if let input, CustomPlanGenerator.isManyDaysBeginner(input) {
+                Text("custom.note.manyDays").appFont(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Text("custom.place").appFont(.subheadline, weight: .bold)
             Picker("custom.place", selection: field(\.place, .gym)) {
                 ForEach(TrainingPlace.allCases, id: \.self) { p in Text(LocalizedStringKey("custom.place." + p.rawValue)).tag(p) }

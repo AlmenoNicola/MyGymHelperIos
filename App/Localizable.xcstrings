@@ -398,6 +398,23 @@
         }
       }
     },
+    "custom.facts.one %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 1 workout a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 1 allenamento a settimana"
+          }
+        }
+      }
+    },
     "custom.generate" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -632,6 +649,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niente esercizi con salti, per proteggere le articolazioni."
+          }
+        }
+      }
+    },
+    "custom.note.manyDays" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you are just starting, 2-4 workouts a week are enough: muscles grow on rest days. If you feel tired or sore, take a rest."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per chi inizia bastano 2-4 allenamenti a settimana: i muscoli crescono nei giorni di recupero. Se ti senti stanco o indolenzito, riposa."
           }
         }
       }
@@ -938,23 +972,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Distretti muscolari dell'elenco"
-          }
-        }
-      }
-    },
-    "ex.listEmpty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No exercises in this list."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun esercizio in questo elenco."
           }
         }
       }
@@ -1771,6 +1788,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profilo"
+          }
+        }
+      }
+    },
+    "workout.yourPlans" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your plans"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue schede"
           }
         }
       }
@@ -2715,6 +2749,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esercizio alternativo"
+          }
+        }
+      }
+    },
+    "alternative.useOnce" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only for this session"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo per questa sessione"
           }
         }
       }
@@ -4306,13 +4357,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter by home equipment"
+            "value" : "Filter by available equipment"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtro per attrezzi in casa"
+            "value" : "Filtro per attrezzi a disposizione"
           }
         }
       }
@@ -5377,13 +5428,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My equipment only"
+            "value" : "Available equipment only"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo i miei attrezzi"
+            "value" : "Solo attrezzi disponibili"
           }
         }
       }
@@ -5394,13 +5445,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter exercises by the equipment you have at home: Pro subscription only."
+            "value" : "Filter exercises by the equipment you have available: Pro subscription only."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtra gli esercizi per gli attrezzi che hai in casa: solo con l'abbonamento Pro."
+            "value" : "Filtra gli esercizi per gli attrezzi che hai a disposizione: solo con l'abbonamento Pro."
           }
         }
       }
@@ -5411,13 +5462,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No equipment marked yet. With the \"My equipment\" filter on you'll only see bodyweight exercises."
+            "value" : "No equipment marked yet. With the \"Available equipment only\" filter on you'll only see bodyweight exercises."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nessun attrezzo segnato. Con il filtro \"Solo i miei attrezzi\" acceso vedi solo gli esercizi a corpo libero."
+            "value" : "Nessun attrezzo segnato. Con il filtro \"Solo attrezzi disponibili\" acceso vedi solo gli esercizi a corpo libero."
           }
         }
       }
@@ -5445,13 +5496,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home equipment"
+            "value" : "Available equipment"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Attrezzi in casa"
+            "value" : "Attrezzi a disposizione"
           }
         }
       }
@@ -6738,13 +6789,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saves workouts to Health and lets you import weight and height. Change permissions in Settings > Health."
+            "value" : "Saves workouts to Health. Change permissions in Settings > Health."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salva gli allenamenti in Salute e permette di importare peso e altezza. I permessi si cambiano in Impostazioni > Salute."
+            "value" : "Salva gli allenamenti in Salute. I permessi si cambiano in Impostazioni > Salute."
           }
         }
       }
@@ -8214,6 +8265,125 @@
         }
       }
     },
+    "movement.counted %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movement counted: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movimento contato: %@"
+          }
+        }
+      }
+    },
+    "movement.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relative to the floor, however the phone is turned. Up/down: raises, presses, squats. Left/right: torso twists, rows and presses on cables or machines that move horizontally."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rispetto al pavimento, comunque sia girato il telefono. Su/giù: alzate, spinte, piegamenti. Sinistra/destra: rotazioni del busto, rematori e spinte ai cavi o alle macchine in orizzontale."
+          }
+        }
+      }
+    },
+    "movement.leftRight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Left/right"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinistra/destra"
+          }
+        }
+      }
+    },
+    "movement.switchTo.leftRight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Count left/right"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conta sinistra/destra"
+          }
+        }
+      }
+    },
+    "movement.switchTo.upDown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Count up/down"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conta su/giù"
+          }
+        }
+      }
+    },
+    "movement.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movement to count"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movimento da contare"
+          }
+        }
+      }
+    },
+    "movement.upDown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up/down"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su/giù"
+          }
+        }
+      }
+    },
     "muscle.abs" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9132,6 +9302,40 @@
         }
       }
     },
+    "plans.badge.app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created by the app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creata dall'app"
+          }
+        }
+      }
+    },
+    "plans.badge.user" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made by you"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fatta da te"
+          }
+        }
+      }
+    },
     "plans.confirm.complete" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9638,6 +9842,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ripristina acquisti"
+          }
+        }
+      }
+    },
+    "plans.restore.failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't check your purchases. Check your connection and try again."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile verificare gli acquisti. Controlla la connessione e riprova."
+          }
+        }
+      }
+    },
+    "plans.restore.none" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active subscription found on this Apple ID."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun abbonamento attivo trovato su questo Apple ID."
+          }
+        }
+      }
+    },
+    "plans.restore.restored" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro subscription restored."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbonamento Pro ripristinato."
           }
         }
       }
@@ -10441,6 +10696,57 @@
         }
       }
     },
+    "presets.day.legsA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legs A"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gambe A"
+          }
+        }
+      }
+    },
+    "presets.day.legsB" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legs B"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gambe B"
+          }
+        }
+      }
+    },
+    "presets.day.lower" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lower"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parte bassa"
+          }
+        }
+      }
+    },
     "presets.day.lowerA" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -10492,6 +10798,40 @@
         }
       }
     },
+    "presets.day.pullA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull A"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull A (tirata)"
+          }
+        }
+      }
+    },
+    "presets.day.pullB" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull B"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull B (tirata)"
+          }
+        }
+      }
+    },
     "presets.day.push" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -10505,6 +10845,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Push (spinta)"
+          }
+        }
+      }
+    },
+    "presets.day.pushA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push A"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push A (spinta)"
+          }
+        }
+      }
+    },
+    "presets.day.pushB" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push B"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push B (spinta)"
           }
         }
       }
@@ -10539,6 +10913,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stretching e mobilità"
+          }
+        }
+      }
+    },
+    "presets.day.upper" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upper"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parte alta"
           }
         }
       }
@@ -10743,6 +11134,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld allenamenti a settimana"
+          }
+        }
+      }
+    },
+    "presets.perWeek.one" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 workout a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 allenamento a settimana"
           }
         }
       }
@@ -13255,13 +13663,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add exercise opens the picker: tap one or more muscles on the body (front and back) to see the exercises that work at least one of them (those that work them all are highlighted); the chosen muscles appear below the figure, tap the X to remove one. You can also filter by type (\"Bodyweight\" shows only exercises without equipment), or search by name. Tap an exercise, set sets, reps, weight and rest and add it: a message confirms it has been added. Then you can add more. Those already in the list have a tick and a coloured background."
+            "value" : "Add exercise is at the bottom of the list's exercises (right below if the list is empty) and opens the picker: tap one or more muscles on the body (front and back) to see the exercises that work at least one of them (those that work them all are highlighted); the chosen muscles appear below the figure, tap the X to remove one. You can also filter by type (\"Bodyweight\" shows only exercises without equipment), or search by name. Tap an exercise, set sets, reps, weight and rest and add it: a message confirms it has been added. Then you can add more. Those already in the list have a tick and a coloured background."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con Aggiungi esercizio si apre la scelta: tocca uno o più muscoli sul corpo (fronte e retro) per vedere gli esercizi che ne allenano almeno uno (in evidenza quelli che li allenano tutti); i muscoli scelti compaiono sotto la figura, tocca la X per toglierne uno. Puoi filtrare anche per tipo (\"Corpo libero\" mostra solo gli esercizi senza attrezzi), oppure cerca per nome. Tocca un esercizio, imposta serie, ripetizioni, peso e pausa e aggiungilo: un avviso ti conferma che è stato aggiunto. Poi puoi aggiungerne altri. Quelli già nell'elenco hanno la spunta e lo sfondo colorato."
+            "value" : "Aggiungi esercizio è in fondo agli esercizi dell'elenco (se l'elenco è vuoto, subito sotto) e apre la scelta: tocca uno o più muscoli sul corpo (fronte e retro) per vedere gli esercizi che ne allenano almeno uno (in evidenza quelli che li allenano tutti); i muscoli scelti compaiono sotto la figura, tocca la X per toglierne uno. Puoi filtrare anche per tipo (\"Corpo libero\" mostra solo gli esercizi senza attrezzi), oppure cerca per nome. Tocca un esercizio, imposta serie, ripetizioni, peso e pausa e aggiungilo: un avviso ti conferma che è stato aggiunto. Poi puoi aggiungerne altri. Quelli già nell'elenco hanno la spunta e lo sfondo colorato."
           }
         }
       }
@@ -13289,13 +13697,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Machine taken or missing equipment? On the start screen of an exercise press \"Do an alternative exercise\": the exercise list opens with its filters, already set to the same muscles. Pick one and do it in its place for this session only, or press \"Replace in the list\" to swap it for good."
+            "value" : "Machine taken or missing equipment? On the start screen of an exercise press \"Do an alternative exercise\": the exercise list opens with its filters, already set to the same muscles. Pick one and set sets, reps, weight and rest (they start from the original exercise), then press \"Only for this session\" to do it in its place today, or \"Replace in the list\" to swap it for good."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Macchina occupata o attrezzo che manca? Nella schermata di avvio di un esercizio premi \"Fai esercizio alternativo\": si apre l'elenco degli esercizi con i filtri, già impostato sugli stessi muscoli. Scegline uno e fallo al suo posto solo per questa sessione, oppure premi \"Sostituisci nell'elenco\" per cambiarlo in modo definitivo."
+            "value" : "Macchina occupata o attrezzo che manca? Nella schermata di avvio di un esercizio premi \"Fai esercizio alternativo\": si apre l'elenco degli esercizi con i filtri, già impostato sugli stessi muscoli. Scegline uno e imposta serie, ripetizioni, peso e pausa (partono da quelli dell'esercizio originale), poi premi \"Solo per questa sessione\" per farlo al suo posto oggi, oppure \"Sostituisci nell'elenco\" per cambiarlo in modo definitivo."
           }
         }
       }
@@ -13510,13 +13918,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "At the top you find all lists, ready-made and yours, closed: tap a list to open it and see its exercises; \"Muscle groups involved\" shows the body areas and muscles worked by the list and by each exercise. Below is the catalogue, with almost 900 exercises: find an exercise by typing its name in the \"Search exercise\" filter, choose one or more muscles (you see the exercises that work at least one of them; the chosen muscles appear below the figure, tap the X to remove one) or a type (strength, plyometrics, stretching, cardio), use \"Bodyweight\" to see only exercises without equipment, open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it. The Pro subscription also suggests exercises for you."
+            "value" : "Here is the catalogue, with almost 900 exercises (your plans are in Workout and under the \"Lists\" button, with the ready-made lists by body area). Choose one or more muscles on the figure (you see the exercises that work at least one of them; the chosen muscles appear below the figure, tap the X to remove one), find an exercise by typing its name in \"Search exercise\", right below the figure, or choose a type (strength, plyometrics, stretching, cardio); use \"Bodyweight\" to see only exercises without equipment. Open an exercise: see the photos, the muscles it works highlighted on the body (primary and secondary) and read how to do it."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In cima trovi tutti gli elenchi, pronti e tuoi, chiusi: tocca un elenco per aprirlo e vedere i suoi esercizi; con \"Distretti muscolari coinvolti\" vedi le zone del corpo e i muscoli allenati dall'elenco e da ogni esercizio. Sotto c'è il catalogo, con quasi 900 esercizi: cerca un esercizio scrivendo il nome nel filtro \"Cerca esercizio\", scegli uno o più muscoli (vedi gli esercizi che ne allenano almeno uno; i muscoli scelti compaiono sotto la figura, con la X ne togli uno) o il tipo (forza, pliometria, stretching, cardio), con \"Corpo libero\" vedi solo gli esercizi senza attrezzi, apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue. Con l'abbonamento Pro ricevi anche esercizi consigliati."
+            "value" : "Qui c'è il catalogo, con quasi 900 esercizi (le tue schede sono in Allenamento e nel pulsante \"Elenchi\", con gli elenchi pronti per zona del corpo). Scegli uno o più muscoli sulla figura (vedi gli esercizi che ne allenano almeno uno; i muscoli scelti compaiono sotto la figura, con la X ne togli uno), cerca un esercizio scrivendo il nome in \"Cerca esercizio\", subito sotto la figura, o scegli il tipo (forza, pliometria, stretching, cardio); con \"Corpo libero\" vedi solo gli esercizi senza attrezzi. Apri un esercizio: vedi le foto, sul corpo i muscoli che allena (principali e secondari) e come si esegue."
           }
         }
       }
@@ -13578,13 +13986,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Here you find your past workouts (saved only on the phone and only with consent to health data)."
+            "value" : "At the bottom of your Profile, “Workout history” shows your past workouts (saved only on the phone and only with consent to health data)."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Qui ritrovi gli allenamenti fatti (si salvano solo sul telefono e solo con il consenso ai dati sulla salute)."
+            "value" : "In fondo al Profilo, con «Storico allenamenti», ritrovi gli allenamenti fatti (si salvano solo sul telefono e solo con il consenso ai dati sulla salute)."
           }
         }
       }
@@ -13612,13 +14020,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With the Pro subscription, mark the equipment you have at home (dumbbells, kettlebell, bands…): you can view, add or remove it whenever you like. Then turn on the \"My equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it. Bodyweight exercises are always shown."
+            "value" : "With the Pro subscription, in the filters box below the figure, mark the equipment you have available (dumbbells, kettlebell, bands…): you can view, add or remove it whenever you like. Then turn on the \"Available equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it: the marked equipment lights up. Bodyweight exercises are always shown."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con l'abbonamento Pro segni gli attrezzi che hai in casa (manubri, kettlebell, elastici…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo i miei attrezzi\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli. Gli esercizi a corpo libero si vedono sempre."
+            "value" : "Con l'abbonamento Pro, nel riquadro dei filtri sotto la figura, segni gli attrezzi che hai a disposizione (manubri, kettlebell, elastici…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo attrezzi disponibili\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli: gli attrezzi segnati si illuminano. Gli esercizi a corpo libero si vedono sempre."
           }
         }
       }
@@ -13629,13 +14037,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Equipment at home"
+            "value" : "Available equipment"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Attrezzi in casa"
+            "value" : "Attrezzi a disposizione"
           }
         }
       }
@@ -13646,13 +14054,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap the circle at the top to set your profile photo (it stays on your phone only). In Settings you also find account, plans and subscriptions, consent to health data, connection with Apple Health or Health Connect, voice, rep counting calibration, legal documents and data deletion."
+            "value" : "Tap the circle at the top to set your profile photo (it stays on your phone only). In Settings you also find account, plans and subscriptions, consent to health data, voice, rep counting calibration, legal documents and data deletion."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tocca il cerchio in alto per mettere la tua foto profilo (resta solo sul telefono). Nelle Impostazioni trovi anche account, piani e abbonamenti, consenso ai dati sulla salute, collegamento con Apple Salute o Health Connect, voce, calibrazione del conteggio, documenti legali e cancellazione dei dati."
+            "value" : "Tocca il cerchio in alto per mettere la tua foto profilo (resta solo sul telefono). Nelle Impostazioni trovi anche account, piani e abbonamenti, consenso ai dati sulla salute, voce, calibrazione del conteggio, documenti legali e cancellazione dei dati."
           }
         }
       }
@@ -13680,13 +14088,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green and show the calories burned (an estimate, counting only the sets you did); at the bottom you find the total with a note. Reset clears them. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Change list). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
+            "value" : "If you have no list yet, with the Pro subscription you find “Create your plan” right here. Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green and show the calories burned (an estimate, counting only the sets you did); at the bottom you find the total with a note. Reset clears them. Below “Loaded exercises”, the “My plans” box gathers the plans made with “Create your plan” and those you wrote yourself. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Select plan). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi e mostrano le calorie bruciate (una stima, calcolata solo sulle serie fatte); in fondo trovi il totale con un avviso. Reset li azzera. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Cambia elenco). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
+            "value" : "Se non hai ancora nessun elenco, con l'abbonamento Pro qui trovi subito «Crea la tua scheda». Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi e mostrano le calorie bruciate (una stima, calcolata solo sulle serie fatte); in fondo trovi il totale con un avviso. Reset li azzera. Sotto «Esercizi caricati», il riquadro «Le mie schede» raccoglie le schede fatte con «Crea la tua scheda» e quelle scritte da te. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Seleziona scheda). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
           }
         }
       }
@@ -13833,13 +14241,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "From here you compare the Free plan and the Pro subscription, subscribe or restore a purchase. Your first subscription starts with a 7-day free trial. If you have a free license, you see here until when it's valid."
+            "value" : "From here you compare the Free plan and the Pro subscription, subscribe or restore a purchase. Your first subscription starts with a 7-day free trial. If you have a free license, you see here until when it's valid. “Restore purchases” tells you whether it found an active subscription on your account."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Da questa voce confronti il piano Free e l'abbonamento Pro, ti abboni o ripristini un acquisto. Alla prima iscrizione hai 7 giorni di prova gratuita. Se hai una licenza gratuita, qui vedi fino a quando vale."
+            "value" : "Da questa voce confronti il piano Free e l'abbonamento Pro, ti abboni o ripristini un acquisto. Alla prima iscrizione hai 7 giorni di prova gratuita. Se hai una licenza gratuita, qui vedi fino a quando vale. «Ripristina acquisti» ti dice se ha trovato un abbonamento attivo sul tuo account."
           }
         }
       }
@@ -13867,13 +14275,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ready-made workouts: choose your workout plan and a day and it becomes your list. At the top, with the Pro subscription, \"Create your plan\": enter height, weight, sex, age, goal (lose weight, maintain or build muscle), experience, workouts a week (2, 3 or 4) and where you train, and the app builds a plan for you; you can create more than one, rename them and redo them. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate, red for Expert. Everyone gets the basic total body plan; Pro adds Beginner, Full body in 2 workouts, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching and the recommended plan, which changes every month based on your workouts."
+            "value" : "At the bottom of the page, the “Ready-made plans” box (tap it to open it) gathers the pre-built plans, sorted by workouts a week: choose your workout plan and a day and it becomes your list. Each plan shows its difficulty in a coloured badge: green for Beginner, orange for Intermediate, red for Expert. Everyone gets the basic total body plan; Pro adds Beginner, Full body in 2 workouts, Push/Pull/Legs, Upper/Lower, Bodyweight and stretching. Right below the list, with the Pro subscription, there is “Create your plan”: enter height, weight, sex, age, goal (lose weight, maintain or build muscle), experience, workouts a week (1 to 7; with 7, one is stretching) and where you train, and the app builds a plan for you; you can create more than one, rename them and redo them. Plans created by the app and those you write yourself (Exercises > Plans, Pro) are in the list, in the “My plans” box, labelled “Created by the app” or “Made by you”."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allenamenti già organizzati: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. In cima, con l'abbonamento Pro, \"Crea la tua scheda\": inserisci altezza, peso, sesso, età, obiettivo (dimagrire, mantenere o massa), esperienza, allenamenti a settimana (2, 3 o 4) e dove ti alleni, e l'app prepara una scheda su misura; puoi crearne più di una, rinominarle e rifarle. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio, rosso per Esperto. Per tutti c'è la scheda base total body; con il Pro anche Principiante, Full body in 2 allenamenti, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching e la scheda consigliata, che cambia ogni mese in base ai tuoi allenamenti."
+            "value" : "In fondo alla pagina, il riquadro «Schede pronte» (toccalo per aprirlo) raccoglie le schede già organizzate, ordinate per allenamenti a settimana: scegli la tua scheda di esercizi e un giorno e diventa il tuo elenco. Ogni scheda mostra la difficoltà in una pastiglia colorata: verde per Principiante, arancione per Intermedio, rosso per Esperto. Per tutti c'è la scheda base total body; con il Pro anche Principiante, Full body in 2 allenamenti, Push/Pull/Legs, Upper/Lower, Corpo libero e stretching. Subito sotto l'elenco, con l'abbonamento Pro, c'è «Crea la tua scheda»: inserisci altezza, peso, sesso, età, obiettivo (dimagrire, mantenere o massa), esperienza, allenamenti a settimana (da 1 a 7; con 7 uno è di stretching) e dove ti alleni, e l'app prepara una scheda su misura; puoi crearne più di una, rinominarle e rifarle. Le schede create dall'app e quelle scritte da te (Esercizi > Schede, Pro) sono nell'elenco, nel riquadro «Le mie schede», con l'etichetta «Creata dall'app» o «Fatta da te»."
           }
         }
       }
@@ -13935,13 +14343,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose where the phone is and press Start. The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\". During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary with the estimated calories burned, and tips."
+            "value" : "Choose where the phone is and press Start: the app counts up/down or left/right movement depending on the exercise (you can change it when editing the exercise). The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\"; if it does not count your movements, try the button to count the other axis. During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary with the estimated calories burned, and tips."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scegli dove hai il telefono e premi Avvia. Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\". Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo con la stima delle calorie bruciate e i consigli."
+            "value" : "Scegli dove hai il telefono e premi Avvia: l'app conta il movimento su/giù o sinistra/destra in base all'esercizio (puoi cambiarlo nella modifica dell'esercizio). Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\"; se non conta i movimenti, prova il pulsante per contare l'altro asse. Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo con la stima delle calorie bruciate e i consigli."
           }
         }
       }
@@ -15006,13 +15414,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Change list"
+            "value" : "Select plan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cambia elenco"
+            "value" : "Seleziona scheda"
           }
         }
       }
@@ -15057,13 +15465,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The list is empty: pick exercises below and tap them to add them."
+            "value" : "The list is empty: tap Add exercise to pick exercises."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'elenco è vuoto: scegli gli esercizi qui sotto e toccali per aggiungerli."
+            "value" : "L'elenco è vuoto: tocca Aggiungi esercizio per scegliere gli esercizi."
           }
         }
       }
@@ -15234,6 +15642,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esercizio non più disponibile"
+          }
+        }
+      }
+    },
+    "workout.myPlans %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My plans (%lld)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le mie schede (%lld)"
           }
         }
       }

@@ -2,9 +2,11 @@ import Foundation
 import HealthKit
 
 /// Collegamento facoltativo con Apple Salute (solo iPhone, tutto sul dispositivo):
-/// - lettura di peso e altezza, solo quando l'utente preme "Importa da Salute";
 /// - scrittura degli allenamenti di forza completati, se il collegamento e' attivo.
-/// Richiede il consenso ai dati sanitari, l'entitlement HealthKit e i testi NSHealth*UsageDescription.
+/// Dal 6 novembre 2026 l'app non chiede piu' di leggere peso e altezza (come su Android): la lettura serviva solo
+/// alla Nutrizione, che e' spenta. latestWeightKg/latestHeightCm restano ma senza permesso non restituiscono dati;
+/// se si riaccende la Nutrizione vanno rimessi i tipi in lettura, NSHealthShareUsageDescription e l'informativa.
+/// Richiede il consenso ai dati sanitari, l'entitlement HealthKit e il testo NSHealthUpdateUsageDescription.
 @MainActor
 final class HealthKitService {
     static let shared = HealthKitService()
@@ -21,7 +23,8 @@ final class HealthKitService {
             && UserDefaults.standard.double(forKey: ConsentStore.grantedAtKey) > 0
     }
 
-    private var readTypes: Set<HKObjectType> { [HKQuantityType(.bodyMass), HKQuantityType(.height)] }
+    /// Nessun dato in lettura (vedi sopra).
+    private var readTypes: Set<HKObjectType> { [] }
     private var shareTypes: Set<HKSampleType> { [HKObjectType.workoutType()] }
 
     /// Mostra la richiesta di Apple (una volta; poi si cambia da Impostazioni > Salute).

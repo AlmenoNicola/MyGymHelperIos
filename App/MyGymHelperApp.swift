@@ -12,6 +12,10 @@ struct MyGymHelperApp: App {
 
     init() {
         ErrorReporter.shared.install()     // prima di tutto: eccezioni non gestite salvate e proposte al riavvio
+        // Apple Salute nascosto e spento (9 novembre 2026): chi l'aveva acceso non scrive più gli allenamenti
+        if !AppFeatures.healthSyncEnabled {
+            UserDefaults.standard.set(false, forKey: HealthKitService.enabledKey)
+        }
     }
 
     var body: some Scene {

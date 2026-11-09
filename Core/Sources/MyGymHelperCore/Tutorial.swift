@@ -43,11 +43,12 @@ public enum TutorialTarget {
     public static let tabProfile = "tab.profile"
     public static let profileMuscles = "profile.muscles"
     public static let profileCharts = "profile.charts"
+    /// Pulsante «Storico allenamenti», in fondo alla scheda Profilo (prima era in Allenamento).
+    public static let profileHistory = "profile.history"
     public static let workoutList = "workout.list"
     public static let workoutAdd = "workout.add"
     public static let workoutPresets = "workout.presets"
     public static let workoutFree = "workout.free"
-    public static let workoutHistory = "workout.history"
     public static let exercisesLinks = "exercises.links"
     public static let exercisesEquipment = "exercises.equipment"
     public static let nutritionProfile = "nutrition.profile"
@@ -62,7 +63,7 @@ public enum TutorialTarget {
 public enum TutorialGuide {
     /// Versione del tutorial: aumentarla a ogni aggiornamento dei passi. Viene salvata quando l'utente lo
     /// completa o lo salta; il tutorial parte da solo solo se non e' mai stato visto (valore salvato 0).
-    public static let version = 21  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
+    public static let version = 31  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
                                     // 4: passi della Nutrizione nascosti mentre la scheda e' disattivata;
                                     // 5: i Piani passano dalla barra delle schede all'Area personale;
                                     // 6: "Suggerisci una funzione" (ultima voce dell'Area personale);
@@ -81,6 +82,16 @@ public enum TutorialGuide {
                                     // 19: "Cerca" in Elenchi (nome dell'elenco o esercizio) e zona Glutei, nel passo "exercisesLinks"
                                     // 20: schede da 2 allenamenti a settimana ("Crea la tua scheda" e "Full body in 2 allenamenti") nel passo "presets"
                                     // 21: tutti gli elenchi in cima a Esercizi (chiusi) e distretti muscolari coinvolti, nel passo "exercisesTab"
+                                    // 22: tutte le schede in fondo ad Allenamento (tue "Fatta da te", create "Creata dall'app", pronte), nel passo "presets"
+                                    // 23: "Crea la tua scheda" da 1 a 7 allenamenti a settimana (con 7 uno è di stretching), nel passo "presets"
+                                    // 24: Allenamento riorganizzato: «Seleziona scheda», «Aggiungi esercizio» dentro l'elenco, riquadro «Le tue schede» sotto l'elenco; «history» e «planReview» passano alla scheda Profilo
+                                    // 25: "Consigliati per te" spostato da Esercizi ad Aggiungi esercizio (riquadro chiuso, tocco = aggiungi)
+                                    // 26: Allenamento: "Le mie schede" sotto Esercizi caricati, "Crea la tua scheda" sotto Reset, "Schede pronte" a parte; consigliati nascosti
+                                    // 27: esercizio alternativo: scelta + parametri, poi "Solo per questa sessione" o "Sostituisci nell'elenco" (passo "alternative")
+                                    // 28: elenchi dell'utente in cima a Esercizi rinominati "Le mie schede" (passo "exercisesTab")
+                                    // 29: "Attrezzi in casa" diventa "Attrezzi a disposizione", dentro i filtri sotto la figura; filtro "Solo attrezzi disponibili" con gli attrezzi segnati in evidenza (passo "homeEquipment")
+                                    // 30: asse del movimento (su/giù o sinistra/destra) nel passo "session"; tolto Apple Salute/Health Connect da "infoTab"
+                                    // 31: Esercizi: tolta la sezione "Le mie schede", "Cerca esercizio" sotto la figura (passo "exercisesTab")
 
     /// Tutti i passi, compresi quelli delle funzioni disattivate.
     public static let allSteps: [TutorialStep] = [
@@ -94,8 +105,6 @@ public enum TutorialGuide {
         TutorialStep("session", art: .session),
         TutorialStep("alternative", art: .session),
         TutorialStep("free", tab: .workout, target: TutorialTarget.workoutFree),
-        TutorialStep("history", tab: .workout, target: TutorialTarget.workoutHistory),
-        TutorialStep("planReview", tab: .workout, target: TutorialTarget.workoutHistory),
         TutorialStep("exercisesTab", tab: .exercises, target: TutorialTarget.tabExercises),
         TutorialStep("exercisesLinks", tab: .exercises, target: TutorialTarget.exercisesLinks),
         TutorialStep("homeEquipment", tab: .exercises, target: TutorialTarget.exercisesEquipment),
@@ -104,6 +113,8 @@ public enum TutorialGuide {
         TutorialStep("profileTab", tab: .profile, target: TutorialTarget.tabProfile),
         TutorialStep("profileMuscles", tab: .profile, target: TutorialTarget.profileMuscles),
         TutorialStep("profileCharts", tab: .profile, target: TutorialTarget.profileCharts),
+        TutorialStep("history", tab: .profile, target: TutorialTarget.profileHistory),
+        TutorialStep("planReview", tab: .profile, target: TutorialTarget.profileHistory),
         TutorialStep("infoTab", tab: .info, target: TutorialTarget.tabInfo),
         TutorialStep("plans", tab: .info, target: TutorialTarget.infoPlans),
         TutorialStep("appearance", tab: .info, target: TutorialTarget.infoAppearance),

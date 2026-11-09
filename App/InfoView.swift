@@ -128,7 +128,8 @@ struct InfoView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard()
 
-                healthCard
+                // Apple Salute: nascosto per ora (AppFeatures.healthSyncEnabled)
+                if AppFeatures.healthSyncEnabled { healthCard }
 
                 VStack(spacing: 0) {
                     // Voce e musica: comprende anche gli avvisi (voce, suono, vibrazione), prima nella scheda Allenamento.

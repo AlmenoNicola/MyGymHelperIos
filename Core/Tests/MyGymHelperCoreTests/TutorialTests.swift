@@ -13,12 +13,14 @@ final class TutorialTests: XCTestCase {
         // Con la Nutrizione disattivata si saltano i suoi 2 passi.
         // Con gli attrezzi in casa nascosti (AppFlags.homeEquipment) si salta anche il loro passo.
         XCTAssertEqual(steps.count, 27 - (AppFeatures.nutritionEnabled ? 0 : 2) - (AppFlags.homeEquipment ? 0 : 1))
-        // Scheda Profilo: tre passi di fila (scheda, muscoli, grafici), subito prima delle Impostazioni.
+        // Scheda Profilo: cinque passi di fila (scheda, muscoli, grafici, Storico, revisione), subito prima delle Impostazioni.
         let profile = steps.firstIndex { $0.id == "profileTab" }!
-        XCTAssertEqual(steps[profile..<(profile + 4)].map(\.id), ["profileTab", "profileMuscles", "profileCharts", "infoTab"])
-        XCTAssertEqual(steps[profile..<(profile + 3)].map(\.target), [TutorialTarget.tabProfile, TutorialTarget.profileMuscles,
-                                                                    TutorialTarget.profileCharts])
-        for s in steps[profile..<(profile + 3)] { XCTAssertEqual(s.tab, .profile) }
+        XCTAssertEqual(steps[profile..<(profile + 6)].map(\.id),
+                       ["profileTab", "profileMuscles", "profileCharts", "history", "planReview", "infoTab"])
+        XCTAssertEqual(steps[profile..<(profile + 5)].map(\.target), [TutorialTarget.tabProfile, TutorialTarget.profileMuscles,
+                                                                    TutorialTarget.profileCharts, TutorialTarget.profileHistory,
+                                                                    TutorialTarget.profileHistory])
+        for s in steps[profile..<(profile + 5)] { XCTAssertEqual(s.tab, .profile) }
         // Attrezzi in casa: subito dopo i collegamenti di Esercizi, nella stessa scheda (se accesi).
         if AppFlags.homeEquipment {
             let equipment = steps.firstIndex { $0.id == "homeEquipment" }!
@@ -34,7 +36,7 @@ final class TutorialTests: XCTestCase {
         // Revisione della scheda ogni due settimane: subito dopo lo Storico, da cui prende i dati.
         let review = steps.firstIndex { $0.id == "planReview" }!
         XCTAssertEqual(steps[review - 1].id, "history")
-        XCTAssertEqual(steps[review].target, TutorialTarget.workoutHistory)
+        XCTAssertEqual(steps[review].target, TutorialTarget.profileHistory)
         // Esercizio alternativo: subito dopo la sessione, con il disegno della sessione.
         let alternative = steps.firstIndex { $0.id == "alternative" }!
         XCTAssertEqual(steps[alternative - 1].id, "session")

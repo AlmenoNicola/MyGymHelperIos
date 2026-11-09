@@ -1299,3 +1299,156 @@ riga apre il dettaglio. Nessuna stringa nuova, tutorial e Core invariati. **Non 
 - Stringhe `ex.districts`, `ex.listDistricts`, `ex.listEmpty`, `ex.listsHint`, `ex.expand`, `ex.collapse`; tutorial
   versione 21 (`tutorial.exercisesTab.body`).
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 6 novembre 2026 – Tutte le schede in fondo ad Allenamento (iOS fatto)
+- Annullata la modifica "Schede unificate" della mattina (mai committata): i file sono tornati al commit `b68c092`.
+- `WorkoutSetupView`: tolta la card "Schede pronte" sotto "Aggiungi esercizio"; in fondo alla pagina, dopo
+  "Conteggio libero" e "Storico", `PlansListSection` con il target del tutorial `workout.presets` sul titolo.
+- `PresetsView`: il contenuto di `PresetPlansView` è ora la vista riusabile `PlansListSection` (la schermata resta
+  uguale). Nuove card delle schede scritte dall'utente (Pro con consenso, apre `TrainingPlanDetailView`; la gestione
+  resta in Esercizi > Schede); etichette `PlanOriginBadge` / `PlanBadges` ("Fatta da te", "Creata dall'app" +
+  difficoltà) sulle schede create, sulla consigliata del mese e nel loro dettaglio; schede pronte solo difficoltà.
+- Stringhe `plans.badge.user`, `plans.badge.app`, `tutorial.presets.body`; tutorial versione 22.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 6 novembre 2026 – Esito di Ripristina acquisti (iOS)
+- `SubscriptionManager.restore()` restituisce `RestoreOutcome` (`restored` / `none` / `failed`), come
+  `BillingManager.restore` su Android: `AppStore.sync()`, poi `refresh()` che rilegge anche il piano dal server
+  (licenze gratuite). `restored` se il piano reale risultante è Pro; `failed` se `AppStore.sync` fallisce o il server
+  non risponde e il piano resta Free; `none` altrimenti. Se l'utente annulla l'accesso all'Apple ID: `nil`, nessun
+  messaggio. `refresh()` e `refreshServer()` ora restituiscono l'esito del server (`@discardableResult`).
+- `PaywallView`: "Ripristina acquisti" mostra l'esito in un avviso con OK (pulsante disattivato durante la verifica).
+- Stringhe `plans.restore.restored`, `.none`, `.failed`; frase finale in `tutorial.plans.body`.
+- **Non compilato** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 6 novembre 2026 – Apple Salute solo in scrittura e informativa aggiornata (iOS)
+- La lettura di peso e altezza da Salute serviva solo al pulsante "Importa da Salute" della Nutrizione (spenta):
+  tolti i tipi in lettura dalla richiesta HealthKit (`HealthKitService.readTypes` vuoto; resta la scrittura degli
+  allenamenti). Tolta la chiave `NSHealthShareUsageDescription` da `InfoPlist.xcstrings`, `project.yml` e
+  `project.pbxproj`; `health.note` non parla più dell'importazione. Se si riaccende la Nutrizione vanno rimessi
+  lettura, testo del permesso e frase dell'informativa.
+- `App/Legal/privacy.it.md` / `.en.md`: data 6 novembre 2026 e sezione 11 "scrive gli allenamenti e non legge dati
+  da Salute" (come la versione Android, che per il resto differisce solo per Google Play e Health Connect).
+- **Non compilato** (nessun Xcode/Swift qui).
+
+## 6 novembre 2026 – In cima a Esercizi solo i miei elenchi (iOS)
+- `ExerciseListsSection` (come `AllListsSection` su Android): tolti gli elenchi pronti "Per zona del corpo"; restano
+  solo "I miei elenchi", chiusi, con piano e consenso. Senza elenchi dell'utente la sezione non mostra niente
+  (né `ex.lists` né `ex.listsHint`). La schermata Elenchi non cambia. Il ricaricamento degli elenchi è passato a
+  `ExercisesView.onAppear`. Testo `tutorial.exercisesTab.body` aggiornato (versione invariata).
+- **Non compilato** (nessun Xcode/Swift qui).
+
+## 6 novembre 2026 – Crea la tua scheda da 1 a 7 allenamenti (iOS fatto)
+- Core `CustomPlans.swift` (uguale a Kotlin): `CustomPlanInput.minDays`/`maxDays` (1-7) e `clamped()`; muscoli `one`;
+  `stretchingDayKey`; `split` con 6-7 (push/pull/legs A e B), 5 (alta/bassa + push/pull/legs), 4, 2, 1 (total body
+  unico), 3 come prima; `generate` con 7 aggiunge in fondo il giorno di stretching della scheda pronta
+  `bodyweightStretching` (solo esercizi del catalogo); `CustomPlanNotes.manyDaysBeginner` e `isManyDaysBeginner`;
+  calorie con attività alta da 6 allenamenti. Le schede pronte non cambiano.
+- Viste: selettore 1…7 con la nota `custom.note.manyDays`, nota anche nella scheda creata; `custom.facts.one` e
+  `presets.perWeek.one` con 1 allenamento.
+- Stringhe nuove `presets.day.upper/lower/pushA/pullA/legsA/pushB/pullB/legsB`, `presets.perWeek.one`,
+  `custom.facts.one %@`, `custom.note.manyDays`; `tutorial.presets.body` aggiornato; tutorial versione 23.
+- Test in `CustomPlansTests.swift`: clamped, 1, 5, 6 e 7 giorni, nota principianti e calorie.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 6 novembre 2026 – Allenamento riorganizzato e Storico nel Profilo (iOS fatto)
+- `WorkoutSetupView`: senza elenchi salvati e con "Crea la tua scheda" disponibile (Pro), al posto della card
+  dell'elenco il pulsante principale "Crea la tua scheda" (target `workout.list`) e sotto "Aggiungi esercizio".
+  Altrimenti la card dell'elenco: "Seleziona scheda" (stesso pulsante di prima, testo nuovo), "Aggiungi esercizio"
+  sotto "L'elenco è vuoto" o dopo l'ultimo esercizio nel riquadro "Esercizi caricati" aperto (vista privata
+  `AddExerciseButton`, target `workout.add`). Sotto la card il riquadro richiudibile "Le tue schede"
+  (`workout.yourPlans`, chiuso all'avvio, target `workout.presets` sull'intestazione) con `PlansListSection(showTitle:
+  false)`; poi "Conteggio libero". Tolti il vecchio "Aggiungi esercizio" principale, "Storico" e le schede in fondo.
+  Con il passo del tutorial su `workout.add` il riquadro "Esercizi caricati" si apre da solo.
+- `ProfileView`: in fondo "Storico allenamenti" (target `profile.history`), anche senza consenso sotto l'invito.
+- Core `Tutorial.swift`: tolto `workoutHistory`, nuovo `profileHistory`; passi "history" e "planReview" dopo
+  "profileCharts" nella scheda Profilo; versione 24. `TutorialTests` aggiornati (27 passi).
+- Stringhe `workout.changeList`, `workout.emptyList`, `workout.yourPlans` (nuova), `tutorial.presets.title`,
+  `tutorial.list.body`, `tutorial.addExercise.body`, `tutorial.presets.body`, `tutorial.history.body`.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – "Consigliati per te" in Aggiungi esercizio (iOS fatto)
+- `ExercisesView`: tolti `recommendations`, il riquadro "Consigliati per te" e la `@Query` delle sessioni (non serviva
+  ad altro).
+- `AddExerciseView` (`WorkoutSetupView.swift`): riquadro `recommendedBox` sotto filtri e ricerca, sopra i risultati;
+  chiuso all'inizio (`recommendedOpen`), solo Pro (`fixedCoaching`), mai in "Fai esercizio alternativo", nascosto
+  senza consigli. Muscoli: quelli scelti, altrimenti quelli principali dell'elenco attuale (tutti se vuoto); esclusi
+  gli esercizi già nell'elenco; filtri attrezzi in casa e corpo libero. Tocco = editor per aggiungere. Miniatura
+  spostata nella vista privata `RecommendationThumbnail`. Il Core non cambia.
+- Testi `tutorial.exercisesTab.body` e `tutorial.addExercise.body`; tutorial versione 25.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Schede nella pagina Allenamento (iOS fatto)
+- `WorkoutSetupView`: tolto il riquadro "Le tue schede". Nella card dell'elenco, sotto "Esercizi caricati" (o sotto
+  l'elenco vuoto e "Aggiungi esercizio"), il riquadro chiuso "Le mie schede (N)" con le schede scritte a mano (Pro
+  con consenso) e quelle di "Crea la tua scheda" (Pro); solo se ce n'è almeno una. Sotto la card "Crea la tua scheda"
+  (non se è già in cima, Pro senza elenchi: in quel caso, come su Android, "Le mie schede" non si vede), poi il
+  riquadro chiuso "Schede pronte" (target del tutorial `workout.presets`), poi "Conteggio libero".
+- `PresetsView` / `CustomPlanViews`: viste riusabili `UserPlanCards`, `CreatePlanCard`, `CustomPlanCards`,
+  `MonthlyPlanCard`, `PresetPlanCards`; `presetsByWeek()` (allenamenti a settimana, difficoltà, ordine originale);
+  `HiddenForNow` con `monthlyPlan` e `recommendedExercises` a false (card del mese e "Consigliati per te" spenti,
+  codice intatto). La schermata Schede pronte (`PresetPlansView`) resta uguale salvo ordine e scheda del mese.
+- Stringhe: nuova `workout.myPlans %lld`; `tutorial.presets.title/.body`, `tutorial.list.body`,
+  `tutorial.addExercise.body`. `workout.yourPlans` resta nel catalogo (non usata). Tutorial versione 26.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Esercizio alternativo con modifica dei parametri (iOS fatto)
+- `AddExerciseView(alternativeFor:originalParameters:canReplace:onPick:)`: toccando un esercizio si apre
+  `ItemEditorView` in modalità alternativa (`AlternativeEdit`: originale, suoi parametri, `canReplace`, `onDone`),
+  precompilata con `WorkoutListLogic.alternativeParameters` (niente valori da scheda o ultima sessione); in alto
+  "Al posto di: …"; in fondo "Solo per questa sessione" (`alternative.useOnce`) e, per un esercizio dell'elenco,
+  "Sostituisci nell'elenco" con la conferma. Indietro dall'editor torna alla scelta.
+- `WorkoutSessionView`: `useAlternative(_:instead:parameters:)` usa i parametri dell'editor; `replaceInList` aggiorna
+  la riga (`replaceExercise`) e riparte da "Pronto" senza "Al posto di". Tolti da "Pronto" il pulsante "Sostituisci
+  nell'elenco", il suo avviso e `makePermanent`.
+- Stringhe `alternative.useOnce` (nuova) e `tutorial.alternative.body`; tutorial versione 27.
+- **Non compilato e non provato** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – "Attrezzi in casa" diventa "Attrezzi a disposizione", dentro i filtri (iOS fatto)
+- `HomeEquipmentCard` diventa `HomeEquipmentSection` (in `ExercisesView.swift`, come su Android): niente card propria,
+  riga con icona casa e titolo in grassetto, pillole degli attrezzi segnati (o `equipment.home.none`) e "Aggiungi o
+  togli attrezzi"; Free: nota bloccata. Con il filtro "Solo attrezzi disponibili" acceso le pillole sono in evidenza
+  (accento pieno, testo `Theme.onAccent`). Il foglio degli attrezzi non cambia.
+- La sezione sta nel riquadro dei filtri subito dopo le pillole dei muscoli scelti in Esercizi (con il target del
+  tutorial `exercises.equipment`) e nella ricerca comune di Aggiungi esercizio / Esercizio alternativo; tolta la
+  vecchia card sopra i filtri. Nomi interni invariati.
+- Testi `equipment.home.title/.filter/.locked/.none`, `compare.homeEquipment`, `tutorial.homeEquipment.title/.body`;
+  tutorial versione 29.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – "I miei elenchi" in Esercizi rinominati "Le mie schede" (iOS fatto)
+- Annullata la modifica "Tolti «I miei elenchi» dalla scheda Esercizi" della mattina (mai committata): rimessa
+  `ExerciseListsSection` com'era (solo elenchi dell'utente, chiusi, con distretti ed esercizi) e lo stato degli elenchi
+  aperti in `DistrictsUIState`.
+- In cima a Esercizi un solo titolo "Le mie schede" (`ex.myPlans`, title3 grassetto) con sotto `ex.myPlansHint`, al
+  posto di `ex.lists` / `lists.mine` / `ex.listsHint`. La schermata Elenchi e il pulsante "Elenchi" non cambiano.
+- Testo `tutorial.exercisesTab.body` (inizio); tutorial versione 29 invariata (cambiato solo il commento della 28,
+  come chiesto dal prompt). `ex.listsHint` e `lists.mine` restano nel catalogo.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Asse del movimento e Apple Salute/Health Connect nascosti (iOS fatto)
+- Core: `RepCounter.swift` sostituito (asse `MovementAxis` su/giù o sinistra/destra rispetto al pavimento, segnale
+  `.yaw` dal giroscopio, spostamento verticale/orizzontale); nuovo `Movement.swift` (`MovementRules`: regole dall'id,
+  valore "movement" del catalogo, scelta della riga); `CatalogExercise.movement`/`movementAxis` (anche dal seed),
+  `WorkoutItem.movement` (azzerato da `replaceExercise`), `PositionTuning.config` con `minYawSwing`,
+  `AppFeatures.healthSyncEnabled = false`; nuovi test `MovementAxisTests.swift` (provati solo in Kotlin). Tutorial 30.
+- App: `MotionService` passa il giroscopio e ha `setAxis` (le ripetizioni della serie restano); `SessionController`
+  con `axis` e `toggleAxis()`. Sessione: asse dalla sessione (alternativa) o `MovementRules.forItem`; in "Pronto" e
+  durante la serie "Movimento contato: …", durante la serie il pulsante "Conta sinistra/destra" / "Conta su/giù".
+  `ItemEditorView`: riquadro "Movimento da contare", salvato sulla riga solo se diverso dal catalogo; esercizio
+  alternativo con l'asse scelto (solo per oggi o sulla riga sostituita).
+- Apple Salute nascosto e spento: riquadro tolto dalle Impostazioni, nessuna scrittura a fine sessione, interruttore
+  spento all'avvio, entitlement HealthKit commentato in `MyGymHelper.entitlements` e `MyGymHelper-Dev.entitlements`.
+  `NSHealthUpdateUsageDescription` resta; `NSHealthShareUsageDescription` resta tolta (scelta dell'utente).
+- Stringhe `movement.*`, `tutorial.session.body`, `tutorial.infoTab.body`.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Esercizi: tolta "Le mie schede", "Cerca esercizio" sotto la figura (iOS fatto)
+- `ExercisesView`: tolta la sezione "Le mie schede" in cima (con il consenso e il ricaricamento degli elenchi usati
+  solo da lei); "Cerca esercizio" subito sotto la figura, prima delle pillole dei muscoli. Aggiungi esercizio /
+  Esercizio alternativo invariati. Pulsanti "Elenchi" e "Schede" al loro posto.
+- `MuscleDistrictsViews.swift`: eliminata `ExerciseListsSection` e lo stato degli elenchi aperti in
+  `DistrictsUIState`; resta `MuscleDistrictsBox` (Allenamento > "Esercizi caricati").
+- Stringhe tolte `ex.myPlans`, `ex.myPlansHint`, `ex.listEmpty` (non più usate); `tutorial.exercisesTab.body` nuovo;
+  tutorial versione 31.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.

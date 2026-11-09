@@ -35,16 +35,19 @@ public struct CatalogExercise: Codable, Identifiable, Hashable, Sendable {
     public let level: String
     /// Foto dell'esercizio (posizione iniziale e finale), scaricate solo quando servono.
     public let images: [String]
+    /// Asse del movimento scritto nel catalogo ("movement": "upDown" / "leftRight"); nil = regole (MovementRules).
+    public let movement: MovementAxis?
 
     public init(id: String, name: String, primary: [MuscleGroup], secondary: [MuscleGroup] = [],
                 equipment: String = "", mechanic: Mechanic = .compound, steps: [String] = [],
-                category: String = "strength", level: String = "", images: [String] = []) {
+                category: String = "strength", level: String = "", images: [String] = [],
+                movement: MovementAxis? = nil) {
         self.id = id; self.name = name; self.primary = primary; self.secondary = secondary
         self.equipment = equipment; self.mechanic = mechanic; self.steps = steps
-        self.category = category; self.level = level; self.images = images
+        self.category = category; self.level = level; self.images = images; self.movement = movement
     }
 
-    enum CodingKeys: String, CodingKey { case id, name, primary, secondary, equipment, mechanic, steps, category, level, images }
+    enum CodingKeys: String, CodingKey { case id, name, primary, secondary, equipment, mechanic, steps, category, level, images, movement }
 
     /// I campi aggiunti dopo (categoria, livello, foto) sono facoltativi: i dati salvati prima restano leggibili.
     public init(from decoder: Decoder) throws {
@@ -59,11 +62,14 @@ public struct CatalogExercise: Codable, Identifiable, Hashable, Sendable {
         category = try c.decodeIfPresent(String.self, forKey: .category) ?? "strength"
         level = try c.decodeIfPresent(String.self, forKey: .level) ?? ""
         images = try c.decodeIfPresent([String].self, forKey: .images) ?? []
+        movement = try c.decodeIfPresent(MovementAxis.self, forKey: .movement)
     }
 
     public var isLowerBody: Bool { primary.contains { $0.isLowerBody } }
     public var isCompound: Bool { mechanic == .compound }
     public var kind: ExerciseKind { .of(category) }
+    /// Asse del movimento da contare (su/giù o sinistra/destra): scritto nel catalogo o dalle regole.
+    public var movementAxis: MovementAxis { MovementRules.of(self) }
 
     /// Esercizio di forza o pliometria: gli unici proposti dai consigli (niente stretching, cardio o foam roller).
     public var isTraining: Bool { (kind == .strength || kind == .plyometrics) && equipment != "foamRoll" }
@@ -82,6 +88,8 @@ struct SeedExercise: Decodable {
     let category: String?
     let level: String?
     let images: [String]?
+    /// Asse del movimento ("upDown" / "leftRight"), facoltativo: vince sulle regole.
+    let movement: String?
 }
 
 public enum SeedCatalog {
@@ -100,7 +108,8 @@ public enum SeedCatalog {
                 steps: (s.steps[language]).flatMap { $0.isEmpty ? nil : $0 } ?? s.steps["en"] ?? [],
                 category: s.category ?? "strength",
                 level: s.level ?? "",
-                images: s.images ?? [])
+                images: s.images ?? [],
+                movement: s.movement.flatMap(MovementAxis.init(rawValue:)))
         }
     }
 }

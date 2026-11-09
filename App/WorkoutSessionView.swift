@@ -4,7 +4,7 @@ import MyGymHelperCore
 
 /// Cosa avviare: esercizio (nil = conteggio libero), parametri ed eventuale esercizio di un elenco.
 /// `replacing`/`replacingParameters`: esercizio originale (e i suoi parametri) quando si fa un esercizio alternativo,
-/// solo per questa sessione.
+/// solo per questa sessione (con "Sostituisci nell'elenco" non c'è: è l'esercizio dell'elenco).
 struct SessionTarget: Hashable, Identifiable {
     let id = UUID()
     var exercise: CatalogExercise?
@@ -13,6 +13,8 @@ struct SessionTarget: Hashable, Identifiable {
     var itemID: UUID? = nil
     var replacing: CatalogExercise? = nil
     var replacingParameters: WorkoutParameters? = nil
+    /// Asse del movimento scelto per questa sessione (esercizio alternativo); nil = dalla riga o dal catalogo.
+    var movement: MovementAxis? = nil
 
     static func == (a: SessionTarget, b: SessionTarget) -> Bool { a.id == b.id }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
@@ -49,14 +51,14 @@ struct WorkoutSessionView: View {
             .id(target.id)
         } else {
             ReadyView(exercise: target.exercise, position: $position, parameters: $parameters,
-                      replacing: target.replacing,
+                      replacing: target.replacing, axis: axis,
                       onAlternative: target.exercise == nil ? nil : { showAlternative = true },
-                      onRestore: target.replacing == nil ? nil : restoreOriginal,
-                      onMakePermanent: target.replacing != nil && target.listID != nil && target.itemID != nil ? makePermanent : nil) {
+                      onRestore: target.replacing == nil ? nil : restoreOriginal) {
                 let settings = AppSettings.shared
                 controller = SessionController(position: position, tuning: settings.tuning(for: position),
                                                parameters: parameters.clamped(), exercise: target.exercise,
                                                options: .fromDefaults(), readAloud: settings.explainExercise,
+                                               axis: axis,
                                                lastSetNotice: { [catalog, listID = target.listID, itemID = target.itemID] in
                     // Prossimo esercizio dell'elenco (o fine della giornata), letto dallo stato attuale dell'elenco.
                     WorkoutListLogic.lastSetNotice(WorkoutListStore.shared.list(listID)?.items, currentItemID: itemID) {
@@ -66,34 +68,53 @@ struct WorkoutSessionView: View {
             }
             .navigationDestination(isPresented: $showAlternative) {
                 if let original = target.replacing ?? target.exercise {
-                    AddExerciseView(alternativeFor: original) { picked in useAlternative(picked, instead: original) }
+                    // Scelta + parametri (editor); poi solo per questa sessione o definitivo nell'elenco
+                    AddExerciseView(alternativeFor: original,
+                                    originalParameters: target.replacingParameters ?? target.parameters,
+                                    canReplace: target.listID != nil && target.itemID != nil) { picked, p, axis, permanent in
+                        if permanent { replaceInList(picked, parameters: p, movement: axis) }
+                        else { useAlternative(picked, instead: original, parameters: p, movement: axis) }
+                    }
                 }
             }
         }
     }
 
-    /// Esercizio alternativo scelto: si torna alla schermata "Pronto" con l'alternativa, solo per questa sessione
-    /// (stesse serie, ripetizioni e pausa; senza peso se è a corpo libero). L'elenco non cambia.
-    private func useAlternative(_ picked: CatalogExercise, instead original: CatalogExercise) {
+    /// "Solo per questa sessione": si chiudono editor e scelta e si torna a "Pronto" con l'alternativa e i parametri
+    /// scelti nell'editor, con "Al posto di" e "Torna a …". L'elenco non cambia.
+    private func useAlternative(_ picked: CatalogExercise, instead original: CatalogExercise, parameters chosen: WorkoutParameters,
+                                movement: MovementAxis) {
         let originalParameters = target.replacingParameters ?? target.parameters
-        target = SessionTarget(exercise: picked,
-                               parameters: WorkoutListLogic.alternativeParameters(originalParameters, alternative: picked),
+        target = SessionTarget(exercise: picked, parameters: chosen,
                                listID: target.listID, itemID: target.itemID,
-                               replacing: original, replacingParameters: originalParameters)
+                               replacing: original, replacingParameters: originalParameters, movement: movement)
         position = WorkoutListLogic.suggestedPosition(picked)
         parameters = target.parameters
         showAlternative = false
     }
 
-    /// "Sostituisci nell'elenco": l'alternativa diventa definitiva (stessa riga, nuovo esercizio e parametri di adesso);
-    /// da qui in poi è l'esercizio dell'elenco, senza più "Al posto di".
-    private func makePermanent() {
-        guard let exercise = target.exercise, let listID = target.listID, let itemID = target.itemID else { return }
+    /// "Sostituisci nell'elenco" (confermato nell'editor): la riga dell'elenco prende il nuovo esercizio e i parametri
+    /// scelti; "Pronto" riparte con l'esercizio dell'elenco (niente "Al posto di", niente "Torna a").
+    private func replaceInList(_ picked: CatalogExercise, parameters chosen: WorkoutParameters, movement: MovementAxis) {
+        guard let listID = target.listID, let itemID = target.itemID else { return }
         let store = WorkoutListStore.shared
         if let item = store.list(listID)?.items.first(where: { $0.id == itemID }) {
-            store.updateItem(WorkoutListLogic.replaceExercise(item, exerciseID: exercise.id, parameters: parameters), in: listID)
+            var replaced = WorkoutListLogic.replaceExercise(item, exerciseID: picked.id, parameters: chosen)
+            replaced.movement = MovementRules.override(picked, movement)   // asse sulla riga solo se diverso dal catalogo
+            store.updateItem(replaced, in: listID)
         }
-        target = SessionTarget(exercise: exercise, parameters: parameters, listID: listID, itemID: itemID)
+        target = SessionTarget(exercise: picked, parameters: chosen, listID: listID, itemID: itemID, movement: movement)
+        position = WorkoutListLogic.suggestedPosition(picked)
+        parameters = chosen
+        showAlternative = false
+    }
+
+    /// Asse del movimento da contare: quello scelto per la sessione (esercizio alternativo), altrimenti quello della
+    /// riga dell'elenco o del catalogo (la scelta della riga non vale per un esercizio diverso). Conteggio libero: su/giù.
+    private var axis: MovementAxis {
+        if let m = target.movement { return m }
+        let item = WorkoutListStore.shared.list(target.listID)?.items.first { $0.id == target.itemID }
+        return MovementRules.forItem(target.exercise, item)
     }
 
     /// "Torna a …": di nuovo l'esercizio originale dell'elenco.
@@ -113,14 +134,13 @@ private struct ReadyView: View {
     @Binding var parameters: WorkoutParameters
     /// Esercizio dell'elenco sostituito da questo (esercizio alternativo), nil altrimenti.
     var replacing: CatalogExercise? = nil
+    /// Asse del movimento che si conterà.
+    var axis: MovementAxis = .upDown
     /// "Fai esercizio alternativo" (solo con un esercizio).
     var onAlternative: (() -> Void)? = nil
-    /// "Torna a …" (solo per un esercizio alternativo).
+    /// "Torna a …" (solo per un esercizio alternativo). "Sostituisci nell'elenco" è passato nell'editor dei parametri.
     var onRestore: (() -> Void)? = nil
-    /// "Sostituisci nell'elenco" (solo per l'alternativa di un esercizio dell'elenco), con conferma.
-    var onMakePermanent: (() -> Void)? = nil
     var onStart: () -> Void
-    @State private var confirmPermanent = false
 
     var body: some View {
         ScrollView {
@@ -141,6 +161,9 @@ private struct ReadyView: View {
                         Text(verbatim: exercise.primary.map(\.title).joined(separator: ", "))
                             .appFont(.subheadline).foregroundStyle(.secondary)
                         Text(verbatim: parameters.summaryText).appFont(.headline)
+                        Text(verbatim: String(format: NSLocalizedString("movement.counted %@", comment: ""),
+                                              NSLocalizedString(axis.titleKey, comment: "")))
+                            .appFont(.caption).foregroundStyle(.secondary)
                     } else {
                         // Conteggio libero: serie, ripetizioni e pausa si scelgono qui.
                         CounterRow(title: "counter.sets", value: $parameters.sets, range: WorkoutParameters.setsRange)
@@ -158,15 +181,6 @@ private struct ReadyView: View {
                 if let onAlternative {
                     Button(action: onAlternative) {
                         Label("alternative.button", systemImage: "arrow.left.arrow.right")
-                            .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.glass)
-                    .tint(Theme.accent)
-                }
-                // Alternativa definitiva: l'esercizio dell'elenco viene sostituito (con conferma).
-                if replacing != nil, onMakePermanent != nil {
-                    Button { confirmPermanent = true } label: {
-                        Label("alternative.makePermanent", systemImage: "checkmark")
                             .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.glass)
@@ -195,14 +209,6 @@ private struct ReadyView: View {
         }
         .appScreen()
         .navigationBarTitleDisplayMode(.inline)
-        .alert("alternative.permanentTitle", isPresented: $confirmPermanent) {
-            Button("alternative.permanentConfirm") { onMakePermanent?() }
-            Button("info.cancel", role: .cancel) {}
-        } message: {
-            if let replacing, let exercise {
-                Text("alternative.permanentBody \(replacing.name) \(exercise.name)")
-            }
-        }
     }
 }
 
@@ -290,6 +296,19 @@ private struct SessionContent: View {
             }
 
             Spacer(minLength: 0)
+
+            // Asse del movimento: se il conteggio non prende le ripetizioni si passa all'altro (resto della sessione).
+            if controller.motion.isAvailable {
+                Text(verbatim: String(format: NSLocalizedString("movement.counted %@", comment: ""),
+                                      NSLocalizedString(controller.axis.titleKey, comment: "")))
+                    .appFont(.caption).foregroundStyle(.secondary)
+                Button { controller.toggleAxis() } label: {
+                    Label(LocalizedStringKey(controller.axis == .upDown ? "movement.switchTo.leftRight" : "movement.switchTo.upDown"),
+                          systemImage: controller.axis == .upDown ? "arrow.left.and.right" : "arrow.up.and.down")
+                        .appFont(.headline).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity).padding(.vertical, 6)
+                }
+                .buttonStyle(.glass)
+            }
 
             Button { showStop = true } label: {
                 Label("session.stopped", systemImage: "hand.raised.fill")
@@ -426,7 +445,10 @@ private struct SessionContent: View {
         try? context.save()
         // Apple Salute: solo se l'utente l'ha collegata (Info) e con il consenso ai dati sanitari.
         let start = controller.startedAt, name = controller.exercise?.name
-        Task { await HealthKitService.shared.saveWorkoutIfEnabled(start: start, end: Date(), title: name) }
+        // Apple Salute: collegamento nascosto e spento per ora (AppFeatures.healthSyncEnabled)
+        if AppFeatures.healthSyncEnabled {
+            Task { await HealthKitService.shared.saveWorkoutIfEnabled(start: start, end: Date(), title: name) }
+        }
     }
 }
 

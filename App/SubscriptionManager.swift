@@ -37,6 +37,25 @@ enum ServerCheck {
     case unavailable
 }
 
+/// Esito di "Ripristina acquisti" (come BillingManager.restore su Android).
+enum RestoreOutcome {
+    /// Il piano risultante e' Pro.
+    case restored
+    /// Nessun abbonamento attivo: il piano resta Free.
+    case none
+    /// App Store o server non raggiungibili e il piano resta Free: non si sa se c'e' un abbonamento.
+    case failed
+
+    /// Testo dell'avviso mostrato all'utente.
+    var messageKey: LocalizedStringResource {
+        switch self {
+        case .restored: "plans.restore.restored"
+        case .none: "plans.restore.none"
+        case .failed: "plans.restore.failed"
+        }
+    }
+}
+
 /// Stato degli abbonamenti con StoreKit 2. Le transazioni sono firmate e verificate sul telefono;
 /// se l'utente ha un account, gli acquisti portano il suo id (`appAccountToken`) per collegarli sul server.
 /// Con l'accesso si legge anche il piano dal server (licenza gratuita assegnata a mano con l'SQL di Supabase,
@@ -93,9 +112,31 @@ final class SubscriptionManager {
         return [.appAccountToken(token)]
     }
 
-    func restore() async { try? await AppStore.sync(); await refresh() }
+    /// "Ripristina acquisti": sincronizza con l'App Store, rilegge le transazioni e il piano dal server
+    /// (licenze gratuite assegnate a mano) e dice com'e' andata. nil = l'utente ha annullato l'accesso
+    /// all'Apple ID: nessun messaggio.
+    func restore() async -> RestoreOutcome? {
+        var syncFailed = false
+        do {
+            try await AppStore.sync()
+        } catch StoreKitError.userCancelled {
+            await refresh()
+            return nil
+        } catch {
+            syncFailed = true
+        }
+        let server = await refresh()
+        // Piano reale (non quello simulato nelle build di debug): il migliore tra App Store e server
+        let best = max(realTier, serverTierNow() ?? .free)
+        if best >= .full { return .restored }
+        if syncFailed { return .failed }
+        if case .unavailable = server { return .failed }
+        return .none
+    }
 
-    func refresh() async {
+    /// Rilegge le transazioni e il piano dal server; restituisce l'esito della lettura dal server.
+    @discardableResult
+    func refresh() async -> ServerCheck {
         var best: SubscriptionTier = .free
         var product: String?
         var expiry: Date?
@@ -112,13 +153,15 @@ final class SubscriptionManager {
         renewalDate = expiry
         UserDefaults.standard.set(best.rawValue, forKey: cacheTierKey)
         UserDefaults.standard.set(Date(), forKey: cacheDateKey)
-        await refreshServer()
+        return await refreshServer()
     }
 
     /// Rilegge il piano dal server (all'avvio, all'accesso o all'uscita dall'account, al ritorno nell'app).
-    func refreshServer() async {
+    @discardableResult
+    func refreshServer() async -> ServerCheck {
         let d = UserDefaults.standard
-        switch await serverCheck() {
+        let check = await serverCheck()
+        switch check {
         case .found(let tier, let until, let source):
             d.set(tier.rawValue, forKey: serverTierKey)
             d.set(until, forKey: serverUntilKey)
@@ -130,6 +173,7 @@ final class SubscriptionManager {
             break
         }
         publish(realTier)
+        return check
     }
 
     /// Piano dal server salvato, se ancora valido (non scaduto e verificato negli ultimi 14 giorni).

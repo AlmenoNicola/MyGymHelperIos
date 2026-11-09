@@ -19,9 +19,10 @@ func monthTitle(_ key: String) -> String {
     return out.string(from: date).capitalized(with: Locale.current)
 }
 
-/// "3 allenamenti a settimana" (la difficoltà è nella pastiglia DifficultyBadge).
+/// "3 allenamenti a settimana" (la difficoltà è nella pastiglia DifficultyBadge); con 1 "1 allenamento a settimana".
 func planFacts(_ plan: PresetPlan) -> String {
-    String(format: NSLocalizedString("presets.perWeek %lld", comment: ""), plan.daysPerWeek)
+    if plan.daysPerWeek == 1 { return NSLocalizedString("presets.perWeek.one", comment: "") }
+    return String(format: NSLocalizedString("presets.perWeek %lld", comment: ""), plan.daysPerWeek)
 }
 
 /// Difficoltà della scheda ben in evidenza: pastiglia colorata con tacche e "Difficoltà: Principiante".
@@ -59,79 +60,213 @@ struct DifficultyBadge: View {
     }
 }
 
-/// Schede pronte: "Crea la tua scheda" con le schede create (Pro), la consigliata del mese (Pro), la base total body
-/// (per tutti) e le altre schede (Pro). Come PresetPlansScreen su Android.
-struct PresetPlansView: View {
-    @Environment(SubscriptionManager.self) private var subscriptions
-    @Environment(CatalogStore.self) private var catalog
-    @Query(sort: \WorkoutSessionRecord.startedAt) private var sessions: [WorkoutSessionRecord]
-    private var monthly: MonthlyPlanStore { MonthlyPlanStore.shared }
-    private var tier: SubscriptionTier { subscriptions.tier }
+/// Chi ha fatto la scheda: l'utente ("Fatta da te") o l'app ("Creata dall'app"). Le schede pronte non hanno etichetta.
+enum PlanOrigin { case user, app }
 
+/// Etichetta dell'origine, stessa forma di DifficultyBadge (capsula, sfondo al 18%, bordo al 60%, padding 10/4):
+/// icona piccola + testo grassetto su una riga. Utente: colore accento, icona persona, "Fatta da te";
+/// app: colore highlight, icona cursori, "Creata dall'app". Come PlanOriginBadge su Android.
+struct PlanOriginBadge: View {
+    let origin: PlanOrigin
+
+    var body: some View {
+        let color = origin == .user ? Theme.accent : Theme.highlight
+        HStack(spacing: 4) {
+            Image(systemName: origin == .user ? "person.fill" : "slider.horizontal.3")
+                .appFont(.footnote).foregroundStyle(color)
+            Text(LocalizedStringKey(origin == .user ? "plans.badge.user" : "plans.badge.app"))
+                .appFont(.caption, weight: .bold).lineLimit(1)
+        }
+        .padding(.horizontal, 10).padding(.vertical, 4)
+        .background(color.opacity(0.18), in: Capsule())
+        .overlay(Capsule().stroke(color.opacity(0.6), lineWidth: 1))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Etichette della scheda (origine e difficolta') in fila con spazio 8, a capo se non c'e' spazio.
+struct PlanBadges: View {
+    let origin: PlanOrigin?
+    var level: String? = nil
+
+    var body: some View {
+        FlowLayout(spacing: 8) {
+            if let origin { PlanOriginBadge(origin: origin) }
+            if let level { DifficultyBadge(level: level) }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// Schede pronte come schermata a se': intestazione e l'elenco di tutte le schede (PlansListSection).
+/// Dal 6 novembre 2026 l'elenco e' in fondo alla pagina Allenamento; la schermata resta per chi ci arriva da altre parti.
+struct PresetPlansView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 ScreenHeader(symbol: "calendar", title: "presets.title", subtitle: "presets.subtitle")
-                // Invito alla scelta, sopra l'elenco delle schede
-                Text("presets.choose").appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                // "Crea la tua scheda" (scheda su misura) e le schede gia' create, sopra la scheda del mese
-                CustomPlansSection(tier: tier)
-
-                let monthlyOn = FeatureGate.isAvailable(.monthlyPlan, for: tier)
-                NavigationLink { PresetPlanView(planID: MonthlyPlanner.id) } label: {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Image(systemName: "sparkles").foregroundStyle(Theme.highlight).appFont(.title3)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("presets.monthly").appFont(.headline)
-                                if let p = monthly.plan { Text(verbatim: monthTitle(p.summary.monthKey)).appFont(.caption).foregroundStyle(.secondary) }
-                            }
-                            Spacer()
-                            Image(systemName: monthlyOn ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
-                        }
-                        if let p = monthly.plan { DifficultyBadge(level: p.plan.level) }
-                        Text("presets.monthly.summary").appFont(.footnote).foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .glassCard()
-                }
-                .buttonStyle(.plain)
-                .disabled(!monthlyOn)
-
-                ForEach(PresetPlans.all) { plan in
-                    let available = PresetPlans.isAvailable(plan, for: tier)
-                    NavigationLink { PresetPlanView(planID: plan.id) } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(LocalizedStringKey(plan.titleKey)).appFont(.headline)
-                                    Text(verbatim: planFacts(plan)).appFont(.caption).foregroundStyle(.secondary)
-                                }
-                                Spacer()
-                                Image(systemName: available ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
-                            }
-                            DifficultyBadge(level: plan.level)
-                            Text(LocalizedStringKey(plan.summaryKey)).appFont(.footnote).foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .glassCard()
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(!available)
-                }
-
-                if !FeatureGate.isAvailable(.presetPlans, for: tier) {
-                    Label("presets.locked", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                PlansListSection()
             }
             .padding(20)
         }
         .appScreen()
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// Elenco di tutte le schede (in fondo ad Allenamento e nella schermata Schede pronte), nell'ordine:
+/// titolo "Scegli la tua scheda di esercizi"; le schede scritte dall'utente (Pro con consenso, "Fatta da te");
+/// "Crea la tua scheda" con le schede create e la "Consigliata per te" ("Creata dall'app"); le schede pronte.
+/// Come PlansListSection su Android.
+struct PlansListSection: View {
+    /// Target del tutorial sul titolo dell'elenco (se c'e').
+    var titleTarget: String? = nil
+    /// Titolo "Scegli la tua scheda di esercizi": nella schermata Schede pronte si', nel riquadro
+    /// "Le tue schede" di Allenamento no.
+    var showTitle = true
+    @Environment(SubscriptionManager.self) private var subscriptions
+    private var tier: SubscriptionTier { subscriptions.tier }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Invito alla scelta, sopra l'elenco delle schede
+            if showTitle {
+                let title = Text("presets.choose").appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let titleTarget { title.tutorialTarget(titleTarget) } else { title }
+            }
+
+            // Schede scritte a mano dall'utente, dalla piu' recente (la gestione resta in Esercizi > Schede)
+            UserPlanCards()
+
+            // "Crea la tua scheda" (scheda su misura) e le schede gia' create, sopra la scheda del mese
+            CustomPlansSection(tier: tier)
+
+            // Scheda del mese nascosta per il momento (HiddenForNow.monthlyPlan)
+            if HiddenForNow.monthlyPlan { MonthlyPlanCard(tier: tier) }
+
+            PresetPlanCards(tier: tier)
+        }
+    }
+}
+
+/// Parti nascoste per il momento (9 novembre 2026): il codice resta, per riaccenderle basta rimettere true.
+enum HiddenForNow {
+    /// Card "Consigliata per te" (scheda del mese) nell'elenco delle schede.
+    static let monthlyPlan = false
+    /// Riquadro "Consigliati per te" in Allenamento > Aggiungi esercizio.
+    static let recommendedExercises = false
+}
+
+/// Schede pronte ordinate per allenamenti a settimana crescenti; a parità prima le più facili
+/// (principiante, intermedio, esperto), poi l'ordine originale (ordinamento stabile con l'indice).
+/// Risultato: Full body in 2, Total body base, Principiante, Corpo libero e stretching, Push/Pull/Legs, Upper/Lower.
+func presetsByWeek() -> [PresetPlan] {
+    func rank(_ level: String) -> Int { level == "beginner" ? 0 : level == "intermediate" ? 1 : 2 }
+    return PresetPlans.all.enumerated().sorted { a, b in
+        if a.element.daysPerWeek != b.element.daysPerWeek { return a.element.daysPerWeek < b.element.daysPerWeek }
+        if rank(a.element.level) != rank(b.element.level) { return rank(a.element.level) < rank(b.element.level) }
+        return a.offset < b.offset
+    }.map(\.element)
+}
+
+/// Card delle schede scritte a mano dall'utente (TrainingPlanRecord, dalla più recente), solo con il piano che le
+/// permette e con il consenso; etichetta "Fatta da te". La gestione (inserisci, elimina) resta in Esercizi > Schede.
+struct UserPlanCards: View {
+    @Environment(SubscriptionManager.self) private var subscriptions
+    @Query(sort: \TrainingPlanRecord.createdAt, order: .reverse) private var records: [TrainingPlanRecord]
+    @AppStorage(ConsentStore.grantedAtKey) private var consentAt = 0.0
+
+    /// Le schede dell'utente si vedono solo con il piano che le permette e con il consenso.
+    static func visible(tier: SubscriptionTier, consentAt: Double) -> Bool {
+        FeatureGate.isAvailable(.uploadTrainingAndNutritionPlans, for: tier) && consentAt > 0
+    }
+
+    var body: some View {
+        if Self.visible(tier: subscriptions.tier, consentAt: consentAt) {
+            ForEach(records) { record in
+                NavigationLink { TrainingPlanDetailView(record: record) } label: {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "doc.text").appFont(.title2).foregroundStyle(Theme.accent)
+                            Text(verbatim: record.name).appFont(.headline, weight: .bold)
+                                .lineLimit(1).minimumScaleFactor(0.7)
+                            Spacer()
+                            Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                        }
+                        PlanBadges(origin: .user)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .glassCard()
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+}
+
+/// Card "Consigliata per te" (scheda del mese, Pro). Per ora nascosta (HiddenForNow.monthlyPlan).
+struct MonthlyPlanCard: View {
+    let tier: SubscriptionTier
+    @Environment(CatalogStore.self) private var catalog
+    @Query(sort: \WorkoutSessionRecord.startedAt) private var sessions: [WorkoutSessionRecord]
+    private var monthly: MonthlyPlanStore { MonthlyPlanStore.shared }
+
+    var body: some View {
+        let monthlyOn = FeatureGate.isAvailable(.monthlyPlan, for: tier)
+        NavigationLink { PresetPlanView(planID: MonthlyPlanner.id) } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: "sparkles").foregroundStyle(Theme.highlight).appFont(.title3)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("presets.monthly").appFont(.headline)
+                        if let p = monthly.plan { Text(verbatim: monthTitle(p.summary.monthKey)).appFont(.caption).foregroundStyle(.secondary) }
+                    }
+                    Spacer()
+                    Image(systemName: monthlyOn ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
+                }
+                PlanBadges(origin: .app, level: monthly.plan?.plan.level)
+                Text("presets.monthly.summary").appFont(.footnote).foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .glassCard()
+        }
+        .buttonStyle(.plain)
+        .disabled(!monthlyOn)
         .task { monthly.refresh(catalog: catalog.all, sessions: sessionSummaries(sessions)) }
+    }
+}
+
+/// Card delle schede pronte (ordinate con presetsByWeek, solo difficoltà) e, nel Free, la nota col lucchetto.
+struct PresetPlanCards: View {
+    let tier: SubscriptionTier
+
+    var body: some View {
+        ForEach(presetsByWeek()) { plan in
+            let available = PresetPlans.isAvailable(plan, for: tier)
+            NavigationLink { PresetPlanView(planID: plan.id) } label: {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(LocalizedStringKey(plan.titleKey)).appFont(.headline)
+                            Text(verbatim: planFacts(plan)).appFont(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: available ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
+                    }
+                    DifficultyBadge(level: plan.level)
+                    Text(LocalizedStringKey(plan.summaryKey)).appFont(.footnote).foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .glassCard()
+            }
+            .buttonStyle(.plain)
+            .disabled(!available)
+        }
+        if !FeatureGate.isAvailable(.presetPlans, for: tier) {
+            Label("presets.locked", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }
 
@@ -173,7 +308,8 @@ struct PresetPlanView: View {
                                      title: LocalizedStringKey(plan.titleKey), subtitle: LocalizedStringKey(planFacts(plan)))
                     }
                     VStack(alignment: .leading, spacing: 8) {
-                        DifficultyBadge(level: plan.level)
+                        // Schede create e consigliata del mese: "Creata dall'app" + difficolta'; pronte: solo difficolta'
+                        PlanBadges(origin: custom != nil || planID == MonthlyPlanner.id ? .app : nil, level: plan.level)
                         if let custom {
                             CustomPlanNotesView(record: custom)
                             CustomPlanActions(record: custom)

@@ -47,8 +47,12 @@ final class SessionController {
     /// Si calcola a quel momento, cosi' tiene conto dello stato attuale dell'elenco.
     @ObservationIgnored private let lastSetNotice: @MainActor () -> LastSetNotice
 
+    /// Asse del movimento contato (su/giù o sinistra/destra); si cambia con `toggleAxis` durante la sessione.
+    private(set) var axis: MovementAxis
+
+    /// `axis`: asse dall'esercizio o dalla riga dell'elenco (conteggio libero: su/giù).
     init(position: SensorPosition, tuning: PositionTuning, parameters: WorkoutParameters,
-         exercise: CatalogExercise?, options: CueOptions, readAloud: Bool,
+         exercise: CatalogExercise?, options: CueOptions, readAloud: Bool, axis: MovementAxis = .upDown,
          lastSetNotice: @escaping @MainActor () -> LastSetNotice = { .lastSetOnly }) {
         let targets = parameters.targets.map { SetTarget(reps: max(1, $0.reps), weightKg: $0.weightKg) }
         self.position = position
@@ -60,7 +64,10 @@ final class SessionController {
         self.totalSets = targets.count
         self.restSeconds = parameters.restSeconds
         self.engine = SessionEngine(repsPerSet: targets.map(\.reps), restSeconds: parameters.restSeconds)
-        self.motion = MotionService(config: tuning.config())
+        var c = tuning.config()
+        c.axis = axis
+        self.axis = axis
+        self.motion = MotionService(config: c)
         self.cues = CueService(options: options)
         self.voiceOn = options.voice
         self.music = Music.create(settings: AppSettings.shared)
@@ -148,6 +155,9 @@ final class SessionController {
         }
         apply(engine.tick(at: now))
     }
+
+    /// Pulsante "cambia asse": su/giù <-> sinistra/destra. Le ripetizioni già contate nella serie restano.
+    func toggleAxis() { axis = axis.other; motion.setAxis(axis) }
 
     func stop(doneReps: Int) { apply(engine.stop(doneReps: doneReps, at: now)) }
     func skipRest() { apply(engine.skipRest(at: now)) }

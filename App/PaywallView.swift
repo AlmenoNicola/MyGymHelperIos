@@ -20,6 +20,9 @@ enum LegalLinks {
 struct PaywallView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @State private var showManage = false
+    /// Esito di "Ripristina acquisti" da mostrare nell'avviso (nil = nessun avviso).
+    @State private var restoreOutcome: RestoreOutcome?
+    @State private var restoring = false
 
     var body: some View {
         SubscriptionStoreView(productIDs: ProductID.all) {
@@ -44,7 +47,15 @@ struct PaywallView: View {
         .navigationBarTitleDisplayMode(.inline)   // il titolo e' gia' nell'intestazione della schermata
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("plans.restore") { Task { await subscriptions.restore() } }
+                Button("plans.restore") {
+                    restoring = true
+                    Task {
+                        // Annullato dall'utente (nil): nessun messaggio
+                        restoreOutcome = await subscriptions.restore()
+                        restoring = false
+                    }
+                }
+                .disabled(restoring)
             }
             // "Gestisci" porta all'App Store: non serve se il piano viene solo dalla licenza gratuita.
             if subscriptions.activeProductID != nil || (subscriptions.tier > .free && subscriptions.freeLicenseUntil == nil) {
@@ -54,6 +65,10 @@ struct PaywallView: View {
             }
         }
         .manageSubscriptionsSheet(isPresented: $showManage)
+        .alert(Text(restoreOutcome?.messageKey ?? "plans.restore"),
+               isPresented: Binding(get: { restoreOutcome != nil }, set: { if !$0 { restoreOutcome = nil } })) {
+            Button("OK", role: .cancel) { restoreOutcome = nil }
+        }
     }
 }
 

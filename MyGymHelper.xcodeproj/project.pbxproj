@@ -236,7 +236,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = MyGymHelper;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "MyGymHelper reads your weight and height from Health to fill in your profile, only when you ask.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "MyGymHelper saves your strength workouts to Health if you turn on the connection.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "MyGymHelper uses the motion sensors to count your reps while you train.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -278,7 +277,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = MyGymHelper;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "MyGymHelper reads your weight and height from Health to fill in your profile, only when you ask.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "MyGymHelper saves your strength workouts to Health if you turn on the connection.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "MyGymHelper uses the motion sensors to count your reps while you train.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

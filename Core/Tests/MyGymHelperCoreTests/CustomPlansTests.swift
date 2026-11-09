@@ -42,9 +42,54 @@ final class CustomPlansTests: XCTestCase {
         XCTAssertEqual(ul.daysPerWeek, 4)
         XCTAssertEqual(ul.level, "expert")
         XCTAssertTrue(ul.days.allSatisfy { $0.items.count == 7 })
-        // 5 o più allenamenti non esistono: si torna a 4
-        XCTAssertEqual(with { $0.daysPerWeek = 6 }.clamped().daysPerWeek, 4)
-        XCTAssertEqual(with { $0.daysPerWeek = 1 }.clamped().daysPerWeek, 2)
+        // Da 1 a 7 allenamenti: fuori dai limiti si torna a 1 o a 7
+        XCTAssertEqual(with { $0.daysPerWeek = 6 }.clamped().daysPerWeek, 6)
+        XCTAssertEqual(with { $0.daysPerWeek = 1 }.clamped().daysPerWeek, 1)
+        XCTAssertEqual(with { $0.daysPerWeek = 9 }.clamped().daysPerWeek, 7)
+        XCTAssertEqual(with { $0.daysPerWeek = 0 }.clamped().daysPerWeek, 1)
+    }
+
+    func testOneDayIsSingleFullBody() {
+        let p = CustomPlanGenerator.generate(with { $0.daysPerWeek = 1 }, catalog: catalog, seed: "s1d")
+        XCTAssertEqual(p.days.map(\.titleKey), ["presets.day.single"])
+        XCTAssertEqual(p.daysPerWeek, 1)
+        XCTAssertEqual(p.days[0].items.count, 5)
+    }
+
+    func testFiveDaysIsUpperLowerPushPullLegs() {
+        let p = CustomPlanGenerator.generate(with { $0.experience = .intermediate; $0.daysPerWeek = 5 }, catalog: catalog, seed: "s5")
+        XCTAssertEqual(p.days.map(\.titleKey), ["presets.day.upper", "presets.day.lower", "presets.day.push",
+                                                "presets.day.pull", "presets.day.legs"])
+        XCTAssertTrue(p.days.allSatisfy { $0.items.count == 6 })
+    }
+
+    func testSixAndSevenDays() {
+        let six = CustomPlanGenerator.generate(with { $0.experience = .advanced; $0.daysPerWeek = 6 }, catalog: catalog, seed: "s6")
+        let ppl = ["presets.day.pushA", "presets.day.pullA", "presets.day.legsA",
+                   "presets.day.pushB", "presets.day.pullB", "presets.day.legsB"]
+        XCTAssertEqual(six.days.map(\.titleKey), ppl)
+        for d in six.days {
+            let ids = d.items.map(\.exerciseID)
+            XCTAssertEqual(ids.count, Set(ids).count, d.titleKey)          // mai lo stesso esercizio nello stesso giorno
+        }
+        let seven = CustomPlanGenerator.generate(with { $0.experience = .advanced; $0.daysPerWeek = 7; $0.goal = .lose },
+                                                 catalog: catalog, seed: "s7")
+        XCTAssertEqual(seven.days.map(\.titleKey), ppl + [CustomPlanGenerator.stretchingDayKey])
+        XCTAssertEqual(seven.daysPerWeek, 7)
+        let stretch = seven.days.last!.items
+        XCTAssertFalse(stretch.isEmpty)
+        XCTAssertTrue(stretch.allSatisfy { byID[$0.exerciseID]?.kind == .stretching })
+    }
+
+    func testManyDaysBeginnerNote() {
+        XCTAssertFalse(CustomPlanGenerator.notes(with { $0.daysPerWeek = 4 }).manyDaysBeginner)
+        XCTAssertTrue(CustomPlanGenerator.notes(with { $0.daysPerWeek = 5 }).manyDaysBeginner)
+        XCTAssertFalse(CustomPlanGenerator.notes(with { $0.experience = .intermediate; $0.daysPerWeek = 6 }).manyDaysBeginner)
+        let k6 = CustomPlanGenerator.notes(with { $0.daysPerWeek = 6 }).dailyCalories
+        let k4 = CustomPlanGenerator.notes(with { $0.daysPerWeek = 4 }).dailyCalories
+        let k1 = CustomPlanGenerator.notes(with { $0.daysPerWeek = 1 }).dailyCalories
+        XCTAssertGreaterThan(k6, k4)
+        XCTAssertGreaterThan(k4, k1)
     }
 
     func testTwoDaysIsFullBodyForEveryLevel() {

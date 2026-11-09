@@ -12,6 +12,10 @@ struct WorkoutSetupView: View {
     @State private var showLists = false
     /// Riquadro degli esercizi caricati: chiuso all'apertura, resta com'è mentre si entra in un esercizio e si torna.
     @State private var itemsExpanded = false
+    /// Riquadri "Le mie schede" e "Schede pronte": chiusi all'avvio, restano come sono tornando da un dettaglio.
+    @State private var myPlansExpanded = false
+    @State private var presetsExpanded = false
+    @Query(sort: \TrainingPlanRecord.createdAt, order: .reverse) private var planRecords: [TrainingPlanRecord]
     @State private var toDelete: WorkoutItem?
     @State private var sessionTarget: SessionTarget?
     @State private var editTarget: EditTarget?
@@ -20,46 +24,51 @@ struct WorkoutSetupView: View {
     private var store: WorkoutListStore { WorkoutListStore.shared }
     private var list: WorkoutListStore.WorkoutList? { store.list(AppSettings.shared.currentListID) }
     private var canChooseLists: Bool { FeatureGate.isAvailable(.savedExerciseLists, for: tier) }
+    /// Nessun elenco salvato e "Crea la tua scheda" disponibile: al posto della card dell'elenco i due pulsanti.
+    private var showCreateFirst: Bool { store.lists.isEmpty && FeatureGate.isAvailable(.customPlans, for: tier) }
+    /// Numero di schede nel riquadro "Le mie schede": scritte a mano (Pro con consenso) e create con
+    /// "Crea la tua scheda" (Pro).
+    private var myPlansCount: Int {
+        (UserPlanCards.visible(tier: tier, consentAt: consentAt) ? planRecords.count : 0)
+            + (FeatureGate.isAvailable(.customPlans, for: tier) ? CustomPlanStore.shared.plans.count : 0)
+    }
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 ScreenHeader(symbol: "bolt.heart.fill", title: "setup.title", subtitle: "setup.subtitle")
                     .tutorialTarget(TutorialTarget.tabWorkout)
-                listCard.tutorialTarget(TutorialTarget.workoutList)
-                NavigationLink { AddExerciseView() } label: {
-                    Label("workout.addExercise", systemImage: "plus.circle.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
-                }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
-                .tutorialTarget(TutorialTarget.workoutAdd)
-                // Schede pronte: card grande come le funzioni principali (prima era un pulsante piccolo)
-                NavigationLink { PresetPlansView() } label: {
-                    HStack(spacing: 14) {
-                        Image(systemName: "calendar").appFont(.title2, weight: .semibold).foregroundStyle(.white)
-                            .frame(width: 48, height: 48).background(Theme.accentGradient, in: Circle())
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("presets.open").appFont(.title3, weight: .bold)
-                            Text("presets.subtitle").appFont(.footnote).foregroundStyle(.secondary)
-                        }
-                        Spacer(minLength: 0)
-                        Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
+                if showCreateFirst {
+                    // Nessun elenco (Pro): subito "Crea la tua scheda" (stessa destinazione della card nelle schede)
+                    // e sotto "Aggiungi esercizio"
+                    NavigationLink { CustomPlanEditorView(editID: nil) } label: {
+                        Label("custom.create", systemImage: "slider.horizontal.3").appFont(.headline).lineLimit(1)
+                            .frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .glassCard(padding: 18)
+                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .tutorialTarget(TutorialTarget.workoutList)
+                    AddExerciseButton()
+                } else {
+                    listCard.tutorialTarget(TutorialTarget.workoutList)
+                    // "Crea la tua scheda" sotto il riquadro dell'elenco (se non c'e' gia' in cima)
+                    CreatePlanCard(tier: tier)
                 }
-                .buttonStyle(.plain)
-                .tutorialTarget(TutorialTarget.workoutPresets)
+                // "Schede pronte" in un riquadro a parte, chiuso all'inizio (tutorial: passo "presets")
+                presetsBox
                 Button { sessionTarget = SessionTarget(exercise: nil, parameters: WorkoutItem.defaultParameters) } label: {
                     Label("workout.freeCount", systemImage: "timer").lineLimit(1).frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.glass)
                 .tutorialTarget(TutorialTarget.workoutFree)
-                NavigationLink { HistoryView() } label: {
-                    Label("history.open", systemImage: "clock.arrow.circlepath").lineLimit(1).frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.glass)
-                .tutorialTarget(TutorialTarget.workoutHistory)
+                // "Storico allenamenti" è passato in fondo alla scheda Profilo
             }
             .padding(20)
+        }
+        // Passo del tutorial su "Aggiungi esercizio": si apre da solo il riquadro degli esercizi caricati,
+        // così il pulsante (in fondo agli esercizi) è visibile e si può illuminare.
+        // Schede create aggiornate (anche tornando dall'editor)
+        .onAppear { CustomPlanStore.shared.reload() }
+        .onChange(of: TutorialController.shared.currentTarget, initial: true) { _, target in
+            if target == TutorialTarget.workoutAdd { itemsExpanded = true }
         }
         .tutorialScrollFollow()
         .appScreen()
@@ -106,6 +115,54 @@ struct WorkoutSetupView: View {
         .accessibilityHint(Text(itemsExpanded ? "workout.itemsHide" : "workout.itemsShow"))
     }
 
+    /// Intestazione di un riquadro richiudibile, stessa forma di "Esercizi caricati": icona, titolo, freccia.
+    private func collapsibleHeader(symbol: String, title: Text, expanded: Binding<Bool>) -> some View {
+        Button {
+            withAnimation(.snappy) { expanded.wrappedValue.toggle() }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: symbol).appFont(.headline).foregroundStyle(Theme.accent)
+                title.appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
+                Spacer(minLength: 0)
+                Image(systemName: expanded.wrappedValue ? "chevron.up" : "chevron.down")
+                    .appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .glassCard(padding: 14)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// Riquadro "Le mie schede (N)" dentro la card dell'elenco, sotto "Esercizi caricati": schede scritte a mano
+    /// ("Fatta da te") e create con "Crea la tua scheda" ("Creata dall'app"). Solo se ce n'e' almeno una.
+    @ViewBuilder
+    private var myPlansBox: some View {
+        let count = myPlansCount
+        if count > 0 {
+            collapsibleHeader(symbol: "doc.text", title: Text("workout.myPlans \(count)"), expanded: $myPlansExpanded)
+            if myPlansExpanded {
+                VStack(spacing: 12) {
+                    UserPlanCards()
+                    CustomPlanCards(tier: tier)
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+    }
+
+    /// Riquadro "Schede pronte": solo le schede pronte (per allenamenti a settimana) e, nel Free, il lucchetto.
+    private var presetsBox: some View {
+        VStack(spacing: 16) {
+            collapsibleHeader(symbol: "calendar", title: Text("presets.title"), expanded: $presetsExpanded)
+                .tutorialTarget(TutorialTarget.workoutPresets)
+            if presetsExpanded {
+                VStack(spacing: 16) { PresetPlanCards(tier: tier) }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+    }
+
     private var listCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -121,6 +178,9 @@ struct WorkoutSetupView: View {
             }
             if list?.items.isEmpty ?? true {
                 Text("workout.emptyList").appFont(.subheadline).foregroundStyle(.secondary)
+                AddExerciseButton()
+                // Elenco vuoto: "Le mie schede" subito sotto
+                myPlansBox
             }
             if let list {
                 // Esercizi già caricati: riquadro chiuso; toccandolo si apre (e si richiude) l'elenco.
@@ -135,7 +195,11 @@ struct WorkoutSetupView: View {
                             itemRow(number: index + 1, item: item, list: list)
                         }
                         .transition(.opacity.combined(with: .move(edge: .top)))
+                        // "Aggiungi esercizio" dopo l'ultimo esercizio
+                        AddExerciseButton()
                     }
+                    // "Le mie schede" sotto "Esercizi caricati", prima di "Esercizio successivo" e Reset
+                    myPlansBox
                 }
                 if !list.items.isEmpty {
                     Toggle("workout.autoNext", isOn: Binding(get: { list.autoNext }, set: { store.setAutoNext($0, for: list.id) }))
@@ -228,18 +292,39 @@ struct WorkoutSetupView: View {
     }
 }
 
+/// "Aggiungi esercizio": pulsante secondario a tutta larghezza (testo e icona nel colore d'accento) che apre la
+/// schermata Aggiungi esercizi. Sta dentro la card dell'elenco (o sotto "Crea la tua scheda" se non ci sono elenchi).
+private struct AddExerciseButton: View {
+    var body: some View {
+        NavigationLink { AddExerciseView() } label: {
+            Label("workout.addExercise", systemImage: "plus").appFont(.headline).lineLimit(1)
+                .foregroundStyle(Theme.accent).frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.glass)
+        .tutorialTarget(TutorialTarget.workoutAdd)
+    }
+}
+
 /// Aggiunta di esercizi all'elenco attuale: mappa del corpo, tipo, ricerca e lista di tutti gli esercizi, filtrata dai
 /// muscoli scelti; in evidenza quelli che li allenano tutti. Toccando un esercizio si impostano i parametri e si
 /// aggiunge all'elenco; poi si torna qui per aggiungerne altri. Come AddExerciseScreen su Android.
 ///
 /// Con `alternativeFor` diventa la scelta dell'esercizio alternativo ("Fai esercizio alternativo", come
-/// AlternativeExerciseScreen su Android): muscoli principali dell'originale già scelti, l'originale non compare e
-/// toccando un esercizio si chiama `onPick` (la sessione lo usa solo questa volta; l'elenco non cambia).
+/// AlternativeExerciseScreen su Android): muscoli principali dell'originale già scelti, l'originale non compare.
+/// Toccando un esercizio si apre la modifica dei parametri (ItemEditorView in modalità alternativa, partendo da quelli
+/// dell'originale); da lì "Solo per questa sessione" o "Sostituisci nell'elenco" chiamano `onPick` (9 novembre 2026).
+/// Indietro dall'editor si torna a questa scelta.
 struct AddExerciseView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(CatalogStore.self) private var catalog
     var alternativeFor: CatalogExercise? = nil
-    var onPick: ((CatalogExercise) -> Void)? = nil
+    /// Esercizio alternativo deciso nell'editor: esercizio scelto, parametri, asse del movimento e se è definitivo
+    /// ("Sostituisci nell'elenco").
+    var onPick: ((CatalogExercise, WorkoutParameters, MovementAxis, Bool) -> Void)? = nil
+    /// Parametri dell'esercizio originale (punto di partenza dell'alternativa).
+    private var originalParameters = WorkoutItem.defaultParameters
+    /// Vero se la sessione viene da un esercizio dell'elenco: si può sostituire nell'elenco.
+    private var canReplace = false
     @State private var editTarget: EditTarget?
     // Restano tornando dall'editor (la vista resta nella pila di navigazione).
     @State private var side: BodySide = .front
@@ -250,12 +335,19 @@ struct AddExerciseView: View {
     @State private var bodyweight = false
     /// Esercizi mostrati (a pagine da 40: il catalogo ne ha quasi 900). Cambiando un filtro si riparte da 40.
     @State private var shown = CatalogFilter.pageSize
+    @Query(sort: \WorkoutSessionRecord.startedAt) private var sessions: [WorkoutSessionRecord]
+    /// Riquadro "Consigliati per te": chiuso all'inizio.
+    @State private var recommendedOpen = false
 
     init() {}
 
-    /// Scelta dell'esercizio alternativo a `original`, solo per la sessione in corso.
-    init(alternativeFor original: CatalogExercise, onPick: @escaping (CatalogExercise) -> Void) {
+    /// Scelta dell'esercizio alternativo a `original` (con i suoi parametri); `canReplace` = sessione di un esercizio
+    /// dell'elenco.
+    init(alternativeFor original: CatalogExercise, originalParameters: WorkoutParameters, canReplace: Bool,
+         onPick: @escaping (CatalogExercise, WorkoutParameters, MovementAxis, Bool) -> Void) {
         alternativeFor = original
+        self.originalParameters = originalParameters
+        self.canReplace = canReplace
         self.onPick = onPick
         _selected = State(initialValue: WorkoutListLogic.alternativeMuscles(original))
         _side = State(initialValue: WorkoutListLogic.alternativeOnBack(original) ? .back : .front)
@@ -271,6 +363,24 @@ struct AddExerciseView: View {
             return WorkoutListLogic.alternatives(pool, original: alternativeFor, selected: selected, query: query)
         }
         return WorkoutListLogic.browse(pool, selected: selected, query: query)
+    }
+
+    /// "Consigliati per te" (Pro, prima in Esercizi; spostato qui il 9 novembre 2026): 3 esercizi per i muscoli scelti
+    /// sulla mappa o, se non ne è scelto nessuno, per i muscoli dell'elenco (tutti se l'elenco è vuoto).
+    /// Esclusi gli esercizi già nell'elenco; rispetta i filtri attrezzi a disposizione e corpo libero.
+    private var recommendations: [Recommendation] {
+        // Nascosto per il momento (HiddenForNow): cosi' i consigli non si calcolano nemmeno
+        guard HiddenForNow.recommendedExercises, alternativeFor == nil,
+              FeatureGate.isAvailable(.fixedCoaching, for: tier) else { return [] }
+        let inList = Set(list?.exerciseIDs ?? [])
+        let targets = selected.isEmpty
+            ? Set((list?.exerciseIDs ?? []).compactMap { catalog.exercise(id: $0) }.flatMap(\.primary))
+            : selected
+        let pool = CatalogFilter.bodyweightOnly(equipmentFiltered(catalog.visible(for: tier), tier: tier), on: bodyweight)
+            .filter { !inList.contains($0.id) }
+        return ExerciseRecommender.recommend(from: pool, targets: targets,
+                                             history: CoachingService.historyEntries(from: sessions, catalog: catalog.all),
+                                             limit: 3)
     }
 
     var body: some View {
@@ -291,15 +401,22 @@ struct AddExerciseView: View {
         }
         .appScreen()
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(item: $editTarget) { ItemEditorView(exercise: $0.exercise, listID: $0.listID, item: $0.item) }
+        .navigationDestination(item: $editTarget) { t in
+            if let alternativeFor, let onPick {
+                // Esercizio alternativo: parametri da quelli dell'originale, poi "Solo per questa sessione" o definitivo
+                ItemEditorView(exercise: t.exercise, alternative: AlternativeEdit(
+                    original: alternativeFor, parameters: originalParameters, canReplace: canReplace,
+                    onDone: { p, axis, permanent in onPick(t.exercise, p, axis, permanent) }))
+            } else {
+                ItemEditorView(exercise: t.exercise, listID: t.listID, item: t.item)
+            }
+        }
     }
 
     // MARK: - Scelta degli esercizi
 
     @ViewBuilder
     private var browser: some View {
-        if AppFlags.homeEquipment { HomeEquipmentCard(tier: tier) }
-
         VStack(spacing: 14) {
             // Primo filtro: ricerca per nome (anche per "Fai esercizio alternativo")
             ExerciseSearchField(query: $query)
@@ -310,6 +427,8 @@ struct AddExerciseView: View {
             BodyMapView(side: side, selected: $selected).frame(height: 300)
             // Muscoli scelti (anche quelli dell'altro lato) con la X per toglierne uno
             SelectedMuscleChips(selected: $selected)
+            // Attrezzi a disposizione sotto la figura, dentro i filtri (9 novembre 2026).
+            if AppFlags.homeEquipment { HomeEquipmentSection(tier: tier) }
             KindChips(kind: $kind)
             BodyweightChip(on: $bodyweight)
             EquipmentFilterChip(tier: tier)
@@ -327,6 +446,9 @@ struct AddExerciseView: View {
         .onChange(of: AppSettings.shared.equipmentFilter) { _, _ in shown = CatalogFilter.pageSize }
         .onChange(of: AppSettings.shared.ownedEquipment) { _, _ in shown = CatalogFilter.pageSize }
 
+        // Sotto i filtri e la ricerca, sopra i risultati (non in "Fai esercizio alternativo": lì recommendations è vuoto)
+        recommendedBox
+
         let items = results
         if selected.count >= 2 && items.contains(where: { WorkoutListLogic.coversAll($0, selected: selected) }) {
             Label("workout.highlightNote", systemImage: "star.fill")
@@ -341,7 +463,8 @@ struct AddExerciseView: View {
         }
         ForEach(items.prefix(shown)) { ex in
             Button {
-                if let onPick { onPick(ex) } else { editTarget = EditTarget(exercise: ex, listID: nil, item: nil) }
+                // Anche per l'esercizio alternativo si apre prima l'editor dei parametri
+                editTarget = EditTarget(exercise: ex, listID: nil, item: nil)
             } label: {
                 BrowseRow(exercise: ex, full: WorkoutListLogic.coversAll(ex, selected: selected),
                           inList: onPick == nil && (list?.exerciseIDs.contains(ex.id) ?? false),
@@ -352,6 +475,76 @@ struct AddExerciseView: View {
         ShowMoreButton(remaining: items.count - shown) { shown += CatalogFilter.pageSize }
     }
 
+    /// Riquadro "Consigliati per te": chiuso all'inizio, il tocco sull'intestazione lo apre e lo richiude.
+    /// Toccando un consiglio si apre l'editor per aggiungerlo all'elenco (come un risultato). Senza consigli non si vede.
+    @ViewBuilder
+    private var recommendedBox: some View {
+        let recs = recommendations
+        if !recs.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                Button {
+                    withAnimation(.snappy) { recommendedOpen.toggle() }
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "sparkles").foregroundStyle(Theme.accent)
+                        Text("ex.recommended").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                        Spacer(minLength: 0)
+                        Image(systemName: recommendedOpen ? "chevron.up" : "chevron.down")
+                            .appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                if recommendedOpen {
+                    ForEach(recs, id: \.exercise.id) { rec in
+                        Button { editTarget = EditTarget(exercise: rec.exercise, listID: nil, item: nil) } label: {
+                            HStack(alignment: .center, spacing: 12) {
+                                RecommendationThumbnail(exercise: rec.exercise)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(verbatim: rec.exercise.name).appFont(.subheadline, weight: .bold)
+                                    Text(LocalizedStringKey(rec.reasonKey)).appFont(.caption).foregroundStyle(Theme.accentSoft)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                Image(systemName: "plus.circle.fill").appFont(.title3).foregroundStyle(Theme.accent)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .glassCard()
+        }
+    }
+}
+
+/// Miniatura di un consiglio: foto della posizione iniziale (come nella spiegazione dell'esercizio), alta 72 pt in 4:3;
+/// senza foto, i muscoli sulla figura. Prima era nei "Consigliati per te" della scheda Esercizi.
+private struct RecommendationThumbnail: View {
+    let exercise: CatalogExercise
+
+    var body: some View {
+        if let link = exercise.images.first {
+            Color.primary.opacity(0.1)
+                .aspectRatio(4 / 3, contentMode: .fit)
+                .overlay {
+                    AsyncImage(url: URL(string: link)) { phase in
+                        if let image = phase.image {
+                            image.resizable().scaledToFill()
+                        } else {
+                            Image(systemName: "dumbbell.fill").appFont(.title2).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .frame(height: 72)
+        } else {
+            MuscleThumbnail(exercise: exercise, height: 72)
+        }
+    }
 }
 
 /// Esercizio da aprire nell'editor: nuovo (item nil) o da modificare.
@@ -451,12 +644,28 @@ private struct ListPickerSheet: View {
 /// Serie, ripetizioni, pausa e peso di un esercizio, con i consigli (piano Pro: adattivi).
 /// item nil = esercizio nuovo (precompilato da scheda e ultima sessione), da aggiungere all'elenco attuale
 /// (o ad "Allenamento odierno" se non ce n'e' uno); altrimenti si modifica quello esistente.
+/// Esercizio alternativo appena scelto: esercizio originale e suoi parametri; in fondo "Solo per questa sessione"
+/// o "Sostituisci nell'elenco" al posto di Aggiungi/Salva (9 novembre 2026). `onDone(parametri, asse, definitivo)` lo
+/// gestisce la sessione.
+struct AlternativeEdit {
+    let original: CatalogExercise
+    let parameters: WorkoutParameters
+    /// Solo per l'esercizio di un elenco (listID e itemID della sessione).
+    let canReplace: Bool
+    let onDone: (WorkoutParameters, MovementAxis, Bool) -> Void
+}
+
 struct ItemEditorView: View {
     let exercise: CatalogExercise
     let listID: UUID?
     let item: WorkoutItem?
     /// Aperto da un'altra scheda (Esercizi, schede caricate): dopo l'aggiunta si passa alla scheda Allenamento.
     var switchToWorkout = false
+    /// Modalità esercizio alternativo (item = nil: la riga dell'elenco non si modifica da qui).
+    var alternative: AlternativeEdit? = nil
+    @State private var confirmPermanent = false
+    /// Movimento da contare (su/giù o sinistra/destra): sulla riga si salva solo se diverso da quello del catalogo.
+    @State private var movement: MovementAxis
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \WorkoutSessionRecord.startedAt) private var sessions: [WorkoutSessionRecord]
@@ -469,11 +678,14 @@ struct ItemEditorView: View {
     /// Revisione della scheda ogni due settimane (proposta in attesa e copia per tornare indietro).
     private var review: PlanReviewStore { PlanReviewStore.shared }
 
-    init(exercise: CatalogExercise, listID: UUID? = nil, item: WorkoutItem? = nil, switchToWorkout: Bool = false) {
+    init(exercise: CatalogExercise, listID: UUID? = nil, item: WorkoutItem? = nil, switchToWorkout: Bool = false,
+         alternative: AlternativeEdit? = nil) {
         self.exercise = exercise
-        self.listID = listID
-        self.item = item
+        self.listID = alternative == nil ? listID : nil
+        self.item = alternative == nil ? item : nil
         self.switchToWorkout = switchToWorkout
+        self.alternative = alternative
+        _movement = State(initialValue: alternative == nil ? MovementRules.forItem(exercise, item) : exercise.movementAxis)
     }
 
     private var tier: SubscriptionTier { subscriptions.tier }
@@ -541,6 +753,11 @@ struct ItemEditorView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(verbatim: exercise.name).appFont(.headline)
                         Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appFont(.caption).foregroundStyle(.secondary)
+                        // Esercizio alternativo: quello che sostituisce
+                        if let alternative {
+                            Text("alternative.instead \(alternative.original.name)").appFont(.caption, weight: .semibold)
+                                .foregroundStyle(Theme.accent).lineLimit(1).minimumScaleFactor(0.7)
+                        }
                     }
                     Spacer()
                     if !exercise.steps.isEmpty {
@@ -571,12 +788,32 @@ struct ItemEditorView: View {
                     .glassCard()
                 }
 
-                Button(action: save) {
-                    Label(LocalizedStringKey(item == nil ? "workout.addItem" : "workout.saveItem"), systemImage: item == nil ? "plus" : "checkmark")
-                        .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                movementPicker
+
+                if let alternative {
+                    // Esercizio alternativo: solo per oggi oppure al posto dell'esercizio dell'elenco (con conferma)
+                    Button { alternative.onDone(current.clamped(), movement, false) } label: {
+                        Label("alternative.useOnce", systemImage: "play.fill")
+                            .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(Theme.accent)
+                    if alternative.canReplace {
+                        Button { confirmPermanent = true } label: {
+                            Label("alternative.makePermanent", systemImage: "checkmark")
+                                .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.glass)
+                        .tint(Theme.accent)
+                    }
+                } else {
+                    Button(action: save) {
+                        Label(LocalizedStringKey(item == nil ? "workout.addItem" : "workout.saveItem"), systemImage: item == nil ? "plus" : "checkmark")
+                            .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(Theme.accent)
                 }
-                .buttonStyle(.glassProminent)
-                .tint(Theme.accent)
             }
             .padding(20)
         }
@@ -584,6 +821,52 @@ struct ItemEditorView: View {
         .navigationTitle(Text(verbatim: exercise.name))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: prefill)
+        .alert("alternative.permanentTitle", isPresented: $confirmPermanent) {
+            Button("alternative.permanentConfirm") { alternative?.onDone(current.clamped(), movement, true) }
+            Button("info.cancel", role: .cancel) {}
+        } message: {
+            if let alternative {
+                Text("alternative.permanentBody \(alternative.original.name) \(exercise.name)")
+            }
+        }
+    }
+
+    /// "Movimento da contare": due pillole come quelle della posizione del telefono (Su/giù, Sinistra/destra),
+    /// sempre rispetto al pavimento.
+    private var movementPicker: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("movement.title").appFont(.headline)
+            HStack(spacing: 10) {
+                ForEach(MovementAxis.allCases, id: \.self) { axis in
+                    let on = movement == axis
+                    Button { withAnimation(.snappy) { movement = axis } } label: {
+                        HStack(spacing: 10) {
+                            Image(systemName: axis == .upDown ? "arrow.up.and.down" : "arrow.left.and.right")
+                                .appFont(.title3, weight: .semibold)
+                            Text(LocalizedStringKey(axis.titleKey)).appFont(.subheadline, weight: .bold)
+                                .lineLimit(1).minimumScaleFactor(0.6)
+                            Spacer(minLength: 0)
+                        }
+                        .padding(.horizontal, 14).padding(.vertical, 16)
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(on ? Color.white : Color.secondary)
+                        .background {
+                            if on {
+                                RoundedRectangle(cornerRadius: 22).fill(Theme.accentGradient)
+                            } else {
+                                RoundedRectangle(cornerRadius: 22).fill(Color.primary.opacity(0.07))
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(on ? .isSelected : [])
+                }
+            }
+            Text("movement.hint").appFont(.caption).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .glassCard()
+        .sensoryFeedback(.selection, trigger: movement)
     }
 
     /// Una riga per gruppo di serie uguali (numero di serie, ripetizioni e peso, cestino se le righe sono piu' di una).
@@ -675,6 +958,13 @@ struct ItemEditorView: View {
     private func prefill() {
         guard !prefilled else { return }
         prefilled = true
+        // Esercizio alternativo: stesse serie, ripetizioni e pausa dell'originale (senza peso se a corpo libero);
+        // niente valori dalla scheda o dall'ultima sessione.
+        if let alternative {
+            let p = WorkoutListLogic.alternativeParameters(alternative.parameters, alternative: exercise).clamped()
+            groups = SetGroup.group(p.targets); restSeconds = p.restSeconds
+            return
+        }
         if let item { groups = SetGroup.group(item.parameters.targets); restSeconds = item.restSeconds; return }
         var p = WorkoutItem.defaultParameters
         if let t = CoachingService.planTarget(for: exercise, plans: plans) {
@@ -700,10 +990,16 @@ struct ItemEditorView: View {
     private func save() {
         let store = WorkoutListStore.shared
         let p = current.clamped()
+        // Asse del movimento: sulla riga solo se diverso da quello del catalogo (così segue eventuali correzioni)
+        let chosen = MovementRules.override(exercise, movement)
         if let item, let listID {
-            store.updateItem(item.with(p), in: listID)
+            var updated = item.with(p)
+            updated.movement = chosen
+            store.updateItem(updated, in: listID)
         } else {
-            store.addItem(WorkoutItem(exerciseID: exercise.id).with(p), to: Self.ensureCurrentList())
+            var added = WorkoutItem(exerciseID: exercise.id).with(p)
+            added.movement = chosen
+            store.addItem(added, to: Self.ensureCurrentList())
             AddedNotice.shared.show(exercise.name)     // avviso "aggiunto all'elenco"
         }
         dismiss()
