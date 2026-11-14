@@ -4,7 +4,7 @@ import CryptoKit
 import Supabase
 import MyGymHelperCore
 
-/// Account facoltativo su Supabase (e-mail con codice, Apple, Google, Facebook).
+/// Account obbligatorio su Supabase, accesso con Apple o Google (e-mail con codice e Facebook restano nel codice ma sono spenti).
 /// Serve a collegare gli abbonamenti alla persona (`appAccountToken`) e ad autenticare le chiamate al backend.
 /// I dati sanitari NON vengono mai caricati sul server.
 /// Configurazione in Info.plist: `MyGymHelperSupabaseURL` e `MyGymHelperSupabaseAnonKey`
@@ -24,15 +24,19 @@ final class AccountService {
     private(set) var isWorking = false
     var lastError: String?
     /// Vero dopo il primo evento di sessione: prima non si sa ancora se l'utente ha fatto l'accesso.
-    @ObservationIgnored private var sessionKnown = false
+    /// Osservabile: la schermata di accesso aspetta questo valore prima di decidere (9 novembre 2026).
+    private(set) var sessionKnown = false
 
     var isConfigured: Bool { client != nil }
     var isSignedIn: Bool { userID != nil }
+    /// Accesso obbligatorio (9 novembre 2026): senza account Apple o Google non si apre l'app (se Supabase non e'
+    /// configurato non si blocca).
+    var loginRequired: Bool { isConfigured }
     /// Facebook va attivato anche in Supabase (Authentication > Providers): in Info.plist `MyGymHelperFacebookLogin` = YES.
-    var facebookEnabled: Bool { Bundle.main.object(forInfoDictionaryKey: "MyGymHelperFacebookLogin") as? Bool ?? false }
+    var facebookEnabled: Bool { false }   // 9 novembre 2026: tolto (prima da Info.plist MyGymHelperFacebookLogin)
     /// Accesso con e-mail e codice: per ora spento (in Info.plist `MyGymHelperEmailLogin` = YES per riattivarlo,
     /// dopo aver collegato un servizio e-mail proprio in Supabase).
-    var emailEnabled: Bool { Bundle.main.object(forInfoDictionaryKey: "MyGymHelperEmailLogin") as? Bool ?? false }
+    var emailEnabled: Bool { false }   // 9 novembre 2026: tolto (prima da Info.plist MyGymHelperEmailLogin)
 
     init() {
         let info = Bundle.main.infoDictionary ?? [:]

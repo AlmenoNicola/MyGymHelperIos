@@ -34,7 +34,7 @@ struct AudioSettingsView: View {
     /// Avvisi durante l'allenamento (voce, suono, vibrazione) con prova: prima erano nella scheda Allenamento.
     private var cueCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("cue.title").appFont(.headline)
+            Text("cue.title").appType(.cardTitle)
             Toggle("cue.voice", isOn: $voiceOn)
             Toggle("cue.sound", isOn: $soundOn)
             Toggle("cue.haptics", isOn: $hapticsOn)
@@ -47,8 +47,8 @@ struct AudioSettingsView: View {
             } label: {
                 Label("cue.test", systemImage: "speaker.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
-            Text("cue.testNote").appFont(.caption).foregroundStyle(.secondary)
+            .buttonStyle(.glass).appType(.button)
+            Text("cue.testNote").appType(.caption).foregroundStyle(.secondary)
         }
         .tint(Theme.accent)
         .glassCard()
@@ -56,7 +56,7 @@ struct AudioSettingsView: View {
 
     private var voiceCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("audio.voice").appFont(.headline)
+            Text("audio.voice").appType(.cardTitle)
             Picker("audio.voice", selection: Binding(get: { settings.voiceGender }, set: { settings.setVoiceGender($0); voice.applyVoice() })) {
                 Text("audio.female").tag("female")
                 Text("audio.male").tag("male")
@@ -74,10 +74,10 @@ struct AudioSettingsView: View {
             .onAppear { resetHiddenVoice() }
             .onChange(of: settings.voiceGender) { resetHiddenVoice() }
             if voice.genderApproximated {
-                Text(settings.voiceGender == "male" ? "audio.noMale" : "audio.noFemale").appFont(.caption).foregroundStyle(.secondary)
+                Text(settings.voiceGender == "male" ? "audio.noMale" : "audio.noFemale").appType(.caption).foregroundStyle(.secondary)
             }
 
-            Text("audio.rate").appFont(.subheadline, weight: .bold)
+            Text("audio.rate").appType(.secondary, weight: .bold)
             HStack {
                 Slider(value: $rate, in: 0.75...1.25, step: 0.05) { editing in
                     if !editing { settings.setVoiceRate(rate) }
@@ -89,8 +89,8 @@ struct AudioSettingsView: View {
             Button { settings.setVoiceRate(rate); voice.preview(String(localized: "audio.previewText")) } label: {
                 Label("audio.preview", systemImage: "speaker.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
-            Text("audio.voiceNoteIOS").appFont(.caption).foregroundStyle(.secondary)
+            .buttonStyle(.glass).appType(.button)
+            Text("audio.voiceNoteIOS").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -98,10 +98,10 @@ struct AudioSettingsView: View {
 
     private var coachingCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("audio.coaching").appFont(.headline)
+            Text("audio.coaching").appType(.cardTitle)
             Toggle("audio.explain", isOn: Binding(get: { settings.explainExercise }, set: { settings.setExplainExercise($0) }))
             Toggle("audio.countReps", isOn: Binding(get: { settings.voiceCountReps }, set: { settings.setVoiceCountReps($0) }))
-            Text("audio.coachingNote").appFont(.caption).foregroundStyle(.secondary)
+            Text("audio.coachingNote").appType(.caption).foregroundStyle(.secondary)
         }
         .tint(Theme.accent)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,7 +115,7 @@ struct AudioSettingsView: View {
 
     private var musicCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label("music.title", systemImage: "music.note").appFont(.headline)
+            Label("music.title", systemImage: "music.note").appType(.cardTitle)
             Toggle("music.enabled", isOn: Binding(get: { settings.musicEnabled }, set: { settings.setMusicEnabled($0) }))
             if settings.musicEnabled {
                 Picker("music.title", selection: Binding(get: { shownMusicMode }, set: { settings.setMusicMode($0) })) {
@@ -127,8 +127,8 @@ struct AudioSettingsView: View {
                 .pickerStyle(.segmented)
                 switch shownMusicMode {
                 case "spotify": SpotifySection()        // accesso a Spotify, scelta di playlist/album/brani, ricerca
-                case "appleMusic": Text("music.appleMusicNote").appFont(.caption).foregroundStyle(.secondary)
-                default: Text("music.otherAppNote").appFont(.caption).foregroundStyle(.secondary)
+                case "appleMusic": Text("music.appleMusicNote").appType(.caption).foregroundStyle(.secondary)
+                default: Text("music.otherAppNote").appType(.caption).foregroundStyle(.secondary)
                 }
             }
         }

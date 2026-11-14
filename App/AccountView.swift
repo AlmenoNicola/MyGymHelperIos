@@ -1,8 +1,8 @@
 import SwiftUI
 import AuthenticationServices
 
-/// Account facoltativo: accesso con Apple, Google, Facebook o e-mail (codice a 6 cifre), uscita ed eliminazione dell'account.
-/// L'app funziona anche senza account; i dati sanitari non vengono mai caricati.
+/// Account obbligatorio (dal 9 novembre 2026 l'accesso con Apple o Google si chiede prima di entrare nell'app): qui si vedono
+/// l'e-mail, l'uscita e l'eliminazione dell'account. I dati sanitari non vengono mai caricati.
 struct AccountView: View {
     @Environment(AccountService.self) private var account
     /// Pulsante Apple bianco sui fondi scuri, nero su quello chiaro (tema neutro con il telefono in modalita' chiara).
@@ -29,15 +29,15 @@ struct AccountView: View {
                 if account.isWorking { ProgressView() }
                 if let error = account.lastError {
                     Label { Text(verbatim: error) } icon: { Image(systemName: "exclamationmark.triangle.fill") }
-                        .appFont(.footnote).foregroundStyle(.orange)
+                        .appType(.caption).foregroundStyle(.orange)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if deleted {
                     Label("account.deleted", systemImage: "checkmark.circle.fill")
-                        .appFont(.footnote).foregroundStyle(Theme.accentSoft)
+                        .appType(.caption).foregroundStyle(Theme.accentSoft)
                 }
 
-                Text("account.privacy").appFont(.caption).foregroundStyle(.secondary)
+                Text("account.privacy").appType(.caption).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(20)
@@ -60,14 +60,14 @@ struct AccountView: View {
 
     private var signedIn: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("account.signedInAs").appFont(.caption).foregroundStyle(.secondary)
-            Text(verbatim: account.email ?? "—").appFont(.headline)
+            Text("account.signedInAs").appType(.caption).foregroundStyle(.secondary)
+            Text(verbatim: account.email ?? "—").appType(.cardTitle)
             Button("account.signOut") { Task { await account.signOut() } }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             Divider().overlay(Color.primary.opacity(0.15))
             Button("account.delete", role: .destructive) { confirmDelete = true }
-                .buttonStyle(.glass)
-            Text("account.deleteNote").appFont(.caption).foregroundStyle(.secondary)
+                .buttonStyle(.glass).appType(.button)
+            Text("account.deleteNote").appType(.caption).foregroundStyle(.secondary)
             if appleConfirm { appleConfirmation }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -78,7 +78,7 @@ struct AccountView: View {
     /// i token Apple (richiesto da Apple quando si elimina l'account). Il codice vale 5 minuti e non viene salvato.
     private var appleConfirmation: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("account.appleConfirm").appFont(.subheadline)
+            Text("account.appleConfirm").appType(.secondary)
             SignInWithAppleButton(.continue) { request in
                 request.requestedScopes = []
             } onCompletion: { result in
@@ -94,14 +94,14 @@ struct AccountView: View {
             .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
             .frame(height: 50)
             .clipShape(Capsule())
-            Button("info.cancel") { appleConfirm = false }.appFont(.footnote)
+            Button("info.cancel") { appleConfirm = false }.appType(.caption)
         }
         .padding(.top, 6)
     }
 
     private var signInOptions: some View {
         VStack(spacing: 14) {
-            Text("account.why").appFont(.subheadline).foregroundStyle(.secondary)
+            Text("account.why").appType(.secondary).foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             SignInWithAppleButton(.signIn) { request in
@@ -121,20 +121,20 @@ struct AccountView: View {
             .clipShape(Capsule())
 
             Button { Task { await account.signInWithGoogle() } } label: {
-                Label("account.google", systemImage: "globe").appFont(.headline).frame(maxWidth: .infinity)
+                Label("account.google", systemImage: "globe").appType(.cardTitle).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
+            .buttonStyle(.glass).appType(.button)
 
             if account.facebookEnabled {
                 Button { Task { await account.signInWithFacebook() } } label: {
-                    Label("account.facebook", systemImage: "person.2.fill").appFont(.headline).frame(maxWidth: .infinity)
+                    Label("account.facebook", systemImage: "person.2.fill").appType(.cardTitle).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
 
             if account.emailEnabled {
             VStack(alignment: .leading, spacing: 10) {
-                Text("account.emailTitle").appFont(.headline)
+                Text("account.emailTitle").appType(.cardTitle)
                 TextField("account.emailField", text: $email)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -151,14 +151,14 @@ struct AccountView: View {
                     Button("account.verify") {
                         Task { _ = await account.verifyEmailCode(code.trimmingCharacters(in: .whitespaces), email: cleanEmail) }
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     .disabled(code.count < 6)
-                    Text("account.codeSent").appFont(.caption).foregroundStyle(.secondary)
+                    Text("account.codeSent").appType(.caption).foregroundStyle(.secondary)
                 } else {
                     Button("account.sendCode") {
                         Task { codeSent = await account.sendEmailCode(to: cleanEmail) }
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     .disabled(!cleanEmail.contains("@"))
                 }
             }
