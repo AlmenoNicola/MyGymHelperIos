@@ -91,7 +91,9 @@ final class MuscleAndCatalogTests: XCTestCase {
         XCTAssertGreaterThan(it.count, 850)
         XCTAssertEqual(Set(it.map(\.id)).count, it.count)
         XCTAssertEqual(it.filter { $0.id.hasPrefix("seed-") }.count, 25)
-        XCTAssertLessThan(it.filter { $0.images.isEmpty }.count, 5)    // la fonte non ha foto per 3 esercizi (Kettlebell Halo...)
+        // La fonte non ha foto per 3 esercizi (Kettlebell Halo...); i 13 con l'anello pilates ("ring-", 9 novembre 2026)
+        // sono scritti da noi e per ora non hanno foto.
+        XCTAssertLessThan(it.filter { $0.images.isEmpty && !$0.id.hasPrefix("ring-") }.count, 5)
         XCTAssertGreaterThan(it.filter { $0.kind == .stretching }.count, 100)
         XCTAssertTrue(it.first { $0.id == "fedb-Barbell_Deadlift" }?.name.contains("Stacco") ?? false)
     }

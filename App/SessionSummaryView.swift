@@ -63,21 +63,21 @@ struct SessionSummaryView: View {
                 VStack(spacing: 14) {
                     if let exercise = controller.exercise {
                         HStack {
-                            Text(verbatim: exercise.name).appFont(.title3, weight: .bold)
+                            Text(verbatim: exercise.name).appType(.sectionTitle, weight: .bold, uppercase: true)
                             Spacer()
                             if !controller.isVaried && controller.weightKg > 0 { Text(verbatim: controller.weightKg.kgText).foregroundStyle(.secondary) }
                         }
                     }
                     ForEach(records, id: \.number) { r in
                         HStack {
-                            Text("session.setResult \(r.number) \(r.doneReps) \(r.plannedReps)").appFont(.headline)
+                            Text("session.setResult \(r.number) \(r.doneReps) \(r.plannedReps)").appType(.cardTitle)
                             Spacer()
                             // Serie diverse: il peso di ogni serie.
                             if controller.isVaried, controller.target(r.number).weightKg > 0 {
-                                Text(verbatim: controller.target(r.number).weightKg.kgText).appFont(.subheadline).foregroundStyle(.secondary)
+                                Text(verbatim: controller.target(r.number).weightKg.kgText).appType(.secondary).foregroundStyle(.secondary)
                             }
                             if r.stoppedEarly {
-                                Text("session.stoppedTag").appFont(.caption, weight: .bold)
+                                Text("session.stoppedTag").appType(.caption, weight: .bold)
                                     .padding(.horizontal, 10).padding(.vertical, 4)
                                     .background(.red.opacity(0.35), in: Capsule())
                             } else {
@@ -91,7 +91,7 @@ struct SessionSummaryView: View {
                     if kcal > 0 {
                         HStack(spacing: 8) {
                             Image(systemName: "flame.fill").font(.system(size: 18 * AppTextScale)).foregroundStyle(Theme.done)
-                            Text("calories.session \(kcal)").appFont(.subheadline, weight: .semibold)
+                            Text("calories.session \(kcal)").appType(.secondary, weight: .semibold)
                                 .lineLimit(1).minimumScaleFactor(0.7)
                         }
                     }
@@ -111,7 +111,7 @@ struct SessionSummaryView: View {
 
                 if FeatureGate.isAvailable(.adaptiveCoaching, for: tier), controller.exercise == nil, !records.isEmpty {
                     Label("advice.chooseExercise", systemImage: "info.circle")
-                        .appFont(.footnote).foregroundStyle(.secondary)
+                        .appType(.caption).foregroundStyle(.secondary)
                 }
 
                 // Revisione della scheda ogni due settimane (Pro): la domanda compare a fine allenamento.
@@ -134,7 +134,7 @@ struct SessionSummaryView: View {
 
                 if !saved {
                     Label("session.notSaved", systemImage: "info.circle")
-                        .appFont(.footnote).foregroundStyle(.secondary)
+                        .appType(.caption).foregroundStyle(.secondary)
                 }
 
                 // Ultimo esercizio dell'elenco appena finito: totale delle calorie di tutto l'allenamento
@@ -146,18 +146,18 @@ struct SessionSummaryView: View {
                     // Si propone il prossimo esercizio: parte solo quando l'utente lo avvia dalla schermata "Pronto".
                     Button(action: onNext) {
                         Label("workout.nextExercise \(nextName)", systemImage: "forward.fill")
-                            .appFont(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
+                            .appType(.cta).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     Button(action: onDone) {
                         Text(doneKey).lineLimit(1).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
                 } else {
                     Button(action: onDone) {
-                        Text(doneKey).appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                        Text(doneKey).appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                 }
             }
         }

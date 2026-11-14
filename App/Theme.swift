@@ -54,8 +54,8 @@ private struct AppFontModifier: ViewModifier {
 }
 
 extension View {
-    /// Al posto di `.font(.caption)` / `.font(.subheadline.bold())`: stesso stile e peso, testo più piccolo del 20%
-    /// (AppTextScale) e sempre legato al Dynamic Type.
+    /// Dal 9 novembre 2026 solo per le icone SF Symbols (stile di sistema ridotto di AppTextScale, legato al Dynamic
+    /// Type); i testi usano i token di Typography.swift (`.appType(...)`, Inter e Oswald).
     func appFont(_ style: Font.TextStyle, weight: Font.Weight? = nil, design: Font.Design? = nil,
                  monospacedDigit: Bool = false, monospaced: Bool = false) -> some View {
         modifier(AppFontModifier(style: style, weight: weight, design: design,
@@ -204,8 +204,8 @@ struct ScreenHeader: View {
                 .background(Theme.accentGradient, in: Circle())
                 .shadow(color: Theme.accent.opacity(0.5), radius: 14, y: 6)
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).appFont(.title, weight: .bold).lineLimit(1)     // rimpicciolisce invece di andare a capo
-                Text(subtitle).appFont(.subheadline).foregroundStyle(.secondary)
+                Text(title).appType(.screenTitle).lineLimit(1)     // Oswald maiuscolo; rimpicciolisce invece di andare a capo
+                Text(subtitle).appType(.secondary).foregroundStyle(.secondary)
             }
             Spacer(minLength: 0)
         }
@@ -221,17 +221,17 @@ struct CounterRow: View {
 
     var body: some View {
         HStack {
-            Text(title).appFont(.headline)
+            Text(title).appType(.cardTitle)
             Spacer()
             HStack(spacing: 14) {
                 Button { value = max(range.lowerBound, value - step) } label: { Image(systemName: "minus") }
-                    .buttonStyle(.glass).buttonBorderShape(.circle)
+                    .buttonStyle(.glass).appType(.button).buttonBorderShape(.circle)
                 Text("\(value)")
-                    .appFont(.title2, weight: .bold, monospacedDigit: true)
+                    .appType(.stat, weight: .bold)
                     .frame(minWidth: 56)
                     .contentTransition(.numericText())
                 Button { value = min(range.upperBound, value + step) } label: { Image(systemName: "plus") }
-                    .buttonStyle(.glass).buttonBorderShape(.circle)
+                    .buttonStyle(.glass).appType(.button).buttonBorderShape(.circle)
             }
         }
         .sensoryFeedback(.selection, trigger: value)
@@ -257,10 +257,11 @@ struct RepRing: View {
                 .animation(.spring(duration: 0.5), value: progress)
             VStack(spacing: 2) {
                 Text("\(count)")
-                    .font(.system(size: 88, weight: .heavy, design: .rounded).monospacedDigit())
+                    .appType(.timer)            // Oswald 88, fuori dalla riduzione del 20%
                     .contentTransition(.numericText())
                     .animation(.snappy, value: count)
-                Text("/ \(target)").appFont(.title3, weight: .semibold).foregroundStyle(.secondary)
+                // "/ 12 REP"
+                Text(verbatim: "/ \(target) " + String(localized: "unit.reps")).appType(.metric).foregroundStyle(.secondary)
             }
         }
         .frame(width: 270, height: 270)
@@ -308,27 +309,27 @@ struct KgInputRow: View {
 
     var body: some View {
         HStack {
-            Text(title).appFont(.headline)
+            Text(title).appType(.cardTitle)
             Spacer()
             HStack(spacing: 10) {
                 Button { value = min(max(minus(value), lowest), range.upperBound) } label: { Image(systemName: "minus") }
-                    .buttonStyle(.glass).buttonBorderShape(.circle)
+                    .buttonStyle(.glass).appType(.button).buttonBorderShape(.circle)
                     .buttonRepeatBehavior(.enabled)
                 HStack(spacing: 3) {
                     TextField("", text: $text, prompt: placeholder.map { Text($0) })
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(.center)
-                        .appFont(.title3, weight: .bold, monospacedDigit: true)
+                        .appType(.metric)
                         .minimumScaleFactor(0.6)
                         .focused($focused)
-                    Text(verbatim: "kg").appFont(.footnote).foregroundStyle(.secondary)
+                    Text(verbatim: "KG").appType(.metric).foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 8).padding(.vertical, 6)
                 .frame(width: 104)
                 .overlay(RoundedRectangle(cornerRadius: 10)
                     .stroke(invalid ? Color.red : Color.primary.opacity(focused ? 0.6 : 0.25), lineWidth: 1))
                 Button { value = min(max(plus(value), lowest), range.upperBound) } label: { Image(systemName: "plus") }
-                    .buttonStyle(.glass).buttonBorderShape(.circle)
+                    .buttonStyle(.glass).appType(.button).buttonBorderShape(.circle)
                     .buttonRepeatBehavior(.enabled)
             }
         }

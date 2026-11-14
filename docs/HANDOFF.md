@@ -1452,3 +1452,73 @@ riga apre il dettaglio. Nessuna stringa nuova, tutorial e Core invariati. **Non 
 - Stringhe tolte `ex.myPlans`, `ex.myPlansHint`, `ex.listEmpty` (non più usate); `tutorial.exercisesTab.body` nuovo;
   tutorial versione 31.
 - **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Sistema tipografico Inter + Oswald (iOS)
+- Font in `App/Fonts/` (Inter Regular/Medium/SemiBold/Bold con opsz 14; Oswald Tabular Medium/SemiBold/Bold, cioè
+  Oswald con le cifre 0-9 tutte larghe uguali; licenze `OFL_Inter.txt`, `OFL_Oswald.txt`), ricreati da google/fonts
+  con fonttools come su Android; registrati in `Support/Info.plist` (`UIAppFonts`). La cartella App è sincronizzata
+  con il target: i file entrano da soli nel bundle.
+- Nuovo `App/Typography.swift`: `AppType` (token caption 13 … timer 88, come `ui/Type.kt`), `AppFontFamily`
+  (nomi PostScript), modificatore `.appType(_:weight:uppercase:monospacedDigit:)` con `Font.custom(..., relativeTo:)`
+  sopra AppTextScale; `timer` e `display` restano fissi (fuori dalla riduzione, come prima contatore, timer della
+  pausa, numero della calibrazione e BMI); `cta` e `screenTitle` in maiuscolo; `String.sportTitle()`.
+- Tutti i `.appFont(stile)` dei testi sostituiti con i token (caption/caption2/footnote → caption; subheadline →
+  secondary; callout/body → body; headline → cardTitle; title3 → sectionTitle; title2 → stat; title → screenTitle).
+  `.appFont` resta solo per le icone SF Symbols e per i due testi a spaziatura fissa (testo letto delle schede).
+  Scelta dell'utente: dimensioni della tabella come su Android (body 15, secondary 14: un po' più piccoli di prima).
+- Oswald: titoli di schermata, nome dell'elenco, nome dell'esercizio in sessione/riepilogo/spiegazione, titoli
+  "Seleziona scheda", "Aggiungi all'elenco", "Scegli la tua scheda", titolo dei passi del tutorial (maiuscolo);
+  contatore e timer della pausa (88), "/ 12 REP" (nuova stringa `unit.reps`), peso della serie "80 KG", campo del
+  peso con "KG", contatori +/− (stat Bold), totale calorie "≈ 350 KCAL" (headline), calibrazione e BMI (display),
+  avanzamento della calibrazione (number), valori del Profilo (stat), serie nello storico (sectionTitle).
+  CTA in Oswald maiuscolo: "Crea la tua scheda" (in cima ad Allenamento), avvio dell'esercizio successivo, "Inizia",
+  "Inizia ora", "Esercizio successivo" nel riepilogo, "Genera/Rigenera scheda". Gli altri pulsanti glass hanno di
+  base Inter SemiBold (token button).
+- Non toccati (sistema): pulsanti "Abbonati/Prova gratis" della vista StoreKit, titoli delle barre di navigazione
+  (es. foglio "Attrezzi a disposizione"), avvisi e menu di sistema.
+- **Non compilato** (nessun Xcode/Swift qui); controllata solo la sintassi. Da guardare: testi tagliati o a capo.
+
+## 9 novembre 2026 – Accesso obbligatorio con Apple o Google (iOS)
+- `AccountService`: `sessionKnown` osservabile, `loginRequired` (= Supabase configurato), Facebook ed e-mail spenti
+  (`facebookEnabled`/`emailEnabled` = false; il codice resta).
+- `MyGymHelperApp`: la copertina a tutto schermo resta finché mancano disclaimer, scelta sul consenso o accesso;
+  al contenuto della copertina si passano `.environment(account)` e il carattere di base (non li eredita).
+- `Onboarding.swift`: dopo il consenso, attesa della sessione salvata e poi `LoginGateView` (Accedi con Apple,
+  Continua con Google). Il primo accesso crea l'account; uscendo dall'account la schermata ricompare.
+- Informativa (`privacy.it/en.md`, sezione 10): l'account è necessario. Stringhe nuove `gate.title/.subtitle/.body`,
+  aggiornate `account.optional`, `account.subtitle`, `account.why`.
+- Nelle build di Debug con il Personal Team "Accedi con Apple" non funziona (manca l'entitlement): per le prove si
+  entra con Google (scelta dell'utente).
+- Applicato dallo script del PC con tre correzioni: stringhe scritte nel formato di Xcode (senza riformattare il
+  catalogo), caratteri con i token tipografici, ambiente dell'account passato alla copertina.
+- **Non compilato** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 – Freccia "indietro" durante la spiegazione (iOS)
+- Controllo del "torna indietro" in tutte le schermate: mancava solo nella spiegazione dell'esercizio (prima della
+  prima serie), dove non c'era nemmeno "Termina allenamento".
+- `WorkoutSessionView`: in quella fase compare in alto a sinistra la freccia (chevron.backward) che riporta a "Pronto"
+  (`SessionContent.onBack`: la sessione si chiude, sensori/voce/musica si fermano). Nel conteggio e nella pausa resta
+  nascosta come prima. Nuova stringa `session.backToReady` (etichetta di accessibilità).
+- **Non compilato** (nessun Xcode/Swift qui); controllata solo la sintassi.
+
+## 9 novembre 2026 (sera) – Pesi di partenza, anello pilates, avanti/indietro e altro (iOS)
+- A) "Esercizio successivo" acceso negli elenchi nuovi (`WorkoutListStore.createList`); quelli salvati restano
+  come sono. Su iOS gli elenchi sono record SwiftData dell'app: nessun test nel Core per questo punto.
+- B) `MovementAxis.forwardBack` (RepCounter.swift): `other` cicla su/giù → sinistra/destra → avanti/indietro;
+  `calibrateForwardBack` usa solo lo spostamento orizzontale (mai la rotazione). `MovementRules.forwardBack`
+  (swing, pull through, slitta, bear crawl, mountain climber, skier). Selettore a 3 pillole (icona sopra, testo
+  sotto) e pulsante "Cambia: conta …" in sessione con l'asse successivo; icone in `MovementAxis.symbol` (app).
+- C) Attrezzo "pilatesRing" in `HomeEquipment.choices` e negli attrezzi leggeri della scheda del mese; in palestra
+  "Crea la tua scheda" non usa l'anello. 13 esercizi "ring-" in fondo a `App/exercises_seed.json` (senza foto: il
+  test del seed ora esclude i "ring-" dal conteggio degli esercizi senza foto).
+- D) Nuovo `Core/.../StartingWeights.swift` (frazione per attrezzo, sesso, esperienza, età, griglia +/-);
+  "Crea la tua scheda" mette il peso di partenza in ogni esercizio. Test in `NovemberNineTests.swift`.
+- E) "Consiglio per oggi": esercizio mai fatto e senza peso → peso di partenza dal Profilo (`advice.startWeight`);
+  "Applica" solo se c'è un risultato e cambia qualcosa (anche nel ramo a regole fisse).
+- F) "Fai esercizio alternativo" anche dalla matita (`ItemEditorView.onAlternative`, gestito da
+  `WorkoutSetupView.alternativeFromEditor`): "Solo per questa sessione" chiude la modifica e apre "Pronto" con
+  l'alternativa; "Sostituisci nell'elenco" aggiorna la riga e resta sull'elenco.
+- G) Scheda scritta a mano: sotto il nome dell'esercizio fino a 4 proposte dal catalogo (`PlanAI.candidates`),
+  toccandone una la voce è collegata.
+- Stringhe nuove/sostituite come da prompt; tutorial versione 32.
+- **Non compilato e test non eseguiti** (nessun Xcode/Swift qui); controllata solo la sintassi.

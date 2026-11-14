@@ -45,7 +45,7 @@ Resta possibile presentare un reclamo all'autorità di controllo competente, in 
 La presente informativa può essere aggiornata in caso di modifiche alle funzionalità, alle modalità di trattamento o agli obblighi normativi.
 Le modifiche sostanziali saranno comunicate secondo le modalità richieste dalla normativa applicabile.
 ## 10. Account e acquisti
-L'account è facoltativo. Se l'utente lo crea, l'applicazione tratta i dati necessari all'accesso: indirizzo e-mail o identificativo fornito dal servizio di accesso, nome visualizzato e lingua. L'accesso avviene con l'account Google o con Accedi con Apple.
+Per usare l'applicazione è necessario un account. Alla registrazione e all'accesso, l'applicazione tratta i dati necessari all'accesso: indirizzo e-mail o identificativo fornito dal servizio di accesso, nome visualizzato e lingua. L'accesso avviene con l'account Google o con Accedi con Apple.
 Account e database sono gestiti da Supabase Inc., che agisce come responsabile del trattamento per conto del titolare. I dati sono conservati su server nell'Unione europea (Francoforte, Germania). Eventuali trasferimenti fuori dall'Unione europea avvengono con le garanzie previste dal fornitore (clausole contrattuali standard).
 Gli acquisti e gli abbonamenti sono gestiti da Apple (App Store). Il titolare riceve lo stato dell'abbonamento (e, se l'utente ha un account, il collegamento tra acquisto e account), non i dati di pagamento. Il titolare può inoltre assegnare a un account una licenza gratuita, registrata nello stesso database.
 ## 11. Dati di salute del sistema e cancellazione dell'account

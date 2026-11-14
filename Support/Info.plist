@@ -45,6 +45,17 @@
 			</array>
 		</dict>
 	</array>
+	<!-- Caratteri dell'app (App/Fonts, licenza SIL OFL 1.1): Inter e Oswald Tabular, vedi Typography.swift. -->
+	<key>UIAppFonts</key>
+	<array>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>OswaldTabular-Medium.ttf</string>
+		<string>OswaldTabular-SemiBold.ttf</string>
+		<string>OswaldTabular-Bold.ttf</string>
+	</array>
 	<key>MyGymHelperPrivacyURL</key>
 	<string>https://mygymhelper-site.github.io/privacy.html</string>
 	<key>MyGymHelperTermsURL</key>

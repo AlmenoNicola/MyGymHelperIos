@@ -35,9 +35,9 @@ struct ProfileView: View {
                 // Età, peso, sesso e altezza sono dati sulla salute: senza consenso non si salvano (come la Nutrizione).
                 if consentAt == 0 {
                     VStack(spacing: 14) {
-                        Label("profile.needConsent", systemImage: "lock.fill").appFont(.callout)
+                        Label("profile.needConsent", systemImage: "lock.fill").appType(.body)
                         Button("consent.open") { showConsent = true }
-                            .buttonStyle(.glassProminent).tint(Theme.accent)
+                            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     }
                     .frame(maxWidth: .infinity)
                     .glassCard()
@@ -51,7 +51,7 @@ struct ProfileView: View {
                 NavigationLink { HistoryView() } label: {
                     Label("history.open", systemImage: "clock.arrow.circlepath").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
                 .tutorialTarget(TutorialTarget.profileHistory)
             }
             .padding(20)
@@ -92,10 +92,10 @@ struct ProfileView: View {
         let shares = ProfileStats.muscleShares(all, catalog: catalog.all, from: from, to: to)
 
         VStack(alignment: .leading, spacing: 12) {
-            Text("profile.muscles.title").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+            Text("profile.muscles.title").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
             PeriodPicker(selected: $period)
             if !pro && !period.isFree { LockedNote(key: "profile.period.locked") }
-            Text(verbatim: rangeText(shown, buckets)).appFont(.caption).foregroundStyle(.secondary)
+            Text(verbatim: rangeText(shown, buckets)).appType(.caption).foregroundStyle(.secondary)
             MuscleUsage(shares: shares)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -104,7 +104,7 @@ struct ProfileView: View {
 
         if !pro {
             VStack(alignment: .leading, spacing: 10) {
-                Text("profile.charts.title").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                Text("profile.charts.title").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
                 LockedNote(key: "profile.charts.locked")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -114,14 +114,14 @@ struct ProfileView: View {
             let series = ProfileStats.series(all, buckets: buckets, zone: zone)
             let totals = ProfileStats.totals(all, from: from, to: to, zone: zone)
             VStack(alignment: .leading, spacing: 10) {
-                Text("profile.charts.title").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                Text("profile.charts.title").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
                 HStack(spacing: 8) {
                     StatTile(title: "profile.stat.workouts", value: "\(totals.workouts)")
                     StatTile(title: "profile.stat.sets", value: "\(totals.sets)")
                     StatTile(title: "profile.stat.reps", value: "\(totals.reps)")
                     StatTile(title: "profile.stat.volume", value: Int(totals.volumeKg.rounded()).formatted())
                 }
-                if totals.sessions == 0 { Text("profile.charts.empty").appFont(.footnote).foregroundStyle(.secondary) }
+                if totals.sessions == 0 { Text("profile.charts.empty").appType(.caption).foregroundStyle(.secondary) }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .glassCard()
@@ -148,18 +148,18 @@ private struct PersonalDataCard: View {
     var body: some View {
         let sex = BiologicalSex(rawValue: profile.sex) ?? .male
         VStack(alignment: .leading, spacing: 14) {
-            Text("profile.data.title").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+            Text("profile.data.title").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
             HStack(alignment: .center, spacing: 12) {
                 AvatarView(sex: sex, heightCm: profile.heightCm, weightKg: profile.weightKg).frame(height: 190)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(verbatim: String(format: loc("profile.data.summary %lld %@ %lld"),
                                           Int(profile.heightCm.rounded()), num1(profile.weightKg), profile.age))
-                        .appFont(.callout, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
+                        .appType(.body, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
                     if let b = BMICalculator.calculate(weightKg: profile.weightKg, heightCm: profile.heightCm) {
                         Text(verbatim: String(format: loc("profile.data.bmi %@ %@"), num1(b.value), loc(bmiKey(b.category))))
-                            .appFont(.subheadline).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
+                            .appType(.secondary).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
                     }
-                    Text("profile.data.note").appFont(.caption).foregroundStyle(.secondary)
+                    Text("profile.data.note").appType(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -220,7 +220,7 @@ private struct PeriodPicker: View {
                 let on = p == selected
                 Button { selected = p } label: {
                     Text(LocalizedStringKey(p.titleKey))
-                        .appFont(.footnote, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
+                        .appType(.caption, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
                         .frame(maxWidth: .infinity).padding(.vertical, 8).padding(.horizontal, 4)
                         .foregroundStyle(on ? Theme.onAccent : Color.primary)
                         .background(on ? AnyShapeStyle(Theme.accent) : AnyShapeStyle(Color.clear), in: Capsule())
@@ -250,24 +250,24 @@ private struct MuscleUsage: View {
                     VStack(spacing: 4) {
                         MuscleHeatFigure(front: front, intensity: { intensity[$0] }, selected: selected, onTap: toggle)
                             .frame(height: 230)
-                        Text(LocalizedStringKey(front ? "profile.front" : "profile.back")).appFont(.caption).foregroundStyle(.secondary)
+                        Text(LocalizedStringKey(front ? "profile.front" : "profile.back")).appType(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                 }
             }
             if shares.isEmpty {
-                Text("profile.muscles.empty").appFont(.footnote).foregroundStyle(.secondary)
+                Text("profile.muscles.empty").appType(.caption).foregroundStyle(.secondary)
             } else {
                 if let m = selected {
                     let p = shares.first { $0.muscle == m }?.percent ?? 0
                     Text(verbatim: String(format: loc("profile.muscles.selected %@ %@"), m.title, percentText(p)))
-                        .appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
+                        .appType(.secondary, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
                 }
                 ForEach(shares, id: \.muscle) { s in
                     Button { toggle(s.muscle) } label: {
                         HStack(spacing: 8) {
                             Text(verbatim: s.muscle.title)
-                                .appFont(.subheadline, weight: selected == s.muscle ? .bold : .regular)
+                                .appType(.secondary, weight: selected == s.muscle ? .bold : .regular)
                                 .lineLimit(1).minimumScaleFactor(0.6)
                                 .frame(width: 110, alignment: .leading)
                             GeometryReader { geo in
@@ -278,7 +278,7 @@ private struct MuscleUsage: View {
                                 }
                             }
                             .frame(height: 8)
-                            Text(verbatim: percentText(s.percent)).appFont(.subheadline).monospacedDigit()
+                            Text(verbatim: percentText(s.percent)).appType(.secondary).monospacedDigit()
                                 .frame(width: 52, alignment: .trailing)
                         }
                         .contentShape(Rectangle())
@@ -299,8 +299,8 @@ private struct StatTile: View {
 
     var body: some View {
         VStack(spacing: 2) {
-            Text(verbatim: value).appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.5)
-            Text(title).appFont(.caption2).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
+            Text(verbatim: value).appType(.stat, weight: .bold).lineLimit(1).minimumScaleFactor(0.5)
+            Text(title).appType(.caption).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 10).padding(.horizontal, 6)
@@ -351,7 +351,7 @@ private struct AxisLabels: View {
         HStack(spacing: 0) {
             ForEach(Array(buckets.enumerated()), id: \.offset) { i, b in
                 Text(verbatim: shortLabel(b, index: i, count: buckets.count) ?? "")
-                    .font(.system(size: 10 * AppTextScale)).foregroundStyle(.secondary).lineLimit(1).fixedSize()
+                    .appType(.caption).foregroundStyle(.secondary).lineLimit(1).fixedSize()
                     .frame(maxWidth: .infinity)
             }
         }
@@ -370,10 +370,10 @@ private struct ChartHeader: View {
     let right: String?
     var body: some View {
         HStack {
-            Text(title).appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
+            Text(title).appType(.secondary, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
             Spacer(minLength: 8)
             if let right {
-                Text(verbatim: right).appFont(.footnote).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
+                Text(verbatim: right).appType(.caption).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.6)
             }
         }
     }
@@ -422,7 +422,7 @@ private struct BarChartCard: View {
                     }
                 }
                 if maxValue > 0 {
-                    Text(verbatim: format(maxValue)).font(.system(size: 10 * AppTextScale)).foregroundStyle(.secondary).padding(2)
+                    Text(verbatim: format(maxValue)).appType(.caption).foregroundStyle(.secondary).padding(2)
                 }
             }
             .frame(height: 140)
@@ -452,7 +452,7 @@ private struct WeightChartCard: View {
         VStack(alignment: .leading, spacing: 8) {
             ChartHeader(title: "profile.chart.weight", right: right)
             if points.isEmpty {
-                Text("profile.chart.weightEmpty").appFont(.footnote).foregroundStyle(.secondary)
+                Text("profile.chart.weightEmpty").appType(.caption).foregroundStyle(.secondary)
             } else {
                 let lo = points.map(\.1).min() ?? 0, hi = points.map(\.1).max() ?? 0
                 let pad = max((hi - lo) * 0.15, 0.5)
@@ -492,7 +492,7 @@ private struct WeightChartCard: View {
                         Spacer()
                         Text(verbatim: "\(num1(lo)) kg")
                     }
-                    .font(.system(size: 10 * AppTextScale)).foregroundStyle(.secondary).padding(2)
+                    .appType(.caption).foregroundStyle(.secondary).padding(2)
                     .allowsHitTesting(false)
                 }
                 .frame(height: 140)

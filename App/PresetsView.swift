@@ -51,7 +51,7 @@ struct DifficultyBadge: View {
                 }
             }
             Text(verbatim: String(format: NSLocalizedString("presets.difficulty %@", comment: ""), name))
-                .appFont(.caption, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
+                .appType(.caption, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
         }
         .padding(.horizontal, 10).padding(.vertical, 4)
         .background(color.opacity(0.18), in: Capsule())
@@ -75,7 +75,7 @@ struct PlanOriginBadge: View {
             Image(systemName: origin == .user ? "person.fill" : "slider.horizontal.3")
                 .appFont(.footnote).foregroundStyle(color)
             Text(LocalizedStringKey(origin == .user ? "plans.badge.user" : "plans.badge.app"))
-                .appFont(.caption, weight: .bold).lineLimit(1)
+                .appType(.caption, weight: .bold).lineLimit(1)
         }
         .padding(.horizontal, 10).padding(.vertical, 4)
         .background(color.opacity(0.18), in: Capsule())
@@ -131,7 +131,7 @@ struct PlansListSection: View {
         VStack(spacing: 16) {
             // Invito alla scelta, sopra l'elenco delle schede
             if showTitle {
-                let title = Text("presets.choose").appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
+                let title = Text("presets.choose").appType(.sectionTitle, weight: .bold, uppercase: true).lineLimit(1).minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if let titleTarget { title.tutorialTarget(titleTarget) } else { title }
             }
@@ -189,7 +189,7 @@ struct UserPlanCards: View {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 10) {
                             Image(systemName: "doc.text").appFont(.title2).foregroundStyle(Theme.accent)
-                            Text(verbatim: record.name).appFont(.headline, weight: .bold)
+                            Text(verbatim: record.name).appType(.cardTitle, weight: .bold)
                                 .lineLimit(1).minimumScaleFactor(0.7)
                             Spacer()
                             Image(systemName: "chevron.right").foregroundStyle(.secondary)
@@ -219,14 +219,14 @@ struct MonthlyPlanCard: View {
                 HStack {
                     Image(systemName: "sparkles").foregroundStyle(Theme.highlight).appFont(.title3)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("presets.monthly").appFont(.headline)
-                        if let p = monthly.plan { Text(verbatim: monthTitle(p.summary.monthKey)).appFont(.caption).foregroundStyle(.secondary) }
+                        Text("presets.monthly").appType(.cardTitle)
+                        if let p = monthly.plan { Text(verbatim: monthTitle(p.summary.monthKey)).appType(.caption).foregroundStyle(.secondary) }
                     }
                     Spacer()
                     Image(systemName: monthlyOn ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
                 }
                 PlanBadges(origin: .app, level: monthly.plan?.plan.level)
-                Text("presets.monthly.summary").appFont(.footnote).foregroundStyle(.secondary)
+                Text("presets.monthly.summary").appType(.caption).foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .glassCard()
@@ -248,14 +248,14 @@ struct PresetPlanCards: View {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(LocalizedStringKey(plan.titleKey)).appFont(.headline)
-                            Text(verbatim: planFacts(plan)).appFont(.caption).foregroundStyle(.secondary)
+                            Text(LocalizedStringKey(plan.titleKey)).appType(.cardTitle)
+                            Text(verbatim: planFacts(plan)).appType(.caption).foregroundStyle(.secondary)
                         }
                         Spacer()
                         Image(systemName: available ? "chevron.right" : "lock.fill").foregroundStyle(.secondary)
                     }
                     DifficultyBadge(level: plan.level)
-                    Text(LocalizedStringKey(plan.summaryKey)).appFont(.footnote).foregroundStyle(.secondary)
+                    Text(LocalizedStringKey(plan.summaryKey)).appType(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard()
@@ -264,7 +264,7 @@ struct PresetPlanCards: View {
             .disabled(!available)
         }
         if !FeatureGate.isAvailable(.presetPlans, for: tier) {
-            Label("presets.locked", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary)
+            Label("presets.locked", systemImage: "lock.fill").appType(.caption).foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -314,10 +314,10 @@ struct PresetPlanView: View {
                             CustomPlanNotesView(record: custom)
                             CustomPlanActions(record: custom)
                         } else if planID == MonthlyPlanner.id { monthlyNotes } else {
-                            Text(LocalizedStringKey(plan.summaryKey)).appFont(.subheadline).foregroundStyle(.secondary)
+                            Text(LocalizedStringKey(plan.summaryKey)).appType(.secondary).foregroundStyle(.secondary)
                         }
                         if plan.id == PresetPlans.freeID {
-                            Text("presets.freeNote").appFont(.caption).foregroundStyle(.secondary)
+                            Text("presets.freeNote").appType(.caption).foregroundStyle(.secondary)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -348,19 +348,19 @@ struct PresetPlanView: View {
 
     private func dayCard(_ day: PresetDay, plan: PresetPlan) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(LocalizedStringKey(day.titleKey)).appFont(.headline)
+            Text(LocalizedStringKey(day.titleKey)).appType(.cardTitle)
             ForEach(Array(day.items.enumerated()), id: \.offset) { _, item in
                 let ex = catalog.exercise(id: item.exerciseID)
                 HStack(spacing: 10) {
                     if let ex { MuscleThumbnail(exercise: ex, height: 48) }
                     VStack(alignment: .leading, spacing: 2) {
-                        if let ex { Text(verbatim: ex.name).appFont(.subheadline, weight: .semibold) }
-                        else { Text("workout.missingExercise").appFont(.subheadline, weight: .semibold) }
-                        Text(verbatim: item.parameters.summaryText).appFont(.caption).foregroundStyle(.secondary)
+                        if let ex { Text(verbatim: ex.name).appType(.secondary, weight: .semibold) }
+                        else { Text("workout.missingExercise").appType(.secondary, weight: .semibold) }
+                        Text(verbatim: item.parameters.summaryText).appType(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     if let ex {
-                        NavigationLink { ExerciseDetailView(exercise: ex) } label: { Text("presets.how").appFont(.footnote) }
+                        NavigationLink { ExerciseDetailView(exercise: ex) } label: { Text("presets.how").appType(.caption) }
                     }
                 }
             }
@@ -368,9 +368,9 @@ struct PresetPlanView: View {
                 let current = store.list(AppSettings.shared.currentListID)
                 if !canSaveLists, let current, !current.items.isEmpty { pending = day } else { use(day, plan: plan) }
             } label: {
-                Label("presets.use", systemImage: "play.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 4)
+                Label("presets.use", systemImage: "play.fill").appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 4)
             }
-            .buttonStyle(.glassProminent).tint(Theme.accent)
+            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -380,20 +380,20 @@ struct PresetPlanView: View {
     private var monthlyNotes: some View {
         let m = monthlyPlan
         let s = m.summary
-        Text(verbatim: monthTitle(s.monthKey)).appFont(.subheadline, weight: .bold)
-        if let note = m.aiNote { Text(verbatim: note).appFont(.subheadline) }
+        Text(verbatim: monthTitle(s.monthKey)).appType(.secondary, weight: .bold)
+        if let note = m.aiNote { Text(verbatim: note).appType(.secondary) }
         if s.trainingDays == 0 {
-            Text("monthly.noHistory").appFont(.subheadline).foregroundStyle(.secondary)
+            Text("monthly.noHistory").appType(.secondary).foregroundStyle(.secondary)
         } else {
-            Text("monthly.basedOn \(s.trainingDays)").appFont(.subheadline).foregroundStyle(.secondary)
+            Text("monthly.basedOn \(s.trainingDays)").appType(.secondary).foregroundStyle(.secondary)
             if !s.undertrained.isEmpty {
-                Text("monthly.undertrained \(s.undertrained.map(\.title).joined(separator: ", "))").appFont(.subheadline).foregroundStyle(.secondary)
+                Text("monthly.undertrained \(s.undertrained.map(\.title).joined(separator: ", "))").appType(.secondary).foregroundStyle(.secondary)
             }
-            Text("monthly.mix \(s.keptExercises) \(s.newExercises)").appFont(.subheadline).foregroundStyle(.secondary)
+            Text("monthly.mix \(s.keptExercises) \(s.newExercises)").appType(.secondary).foregroundStyle(.secondary)
         }
-        if consentAt == 0 { Text("monthly.consent").appFont(.caption).foregroundStyle(.secondary) }
+        if consentAt == 0 { Text("monthly.consent").appType(.caption).foregroundStyle(.secondary) }
         if monthly.isWorking { ProgressView().controlSize(.small) }
-        Text(LocalizedStringKey(m.aiNote != nil ? "monthly.ai" : "monthly.rules")).appFont(.caption).foregroundStyle(.secondary)
+        Text(LocalizedStringKey(m.aiNote != nil ? "monthly.ai" : "monthly.rules")).appType(.caption).foregroundStyle(.secondary)
     }
 
     private func use(_ day: PresetDay, plan: PresetPlan) {

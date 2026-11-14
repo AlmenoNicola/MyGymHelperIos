@@ -83,7 +83,11 @@ final class MovementAxisTests: XCTestCase {
     }
 
     func testOtherAxisAndRawValues() {
+        // Il pulsante "cambia" cicla sui tre assi (9 novembre 2026)
         XCTAssertEqual(MovementAxis.upDown.other, .leftRight)
+        XCTAssertEqual(MovementAxis.leftRight.other, .forwardBack)
+        XCTAssertEqual(MovementAxis.forwardBack.other, .upDown)
+        XCTAssertEqual(MovementAxis(rawValue: "forwardBack"), .forwardBack)
         XCTAssertEqual(MovementAxis(rawValue: "upDown"), .upDown)
         XCTAssertNil(MovementAxis(rawValue: "x"))
     }
@@ -93,6 +97,18 @@ final class MovementAxisTests: XCTestCase {
         c.axis = .leftRight
         XCTAssertEqual(c.axis, .leftRight)
         XCTAssertLessThan(c.minYawSwing, RepCounterConfig().minYawSwing)
+    }
+
+    func testForwardBackCountsHorizontalMovementOnly() {
+        XCTAssertEqual(translation(.forwardBack, vertical: false).count, 8)
+        XCTAssertEqual(translation(.forwardBack, vertical: true).count, 0)
+    }
+
+    func testForwardBackRules() {
+        for id in ["fedb-Kettlebell_Swing", "fedb-Cable_Pull_Through", "fedb-Sled_Push"] {
+            XCTAssertEqual(MovementRules.of(ex(id)), .forwardBack, id)
+        }
+        XCTAssertEqual(MovementRules.of(ex("seed-bench-press")), .upDown)
     }
 
     // ---------- Regole del catalogo ----------

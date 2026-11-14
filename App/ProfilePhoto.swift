@@ -122,12 +122,12 @@ struct ProfileHeader: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text("profile.photo.change"))
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("info.title").appFont(.title, weight: .bold).lineLimit(1)
-                    Text("info.subtitle").appFont(.subheadline).foregroundStyle(.secondary)
+                    Text("info.title").appType(.screenTitle, weight: .bold).lineLimit(1)
+                    Text("info.subtitle").appType(.secondary).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 0)
             }
-            if failed { Text("profile.photo.error").appFont(.footnote).foregroundStyle(.orange) }
+            if failed { Text("profile.photo.error").appType(.caption).foregroundStyle(.orange) }
         }
         .photosPicker(isPresented: $showPicker, selection: $item, matching: .images)
         .onChange(of: item) { _, new in

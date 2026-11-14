@@ -5,7 +5,8 @@ import Foundation
 /// Il catalogo non lo indica: si ricava dall'id (che contiene il nome inglese, es. "fedb-Seated_Cable_Rows") con
 /// regole fisse. Sinistra/destra = movimento nel piano orizzontale o rotazione attorno alla verticale (twist,
 /// woodchop, rematori ai cavi da seduti, chest press e croci alla macchina, adductor/abductor da seduti, salti
-/// laterali); tutto il resto e' su/giu'. Un esercizio del catalogo puo' avere il valore scritto ("movement" nel file
+/// laterali); avanti/indietro = oscillazioni e trascinamenti in orizzontale (swing, pull through, slitta, bear crawl,
+/// mountain climber, skier: 9 novembre 2026); tutto il resto e' su/giu'. Un esercizio del catalogo puo' avere il valore scritto ("movement" nel file
 /// degli esercizi), che vince sulle regole; l'utente puo' cambiarlo per la riga dell'elenco (`WorkoutItem.movement`)
 /// e durante il conteggio (solo per quella sessione).
 public enum MovementRules {
@@ -24,6 +25,9 @@ public enum MovementRules {
         "wrist rotation", "supine chest", "crossover reverse lunge"
     ]
 
+    /// Parole che indicano avanti/indietro (controllate dopo le liste qui sopra, prima dei salti laterali).
+    static let forwardBack = ["swing", "pull through", "sled push", "sled drag", "bear crawl", "mountain climber", "skier"]
+
     /// Pliometria che si sposta di lato (salti e passi laterali).
     static let lateralJumps = ["lateral", "side", "shuffle", "skater", "carioca"]
 
@@ -40,6 +44,7 @@ public enum MovementRules {
         let t = text(exercise.id)
         if upDown.contains(where: { t.contains($0) }) { return .upDown }
         if leftRight.contains(where: { t.contains($0) }) { return .leftRight }
+        if forwardBack.contains(where: { t.contains($0) }) { return .forwardBack }
         if exercise.kind == .plyometrics && lateralJumps.contains(where: { t.contains(" " + $0) }) { return .leftRight }
         return .upDown
     }

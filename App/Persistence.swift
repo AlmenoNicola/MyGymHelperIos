@@ -234,7 +234,8 @@ final class WorkoutListStore {
 
     @discardableResult
     func createList(name: String, items: [WorkoutItem] = []) -> UUID {
-        let l = WorkoutList(id: UUID(), name: name, items: items, autoNext: false, createdAt: Date())
+        // "Esercizio successivo" acceso di default negli elenchi nuovi (9 novembre 2026); quelli salvati restano come sono
+        let l = WorkoutList(id: UUID(), name: name, items: items, autoNext: true, createdAt: Date())
         save(l)
         return l.id
     }

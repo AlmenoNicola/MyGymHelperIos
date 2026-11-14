@@ -152,7 +152,7 @@ public enum CatalogAccess {
 public enum HomeEquipment {
     /// Attrezzi che si possono segnare (nomi del catalogo, tradotti con equipment.<nome>). Il corpo libero non serve segnarlo.
     public static let choices: [String] = [
-        "dumbbell", "barbell", "ezBar", "kettlebell", "band", "exerciseBall",
+        "dumbbell", "barbell", "ezBar", "kettlebell", "band", "exerciseBall", "pilatesRing",
         "medicineBall", "foamRoll", "cable", "machine", "other"
     ]
 

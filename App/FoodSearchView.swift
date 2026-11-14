@@ -45,7 +45,7 @@ struct FoodSearchView: View {
                     ProgressView().padding()
                 case .failed:
                     Label("food.search.error", systemImage: "wifi.exclamationmark")
-                        .appFont(.callout).foregroundStyle(.secondary).glassCard(padding: 16)
+                        .appType(.body).foregroundStyle(.secondary).glassCard(padding: 16)
                 case .done:
                     if results.isEmpty {
                         Text("food.search.none").foregroundStyle(.secondary).glassCard(padding: 16)
@@ -56,9 +56,9 @@ struct FoodSearchView: View {
                 }
 
                 VStack(spacing: 4) {
-                    Text("food.attribution").appFont(.caption2).foregroundStyle(.secondary)
+                    Text("food.attribution").appType(.caption).foregroundStyle(.secondary)
                     Link(destination: URL(string: "https://world.openfoodfacts.org")!) {
-                        Text(verbatim: "openfoodfacts.org").appFont(.caption2, weight: .bold)
+                        Text(verbatim: "openfoodfacts.org").appType(.caption, weight: .bold)
                     }
                 }
                 .padding(.top, 8)
@@ -98,12 +98,12 @@ private struct FoodRow: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(verbatim: product.name).appFont(.headline)
-                    if let brand = product.brand { Text(verbatim: brand).appFont(.caption).foregroundStyle(.secondary) }
+                    Text(verbatim: product.name).appType(.cardTitle)
+                    if let brand = product.brand { Text(verbatim: brand).appType(.caption).foregroundStyle(.secondary) }
                 }
                 Spacer()
                 if let kcal = product.kcal100g {
-                    Text(verbatim: "\(Int(kcal.rounded())) kcal").appFont(.subheadline, weight: .bold, monospacedDigit: true)
+                    Text(verbatim: "\(Int(kcal.rounded())) kcal").appType(.secondary, weight: .bold, monospacedDigit: true)
                 }
             }
             HStack(spacing: 12) {
@@ -111,7 +111,7 @@ private struct FoodRow: View {
                 value("nutrition.carbs", product.carbs100g)
                 value("nutrition.fat", product.fat100g)
             }
-            Text("food.per100g").appFont(.caption2).foregroundStyle(.secondary)
+            Text("food.per100g").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(padding: 16)
@@ -122,6 +122,6 @@ private struct FoodRow: View {
             Text(title).foregroundStyle(.secondary)
             Text(verbatim: grams.map { "\($0.formatted(.number.precision(.fractionLength(0...1)))) g" } ?? "—")
         }
-        .appFont(.caption)
+        .appType(.caption)
     }
 }

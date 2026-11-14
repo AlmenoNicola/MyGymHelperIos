@@ -199,7 +199,7 @@ public enum CustomPlanGenerator {
     /// L'esercizio si può fare dove si allena l'utente?
     public static func isDoable(_ ex: CatalogExercise, _ input: CustomPlanInput) -> Bool {
         switch input.place {
-        case .gym: return true
+        case .gym: return ex.equipment != "pilatesRing"   // in palestra niente anello pilates (a casa sì, se c'è)
         case .home: return HomeEquipment.isDoable(ex, owned: input.ownedEquipment)
         case .bodyweight: return HomeEquipment.alwaysAvailable.contains(ex.equipment)
         }
@@ -339,7 +339,9 @@ public enum CustomPlanGenerator {
             if ex.isCompound { rest += 30 }
         }
         if i.age >= 65 { sets = min(sets, 3) }
-        return PresetItem(ex.id, sets: sets, reps: reps, restSeconds: rest)
+        // Peso di partenza prudente (9 novembre 2026): 0 per corpo libero ed esercizi senza carico
+        let weight = StartingWeights.suggest(ex, sex: i.sex, bodyWeightKg: i.weightKg, age: i.age, experience: i.experience) ?? 0
+        return PresetItem(ex.id, sets: sets, reps: reps, restSeconds: rest, weightKg: weight)
     }
 
     /// Nome proposto: "La mia scheda", "La mia scheda 2" ... (il testo base arriva tradotto dall'app).

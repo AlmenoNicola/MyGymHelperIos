@@ -8,7 +8,7 @@ import MyGymHelperCore
 private struct ReviewCardTitle: View {
     let key: LocalizedStringKey
     var body: some View {
-        Label { Text(key).appFont(.headline) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
+        Label { Text(key).appType(.cardTitle) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
     }
 }
 
@@ -22,7 +22,7 @@ private struct AINoteView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("review.aiNote \(note)").appFont(.footnote).foregroundStyle(Theme.accent)
+            Text("review.aiNote \(note)").appType(.caption).foregroundStyle(Theme.accent)
             Button {
                 noMail = false
                 let info = ErrorReporter.info(time: Date())
@@ -32,11 +32,11 @@ private struct AINoteView: View {
                                     intro: String(localized: "review.report.intro"), aiText: note, info: info))]
                 if let url = c.url { openURL(url) { accepted in if !accepted { noMail = true } } } else { noMail = true }
             } label: {
-                Label("review.report", systemImage: "flag").appFont(.caption).foregroundStyle(.secondary)
+                Label("review.report", systemImage: "flag").appType(.caption).foregroundStyle(.secondary)
             }
             .buttonStyle(.plain)
             if noMail {
-                Text("suggest.noMail \(AIContentReport.email)").appFont(.footnote).foregroundStyle(.orange)
+                Text("suggest.noMail \(AIContentReport.email)").appType(.caption).foregroundStyle(.orange)
             }
         }
     }
@@ -51,15 +51,15 @@ struct PlanReviewQuestionCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ReviewCardTitle(key: "review.question.title")
-            Text("review.question.body \(planName)").appFont(.subheadline).foregroundStyle(.secondary)
+            Text("review.question.body \(planName)").appType(.secondary).foregroundStyle(.secondary)
             Button { onAnswer(.tooLight) } label: { Text("review.light").lineLimit(1).frame(maxWidth: .infinity) }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             Button { onAnswer(.right) } label: { Text("review.right").lineLimit(1).frame(maxWidth: .infinity) }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             Button { onAnswer(.tooHeavy) } label: { Text("review.heavy").lineLimit(1).frame(maxWidth: .infinity) }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             Button(action: onLater) { Text("review.later").lineLimit(1).frame(maxWidth: .infinity).foregroundStyle(.secondary) }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -74,7 +74,7 @@ struct PlanReviewAnsweredNote: View {
         VStack(alignment: .leading, spacing: 8) {
             ReviewCardTitle(key: "review.question.title")
             Text(LocalizedStringKey(working ? "review.working" : hasProposal ? "review.ready" : "review.none"))
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -93,21 +93,21 @@ struct PlanReviewAdviceCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ReviewCardTitle(key: "advice.adaptiveTitle")
-            Text("review.cardSubtitle").appFont(.caption).foregroundStyle(.secondary)
-            ForEach(change.reasonKeys, id: \.self) { Text(LocalizedStringKey($0)).appFont(.subheadline).foregroundStyle(.secondary) }
+            Text("review.cardSubtitle").appType(.caption).foregroundStyle(.secondary)
+            ForEach(change.reasonKeys, id: \.self) { Text(LocalizedStringKey($0)).appType(.secondary).foregroundStyle(.secondary) }
             if let note = review.note { AINoteView(note: note) }
             Text(verbatim: AdviceText.loadChange(before: change.beforeParameters, after: change.afterParameters))
-                .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accent)
-            Text("review.before \(change.beforeParameters.summaryText)").appFont(.footnote).foregroundStyle(.secondary)
-            Text("review.after \(change.afterParameters.summaryText)").appFont(.subheadline, weight: .semibold)
-            if working { Text("review.working").appFont(.caption).foregroundStyle(.secondary) }
-            Text("review.scope \(review.changedCount) \(review.planName)").appFont(.caption).foregroundStyle(.secondary)
+                .appType(.secondary, weight: .semibold).foregroundStyle(Theme.accent)
+            Text("review.before \(change.beforeParameters.summaryText)").appType(.caption).foregroundStyle(.secondary)
+            Text("review.after \(change.afterParameters.summaryText)").appType(.secondary, weight: .semibold)
+            if working { Text("review.working").appType(.caption).foregroundStyle(.secondary) }
+            Text("review.scope \(review.changedCount) \(review.planName)").appType(.caption).foregroundStyle(.secondary)
             Button(action: onApply) {
                 Label("advice.apply", systemImage: "checkmark").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glassProminent).tint(Theme.accent)
+            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             Button(action: onDiscard) { Text("review.discard").lineLimit(1).frame(maxWidth: .infinity).foregroundStyle(.secondary) }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -121,11 +121,11 @@ struct PlanReviewUndoCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("review.applied \(appliedAt.formatted(date: .abbreviated, time: .omitted))")
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
             Button(action: onUndo) {
                 Label("review.undo", systemImage: "arrow.uturn.backward").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
+            .buttonStyle(.glass).appType(.button)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -142,31 +142,31 @@ struct PlanReviewPlanCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ReviewCardTitle(key: "review.planTitle")
-            Text("review.cardSubtitle").appFont(.caption).foregroundStyle(.secondary)
+            Text("review.cardSubtitle").appType(.caption).foregroundStyle(.secondary)
             if let note = review.note { AINoteView(note: note) }
-            if working { Text("review.working").appFont(.caption).foregroundStyle(.secondary) }
+            if working { Text("review.working").appType(.caption).foregroundStyle(.secondary) }
             ForEach(review.changes, id: \.entryID) { c in
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(verbatim: c.name).appFont(.subheadline, weight: .bold)
+                    Text(verbatim: c.name).appType(.secondary, weight: .bold)
                     Text(verbatim: AdviceText.loadChange(before: c.beforeParameters, after: c.afterParameters))
-                        .appFont(.caption, weight: .semibold).foregroundStyle(Theme.accent)
+                        .appType(.caption, weight: .semibold).foregroundStyle(Theme.accent)
                     if c.changed {
-                        Text("review.before \(c.beforeParameters.summaryText)").appFont(.caption).foregroundStyle(.secondary)
-                        Text("review.after \(c.afterParameters.summaryText)").appFont(.footnote, weight: .semibold)
+                        Text("review.before \(c.beforeParameters.summaryText)").appType(.caption).foregroundStyle(.secondary)
+                        Text("review.after \(c.afterParameters.summaryText)").appType(.caption, weight: .semibold)
                     }
-                    ForEach(c.reasonKeys, id: \.self) { Text(LocalizedStringKey($0)).appFont(.caption).foregroundStyle(.secondary) }
+                    ForEach(c.reasonKeys, id: \.self) { Text(LocalizedStringKey($0)).appType(.caption).foregroundStyle(.secondary) }
                 }
             }
             if review.changedCount > 0 {
                 Button(action: onApply) {
                     Label("advice.apply", systemImage: "checkmark").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             } else {
-                Text("review.nothingChanged").appFont(.footnote).foregroundStyle(.secondary)
+                Text("review.nothingChanged").appType(.caption).foregroundStyle(.secondary)
             }
             Button(action: onDiscard) { Text("review.discard").lineLimit(1).frame(maxWidth: .infinity).foregroundStyle(.secondary) }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()

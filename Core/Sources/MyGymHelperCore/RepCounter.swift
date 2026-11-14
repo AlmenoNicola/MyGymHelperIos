@@ -18,6 +18,7 @@ import Foundation
 /// sinistra/destra, sempre rispetto al pavimento (gravita'), qualunque sia l'orientamento del telefono:
 /// - SU/GIU': inclinazione oppure spostamento lungo la verticale; le rotazioni attorno alla verticale non contano.
 /// - SINISTRA/DESTRA: rotazione attorno alla verticale oppure spostamento nel piano orizzontale.
+/// - AVANTI/INDIETRO (9 novembre 2026): solo spostamento nel piano orizzontale, mai la rotazione (swing, slitta...).
 /// Senza asse (nil) si sceglie da soli, come prima.
 public struct RepCounterConfig: Sendable, Equatable {
     public var calibrationSeconds = 2.0    // movimento minimo osservato prima di scegliere segnale e asse
@@ -53,10 +54,16 @@ public enum RepSignal: String, Sendable, Equatable, CaseIterable, Codable {
 /// Direzione del movimento che si conta, rispetto al pavimento. `rawValue` e' il valore salvato (elenchi e catalogo),
 /// uguale su Android (MovementAxis in RepCounter.kt).
 public enum MovementAxis: String, Sendable, Equatable, Hashable, CaseIterable, Codable {
-    case upDown, leftRight
+    case upDown, leftRight, forwardBack
 
-    /// L'altro asse (pulsante "cambia asse" durante il conteggio).
-    public var other: MovementAxis { self == .upDown ? .leftRight : .upDown }
+    /// Asse successivo (pulsante "cambia" durante il conteggio): su/giù → sinistra/destra → avanti/indietro → su/giù.
+    public var other: MovementAxis {
+        switch self {
+        case .upDown: return .leftRight
+        case .leftRight: return .forwardBack
+        case .forwardBack: return .upDown
+        }
+    }
     /// Chiave del testo: "movement.upDown" / "movement.leftRight".
     public var titleKey: String { "movement.\(rawValue)" }
 }
@@ -149,6 +156,7 @@ public struct RepCounter {
         case nil: return calibrateAuto()
         case .upDown?: return calibrateUpDown()
         case .leftRight?: return calibrateLeftRight()
+        case .forwardBack?: return calibrateForwardBack()
         }
     }
 
@@ -227,6 +235,15 @@ public struct RepCounter {
         } else {
             useTranslation(.horizontal, PrincipalAxis.estimate(from: horizontal) ?? Vector3(1, 0, 0))
         }
+        return true
+    }
+
+    /// Avanti/indietro: spostamento nel piano orizzontale, lungo la direzione in cui varia di più. Non usa mai la
+    /// rotazione attorno alla verticale (è la differenza rispetto a sinistra/destra).
+    private mutating func calibrateForwardBack() -> Bool {
+        let horizontal = window.map { Self.horizontalPart($0.linear, $0.gravity) }
+        if (horizontal.map(\.length).max() ?? 0) < 0.12 { return false }   // ancora fermo: si aspetta
+        useTranslation(.horizontal, PrincipalAxis.estimate(from: horizontal) ?? Vector3(1, 0, 0))
         return true
     }
 

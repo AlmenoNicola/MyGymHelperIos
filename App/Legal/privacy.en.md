@@ -45,7 +45,7 @@ You may also lodge a complaint with the competent supervisory authority (in Ital
 This policy may be updated in case of changes to the features, to the processing methods or to legal obligations.
 Substantial changes will be communicated as required by the applicable law.
 ## 10. Account and purchases
-The account is optional. If the user creates one, the application processes the data needed to sign in: e-mail address or identifier provided by the sign-in service, display name and language. Sign-in uses the Google account or Sign in with Apple.
+An account is required to use the application. When the user signs up or signs in, the application processes the data needed to sign in: e-mail address or identifier provided by the sign-in service, display name and language. Sign-in uses the Google account or Sign in with Apple.
 Account and database are managed by Supabase Inc., acting as processor on behalf of the controller. Data is stored on servers in the European Union (Frankfurt, Germany). Any transfer outside the European Union takes place with the safeguards provided by the supplier (standard contractual clauses).
 Purchases and subscriptions are handled by Apple (App Store). The controller receives the subscription status (and, if the user has an account, the link between purchase and account), not payment data. The controller may also assign a free licence to an account, recorded in the same database.
 ## 11. System health data and account deletion

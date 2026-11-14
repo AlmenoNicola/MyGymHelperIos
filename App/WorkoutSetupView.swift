@@ -41,10 +41,10 @@ struct WorkoutSetupView: View {
                     // Nessun elenco (Pro): subito "Crea la tua scheda" (stessa destinazione della card nelle schede)
                     // e sotto "Aggiungi esercizio"
                     NavigationLink { CustomPlanEditorView(editID: nil) } label: {
-                        Label("custom.create", systemImage: "slider.horizontal.3").appFont(.headline).lineLimit(1)
+                        Label("custom.create", systemImage: "slider.horizontal.3").appType(.cta).lineLimit(1)
                             .frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.accent)
+                    .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     .tutorialTarget(TutorialTarget.workoutList)
                     AddExerciseButton()
                 } else {
@@ -57,7 +57,7 @@ struct WorkoutSetupView: View {
                 Button { sessionTarget = SessionTarget(exercise: nil, parameters: WorkoutItem.defaultParameters) } label: {
                     Label("workout.freeCount", systemImage: "timer").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
                 .tutorialTarget(TutorialTarget.workoutFree)
                 // "Storico allenamenti" è passato in fondo alla scheda Profilo
             }
@@ -74,7 +74,10 @@ struct WorkoutSetupView: View {
         .appScreen()
         .toolbar(.hidden, for: .navigationBar)
         .navigationDestination(item: $sessionTarget) { WorkoutSessionView(target: $0) }
-        .navigationDestination(item: $editTarget) { ItemEditorView(exercise: $0.exercise, listID: $0.listID, item: $0.item) }
+        .navigationDestination(item: $editTarget) { t in
+            ItemEditorView(exercise: t.exercise, listID: t.listID, item: t.item,
+                           onAlternative: { choice in alternativeFromEditor(t, choice) })
+        }
         .sheet(isPresented: $showLists) { ListPickerSheet() }
         .alert("workout.deleteItem", isPresented: Binding(get: { toDelete != nil }, set: { if !$0 { toDelete = nil } })) {
             Button("history.delete", role: .destructive) {
@@ -100,8 +103,8 @@ struct WorkoutSetupView: View {
             HStack(spacing: 10) {
                 Image(systemName: "list.bullet").appFont(.headline).foregroundStyle(Theme.accent)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("workout.itemsLoaded \(total)").appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
-                    Text("workout.itemsDone \(done) \(total)").appFont(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    Text("workout.itemsLoaded \(total)").appType(.secondary, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
+                    Text("workout.itemsDone \(done) \(total)").appType(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.down").appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
@@ -122,7 +125,7 @@ struct WorkoutSetupView: View {
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: symbol).appFont(.headline).foregroundStyle(Theme.accent)
-                title.appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
+                title.appType(.secondary, weight: .bold).lineLimit(1).minimumScaleFactor(0.75)
                 Spacer(minLength: 0)
                 Image(systemName: expanded.wrappedValue ? "chevron.up" : "chevron.down")
                     .appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
@@ -167,17 +170,17 @@ struct WorkoutSetupView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("workout.list").appFont(.caption).foregroundStyle(.secondary)
-                    if let list { Text(verbatim: list.name).appFont(.title3, weight: .bold).lineLimit(1) }
-                    else { Text("workout.todayList").appFont(.title3, weight: .bold).lineLimit(1) }
+                    Text("workout.list").appType(.caption).foregroundStyle(.secondary)
+                    if let list { Text(verbatim: list.name).appType(.sectionTitle, weight: .bold, uppercase: true).lineLimit(1) }
+                    else { Text("workout.todayList").appType(.sectionTitle, weight: .bold, uppercase: true).lineLimit(1) }
                 }
                 Spacer()
                 if canChooseLists {
-                    Button("workout.changeList") { showLists = true }.buttonStyle(.glass).lineLimit(1)
+                    Button("workout.changeList") { showLists = true }.buttonStyle(.glass).appType(.button).lineLimit(1)
                 }
             }
             if list?.items.isEmpty ?? true {
-                Text("workout.emptyList").appFont(.subheadline).foregroundStyle(.secondary)
+                Text("workout.emptyList").appType(.secondary).foregroundStyle(.secondary)
                 AddExerciseButton()
                 // Elenco vuoto: "Le mie schede" subito sotto
                 myPlansBox
@@ -207,16 +210,16 @@ struct WorkoutSetupView: View {
                     if let next = WorkoutListLogic.nextPending(list.items) {
                         Button { start(next, in: list) } label: {
                             Label("workout.startNext \(catalog.exercise(id: next.exerciseID)?.name ?? "")", systemImage: "play.fill")
-                                .appFont(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
+                                .appType(.cta).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 6)
                         }
-                        .buttonStyle(.glassProminent).tint(Theme.accent)
+                        .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     } else {
-                        Text("workout.allDone").appFont(.subheadline).foregroundStyle(.secondary)
+                        Text("workout.allDone").appType(.secondary).foregroundStyle(.secondary)
                     }
                     Button { store.reset(list.id) } label: {
                         Label("workout.reset", systemImage: "arrow.counterclockwise").lineLimit(1).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
                     .disabled(!list.items.contains { $0.done })
                     // Totale delle calorie (stima) degli esercizi fatti, dopo Reset
                     if list.items.contains(where: \.done) {
@@ -225,7 +228,7 @@ struct WorkoutSetupView: View {
                 }
             }
             if consentAt == 0 {
-                Text("workout.notSavedNote").appFont(.caption).foregroundStyle(.secondary)
+                Text("workout.notSavedNote").appType(.caption).foregroundStyle(.secondary)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -242,20 +245,20 @@ struct WorkoutSetupView: View {
                     if item.done {
                         Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.done).appFont(.title3)
                     } else {
-                        Text(verbatim: "\(number)").appFont(.headline).foregroundStyle(Theme.accent).frame(width: 22)
+                        Text(verbatim: "\(number)").appType(.cardTitle).foregroundStyle(Theme.accent).frame(width: 22)
                     }
                     if let exercise { MuscleThumbnail(exercise: exercise, height: 42) }
                     VStack(alignment: .leading, spacing: 2) {
-                        if let exercise { Text(verbatim: exercise.name).appFont(.subheadline, weight: .bold).lineLimit(1) }
-                        else { Text("workout.missingExercise").appFont(.subheadline, weight: .bold).lineLimit(1) }
-                        Text(verbatim: item.parameters.summaryText).appFont(.caption).foregroundStyle(.secondary)
+                        if let exercise { Text(verbatim: exercise.name).appType(.secondary, weight: .bold).lineLimit(1) }
+                        else { Text("workout.missingExercise").appType(.secondary, weight: .bold).lineLimit(1) }
+                        Text(verbatim: item.parameters.summaryText).appType(.caption).foregroundStyle(.secondary)
                             .lineLimit(1).minimumScaleFactor(0.7)
                         // Esercizio fatto: calorie bruciate (stima) nelle serie fatte
                         let kcal = CalorieEstimator.display(item.kcal)
                         if item.done && kcal > 0 {
                             HStack(spacing: 4) {
                                 Image(systemName: "flame.fill").font(.system(size: 14 * AppTextScale))
-                                Text("calories.item \(kcal)").font(.system(size: 12 * AppTextScale, weight: .semibold))
+                                Text("calories.item \(kcal)").appType(.caption, weight: .semibold)
                             }
                             .foregroundStyle(Theme.done)
                         }
@@ -286,6 +289,26 @@ struct WorkoutSetupView: View {
         .tintedCard(item.done ? Theme.done : nil, padding: 14)
     }
 
+    /// "Fai esercizio alternativo" dalla matita (9 novembre 2026). Si chiudono modifica, scelta e modifica
+    /// dell'alternativa; "Solo per questa sessione" apre poi "Pronto" con l'alternativa (con "Al posto di" e
+    /// "Torna a"); "Sostituisci nell'elenco" aggiorna la riga e resta sull'elenco, senza avviare l'esercizio.
+    private func alternativeFromEditor(_ t: EditTarget, _ choice: EditorAlternative) {
+        editTarget = nil
+        guard let listID = t.listID, let item = t.item else { return }
+        if choice.permanent {
+            let current = store.list(listID)?.items.first { $0.id == item.id } ?? item
+            var replaced = WorkoutListLogic.replaceExercise(current, exerciseID: choice.picked.id, parameters: choice.parameters)
+            replaced.movement = MovementRules.override(choice.picked, choice.movement)   // solo se diverso dal catalogo
+            store.updateItem(replaced, in: listID)
+        } else {
+            let target = SessionTarget(exercise: choice.picked, parameters: choice.parameters, listID: listID, itemID: item.id,
+                                       replacing: t.exercise, replacingParameters: choice.originalParameters,
+                                       movement: choice.movement)
+            // Prima si chiude la pila della modifica, poi si apre "Pronto" (due cambi di navigazione insieme non vanno)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { sessionTarget = target }
+        }
+    }
+
     private func start(_ item: WorkoutItem, in list: WorkoutListStore.WorkoutList) {
         guard let exercise = catalog.exercise(id: item.exerciseID) else { return }
         sessionTarget = SessionTarget(exercise: exercise, parameters: item.parameters, listID: list.id, itemID: item.id)
@@ -297,10 +320,10 @@ struct WorkoutSetupView: View {
 private struct AddExerciseButton: View {
     var body: some View {
         NavigationLink { AddExerciseView() } label: {
-            Label("workout.addExercise", systemImage: "plus").appFont(.headline).lineLimit(1)
+            Label("workout.addExercise", systemImage: "plus").appType(.cardTitle).lineLimit(1)
                 .foregroundStyle(Theme.accent).frame(maxWidth: .infinity)
         }
-        .buttonStyle(.glass)
+        .buttonStyle(.glass).appType(.button)
         .tutorialTarget(TutorialTarget.workoutAdd)
     }
 }
@@ -389,7 +412,7 @@ struct AddExerciseView: View {
                 if let alternativeFor {
                     ScreenHeader(symbol: "arrow.left.arrow.right.circle.fill", title: "alternative.title",
                                  subtitle: "alternative.subtitle \(alternativeFor.name)")
-                    Text("alternative.note").appFont(.caption).foregroundStyle(.secondary)
+                    Text("alternative.note").appType(.caption).foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     ScreenHeader(symbol: "plus.circle.fill", title: "workout.addTitle",
@@ -433,9 +456,9 @@ struct AddExerciseView: View {
             BodyweightChip(on: $bodyweight)
             EquipmentFilterChip(tier: tier)
             Text(LocalizedStringKey(selected.isEmpty ? "workout.allExercises" : "workout.filtered"))
-                .appFont(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appType(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
             if !selected.isEmpty {
-                Button("ex.clear") { selected.removeAll() }.appFont(.footnote)
+                Button("ex.clear") { selected.removeAll() }.appType(.caption)
             }
         }
         .glassCard()
@@ -452,11 +475,11 @@ struct AddExerciseView: View {
         let items = results
         if selected.count >= 2 && items.contains(where: { WorkoutListLogic.coversAll($0, selected: selected) }) {
             Label("workout.highlightNote", systemImage: "star.fill")
-                .appFont(.caption).foregroundStyle(Theme.highlight).frame(maxWidth: .infinity, alignment: .leading)
+                .appType(.caption).foregroundStyle(Theme.highlight).frame(maxWidth: .infinity, alignment: .leading)
         }
         if !FeatureGate.isAvailable(.catalogFull, for: tier) {
             Label("ex.freeLimit", systemImage: "lock.fill")
-                .appFont(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appType(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
         }
         if items.isEmpty {
             Text("ex.none").foregroundStyle(.secondary).glassCard(padding: 16)
@@ -487,7 +510,7 @@ struct AddExerciseView: View {
                 } label: {
                     HStack(spacing: 10) {
                         Image(systemName: "sparkles").foregroundStyle(Theme.accent)
-                        Text("ex.recommended").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                        Text("ex.recommended").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
                         Spacer(minLength: 0)
                         Image(systemName: recommendedOpen ? "chevron.up" : "chevron.down")
                             .appFont(.footnote, weight: .semibold).foregroundStyle(.secondary)
@@ -502,8 +525,8 @@ struct AddExerciseView: View {
                             HStack(alignment: .center, spacing: 12) {
                                 RecommendationThumbnail(exercise: rec.exercise)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text(verbatim: rec.exercise.name).appFont(.subheadline, weight: .bold)
-                                    Text(LocalizedStringKey(rec.reasonKey)).appFont(.caption).foregroundStyle(Theme.accentSoft)
+                                    Text(verbatim: rec.exercise.name).appType(.secondary, weight: .bold)
+                                    Text(LocalizedStringKey(rec.reasonKey)).appType(.caption).foregroundStyle(Theme.accentSoft)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 Image(systemName: "plus.circle.fill").appFont(.title3).foregroundStyle(Theme.accent)
@@ -571,10 +594,10 @@ private struct BrowseRow: View {
         HStack(spacing: 10) {
             MuscleThumbnail(exercise: exercise, height: 46)   // muscoli coinvolti in miniatura
             VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: exercise.name).appFont(.subheadline, weight: .semibold)
+                Text(verbatim: exercise.name).appType(.secondary, weight: .semibold)
                 if full {
                     Label("workout.allMuscles", systemImage: "star.fill")
-                        .appFont(.caption, weight: .semibold).foregroundStyle(Theme.highlight)
+                        .appType(.caption, weight: .semibold).foregroundStyle(Theme.highlight)
                 }
             }
             Spacer()
@@ -601,14 +624,14 @@ private struct ListPickerSheet: View {
             AppBackground()
             ScrollView {
                 VStack(spacing: 14) {
-                    Text("workout.changeList").appFont(.title3, weight: .bold)
+                    Text("workout.changeList").appType(.sectionTitle, weight: .bold, uppercase: true)
                     ForEach(store.lists) { list in
                         Button {
                             AppSettings.shared.setCurrentList(list.id)
                             dismiss()
                         } label: {
                             HStack {
-                                Text(verbatim: list.name).appFont(.headline)
+                                Text(verbatim: list.name).appType(.cardTitle)
                                 Spacer()
                                 Text(verbatim: "\(list.items.filter(\.done).count)/\(list.items.count)").foregroundStyle(.secondary)
                             }
@@ -624,13 +647,13 @@ private struct ListPickerSheet: View {
                             AppSettings.shared.setCurrentList(id)
                             dismiss()
                         }
-                        .buttonStyle(.glassProminent).tint(Theme.accent)
+                        .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     }
                     .glassCard(padding: 16)
                     if consentAt == 0 {
-                        Text("workout.notSavedNote").appFont(.caption).foregroundStyle(.secondary)
+                        Text("workout.notSavedNote").appType(.caption).foregroundStyle(.secondary)
                     }
-                    Button("info.cancel") { dismiss() }.buttonStyle(.glass)
+                    Button("info.cancel") { dismiss() }.buttonStyle(.glass).appType(.button)
                 }
                 .padding(24)
             }
@@ -655,6 +678,28 @@ struct AlternativeEdit {
     let onDone: (WorkoutParameters, MovementAxis, Bool) -> Void
 }
 
+/// Alternativa scelta dalla modifica di una riga dell'elenco ("Fai esercizio alternativo" dalla matita).
+struct EditorAlternative {
+    let picked: CatalogExercise
+    let parameters: WorkoutParameters
+    let movement: MovementAxis
+    /// true = "Sostituisci nell'elenco".
+    let permanent: Bool
+    /// Parametri dell'esercizio originale (quelli dell'editor), per "Torna a …".
+    let originalParameters: WorkoutParameters
+}
+
+/// Icona dell'asse del movimento (selettore nella modifica e pulsante "cambia" durante il conteggio).
+extension MovementAxis {
+    var symbol: String {
+        switch self {
+        case .upDown: return "arrow.up.arrow.down"
+        case .leftRight: return "arrow.left.arrow.right"
+        case .forwardBack: return "arrow.up.left.and.arrow.down.right"
+        }
+    }
+}
+
 struct ItemEditorView: View {
     let exercise: CatalogExercise
     let listID: UUID?
@@ -664,7 +709,12 @@ struct ItemEditorView: View {
     /// Modalità esercizio alternativo (item = nil: la riga dell'elenco non si modifica da qui).
     var alternative: AlternativeEdit? = nil
     @State private var confirmPermanent = false
-    /// Movimento da contare (su/giù o sinistra/destra): sulla riga si salva solo se diverso da quello del catalogo.
+    /// "Fai esercizio alternativo" dalla modifica di una riga dell'elenco (9 novembre 2026): lo gestisce l'elenco.
+    var onAlternative: ((EditorAlternative) -> Void)? = nil
+    @State private var showAlternative = false
+    /// Profilo (peso, sesso, età) per il peso di partenza consigliato.
+    @Query private var profiles: [HealthProfileRecord]
+    /// Movimento da contare (su/giù, sinistra/destra o avanti/indietro): sulla riga si salva solo se diverso dal catalogo.
     @State private var movement: MovementAxis
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.dismiss) private var dismiss
@@ -679,7 +729,8 @@ struct ItemEditorView: View {
     private var review: PlanReviewStore { PlanReviewStore.shared }
 
     init(exercise: CatalogExercise, listID: UUID? = nil, item: WorkoutItem? = nil, switchToWorkout: Bool = false,
-         alternative: AlternativeEdit? = nil) {
+         alternative: AlternativeEdit? = nil, onAlternative: ((EditorAlternative) -> Void)? = nil) {
+        self.onAlternative = onAlternative
         self.exercise = exercise
         self.listID = alternative == nil ? listID : nil
         self.item = alternative == nil ? item : nil
@@ -751,18 +802,18 @@ struct ItemEditorView: View {
                 HStack(spacing: 14) {
                     Image(systemName: "dumbbell.fill").foregroundStyle(Theme.accent).frame(width: 28)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(verbatim: exercise.name).appFont(.headline)
-                        Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appFont(.caption).foregroundStyle(.secondary)
+                        Text(verbatim: exercise.name).appType(.cardTitle)
+                        Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appType(.caption).foregroundStyle(.secondary)
                         // Esercizio alternativo: quello che sostituisce
                         if let alternative {
-                            Text("alternative.instead \(alternative.original.name)").appFont(.caption, weight: .semibold)
+                            Text("alternative.instead \(alternative.original.name)").appType(.caption, weight: .semibold)
                                 .foregroundStyle(Theme.accent).lineLimit(1).minimumScaleFactor(0.7)
                         }
                     }
                     Spacer()
                     if !exercise.steps.isEmpty {
                         NavigationLink { ExerciseDetailView(exercise: exercise) } label: { Text("ex.how").lineLimit(1) }
-                            .buttonStyle(.glass)
+                            .buttonStyle(.glass).appType(.button)
                     }
                 }
                 .glassCard(padding: 16)
@@ -790,28 +841,38 @@ struct ItemEditorView: View {
 
                 movementPicker
 
+                // Fai esercizio alternativo anche dalla matita (solo riga dell'elenco, non durante la scelta di un'alternativa)
+                if onAlternative != nil, alternative == nil, item != nil {
+                    Button { showAlternative = true } label: {
+                        Label("alternative.button", systemImage: "arrow.left.arrow.right")
+                            .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.glass).appType(.button)
+                    .tint(Theme.accent)
+                }
+
                 if let alternative {
                     // Esercizio alternativo: solo per oggi oppure al posto dell'esercizio dell'elenco (con conferma)
                     Button { alternative.onDone(current.clamped(), movement, false) } label: {
                         Label("alternative.useOnce", systemImage: "play.fill")
-                            .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                            .appType(.sectionTitle, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.glassProminent).appType(.button)
                     .tint(Theme.accent)
                     if alternative.canReplace {
                         Button { confirmPermanent = true } label: {
                             Label("alternative.makePermanent", systemImage: "checkmark")
                                 .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                         }
-                        .buttonStyle(.glass)
+                        .buttonStyle(.glass).appType(.button)
                         .tint(Theme.accent)
                     }
                 } else {
                     Button(action: save) {
                         Label(LocalizedStringKey(item == nil ? "workout.addItem" : "workout.saveItem"), systemImage: item == nil ? "plus" : "checkmark")
-                            .appFont(.title3, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
+                            .appType(.sectionTitle, weight: .bold).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 8)
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.glassProminent).appType(.button)
                     .tint(Theme.accent)
                 }
             }
@@ -821,6 +882,14 @@ struct ItemEditorView: View {
         .navigationTitle(Text(verbatim: exercise.name))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: prefill)
+        .navigationDestination(isPresented: $showAlternative) {
+            // Esercizio originale = valori attuali della modifica; si può sempre sostituire nell'elenco
+            let original = current.clamped()
+            AddExerciseView(alternativeFor: exercise, originalParameters: original, canReplace: true) { picked, p, axis, permanent in
+                onAlternative?(EditorAlternative(picked: picked, parameters: p, movement: axis, permanent: permanent,
+                                                 originalParameters: original))
+            }
+        }
         .alert("alternative.permanentTitle", isPresented: $confirmPermanent) {
             Button("alternative.permanentConfirm") { alternative?.onDone(current.clamped(), movement, true) }
             Button("info.cancel", role: .cancel) {}
@@ -835,19 +904,19 @@ struct ItemEditorView: View {
     /// sempre rispetto al pavimento.
     private var movementPicker: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("movement.title").appFont(.headline)
-            HStack(spacing: 10) {
+            Text("movement.title").appType(.cardTitle)
+            // Tre pillole affiancate (su/giù, sinistra/destra, avanti/indietro): icona sopra, testo sotto che si adatta
+            HStack(spacing: 8) {
                 ForEach(MovementAxis.allCases, id: \.self) { axis in
                     let on = movement == axis
                     Button { withAnimation(.snappy) { movement = axis } } label: {
-                        HStack(spacing: 10) {
-                            Image(systemName: axis == .upDown ? "arrow.up.and.down" : "arrow.left.and.right")
+                        VStack(spacing: 6) {
+                            Image(systemName: axis.symbol)
                                 .appFont(.title3, weight: .semibold)
-                            Text(LocalizedStringKey(axis.titleKey)).appFont(.subheadline, weight: .bold)
-                                .lineLimit(1).minimumScaleFactor(0.6)
-                            Spacer(minLength: 0)
+                            Text(LocalizedStringKey(axis.titleKey)).appType(.secondary, weight: .bold)
+                                .lineLimit(1).minimumScaleFactor(0.5)
                         }
-                        .padding(.horizontal, 14).padding(.vertical, 16)
+                        .padding(.horizontal, 8).padding(.vertical, 14)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(on ? Color.white : Color.secondary)
                         .background {
@@ -862,7 +931,7 @@ struct ItemEditorView: View {
                     .accessibilityAddTraits(on ? .isSelected : [])
                 }
             }
-            Text("movement.hint").appFont(.caption).foregroundStyle(.secondary)
+            Text("movement.hint").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -874,8 +943,8 @@ struct ItemEditorView: View {
     /// tutto; la pausa e' unica.
     private var variedSetsCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("sets.title").appFont(.headline)
-            Text("sets.hint").appFont(.caption).foregroundStyle(.secondary)
+            Text("sets.title").appType(.cardTitle)
+            Text("sets.hint").appType(.caption).foregroundStyle(.secondary)
             VStack(spacing: 12) {
                 ForEach(0..<groups.count, id: \.self) { i in
                     let title = rowTitle(i)
@@ -883,7 +952,7 @@ struct ItemEditorView: View {
                     let maxCount = max(1, countBinding(i).wrappedValue + WorkoutParameters.setsRange.upperBound - rows.count)
                     VStack(spacing: 10) {
                         HStack {
-                            Text(verbatim: title).appFont(.subheadline, weight: .bold).foregroundStyle(Theme.accent)
+                            Text(verbatim: title).appType(.secondary, weight: .bold).foregroundStyle(Theme.accent)
                             Spacer()
                             if groups.count > 1 {
                                 Button { withAnimation(.snappy) { _ = groups.remove(at: i) } } label: {
@@ -906,7 +975,7 @@ struct ItemEditorView: View {
                 Button { withAnimation(.snappy) { if let last = groups.last { groups.append(SetGroup(count: 1, reps: last.reps, weightKg: last.weightKg)) } } } label: {
                     Label("sets.add", systemImage: "plus").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
             Divider().overlay(Color.primary.opacity(0.15))
             CounterRow(title: "counter.rest", value: $restSeconds, range: WorkoutParameters.restRange, step: 15)
@@ -922,17 +991,25 @@ struct ItemEditorView: View {
                 if review.apply(pending, plans: plans) { apply(change.afterParameters) }
             }, onDiscard: { review.discard() })
         } else if let adaptive {
-            // Serie diverse: stessa variazione su ogni serie, mantenendo lo schema.
-            let proposed = adaptive.parameters(from: current)
-            AdviceCard(title: "advice.adaptiveTitle", reasons: adaptive.reasonKeys, parameters: proposed, before: current) { apply(proposed) }
+            // Esercizio mai fatto e senza peso: peso di partenza prudente dal Profilo (9 novembre 2026).
+            let noData = adaptive.reasonKeys == ["coach.nodata"]
+            let startWeight = noData && current.maxWeightKg == 0 ? StartingWeights.suggest(exercise, profile: healthProfile) : nil
+            // Serie diverse: stessa variazione su ogni serie, mantenendo lo schema (col peso di partenza: su ogni serie).
+            let proposed = startWeight.map { w in
+                WorkoutParameters.of(current.targets.map { SetTarget(reps: $0.reps, weightKg: w) }, restSeconds: current.restSeconds)
+            } ?? adaptive.parameters(from: current)
+            // "Applica" solo se c'è un risultato e cambia qualcosa; altrimenti la card è solo informativa.
+            AdviceCard(title: "advice.adaptiveTitle", reasons: startWeight != nil ? ["advice.startWeight"] : adaptive.reasonKeys,
+                       parameters: proposed, before: current,
+                       onApply: applyAction(proposed, if: (startWeight != nil || !noData) && proposed != current))
         } else if let fixed {
-            AdviceCard(title: "advice.title", reasons: [fixed.reasonKey], parameters: fixed.applied(to: current),
-                       details: fixed.advice.map { $0.textKey(bodyweight: current.maxWeightKg == 0) }) {
-                apply(fixed.applied(to: current))
-            }
+            let proposed = fixed.applied(to: current)
+            AdviceCard(title: "advice.title", reasons: [fixed.reasonKey], parameters: proposed,
+                       details: fixed.advice.map { $0.textKey(bodyweight: current.maxWeightKg == 0) },
+                       onApply: applyAction(proposed, if: proposed != current))
         } else if FeatureGate.isAvailable(.fixedCoaching, for: tier) {
             Label("advice.noHistory", systemImage: "sparkles")
-                .appFont(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                .appType(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
         } else {
             LockedNote(key: "advice.locked")
         }
@@ -945,6 +1022,17 @@ struct ItemEditorView: View {
                 if let old { apply(old.parameters) }
             }
         }
+    }
+
+    /// Profilo salvato (con il consenso), per il peso di partenza.
+    private var healthProfile: HealthProfile? {
+        profiles.first.map { HealthProfile(sex: $0.sex, age: $0.age, heightCm: $0.heightCm, weightKg: $0.weightKg,
+                                           goal: $0.goal, goalChosen: $0.goalChosen) }
+    }
+
+    /// Azione del pulsante "Applica" (nil = nessun pulsante).
+    private func applyAction(_ p: WorkoutParameters, if useful: Bool) -> (() -> Void)? {
+        useful ? { apply(p) } : nil
     }
 
     private func apply(_ p: WorkoutParameters) {
@@ -1076,7 +1164,7 @@ struct AddedNoticeBanner: View {
     var body: some View {
         if let name = notice.exerciseName {
             Label {
-                Text("workout.added \(name)").appFont(.subheadline, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
+                Text("workout.added \(name)").appType(.secondary, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
             } icon: {
                 Image(systemName: "checkmark.circle.fill")
             }

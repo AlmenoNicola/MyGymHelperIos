@@ -44,7 +44,7 @@ struct ExercisesView: View {
                         Label("ex.plans", systemImage: "doc.text.magnifyingglass").lineLimit(1).frame(maxWidth: .infinity)
                     }
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
                 .tutorialTarget(TutorialTarget.exercisesLinks)
 
                 VStack(spacing: 14) {
@@ -66,7 +66,7 @@ struct ExercisesView: View {
                     BodyweightChip(on: $bodyweight)
                     EquipmentFilterChip(tier: tier)
                     if !selected.isEmpty {
-                        Button("ex.clear") { selected.removeAll() }.appFont(.footnote)
+                        Button("ex.clear") { selected.removeAll() }.appType(.caption)
                     }
                 }
                 .glassCard()
@@ -75,7 +75,7 @@ struct ExercisesView: View {
 
                 if !FeatureGate.isAvailable(.catalogFull, for: tier) {
                     Label("ex.freeLimit", systemImage: "lock.fill")
-                        .appFont(.footnote).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                        .appType(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 if filtered.isEmpty {
@@ -113,7 +113,7 @@ struct ExerciseRow: View {
         HStack(spacing: 12) {
             MuscleThumbnail(exercise: exercise)         // muscoli coinvolti in miniatura
             // Solo il nome: i muscoli coinvolti si vedono nella miniatura.
-            Text(verbatim: exercise.name).appFont(.headline)
+            Text(verbatim: exercise.name).appType(.cardTitle)
             Spacer()
             Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
         }
@@ -137,10 +137,10 @@ struct ExerciseDetailView: View {
                 FlowLayout(spacing: 8) {
                     chip(LocalizedStringKey(exercise.kind.titleKey))
                     chip(exercise.mechanic == .compound ? "mech.compound" : "mech.isolation")
-                    if !exercise.equipment.isEmpty { Text(verbatim: equipmentTitle(exercise.equipment)).appFont(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6).background(Color.primary.opacity(0.1), in: Capsule()) }
-                    if !exercise.level.isEmpty { Text(LocalizedStringKey("level.\(exercise.level)")).appFont(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6).background(Color.primary.opacity(0.1), in: Capsule()) }
+                    if !exercise.equipment.isEmpty { Text(verbatim: equipmentTitle(exercise.equipment)).appType(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6).background(Color.primary.opacity(0.1), in: Capsule()) }
+                    if !exercise.level.isEmpty { Text(LocalizedStringKey("level.\(exercise.level)")).appType(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6).background(Color.primary.opacity(0.1), in: Capsule()) }
                     ForEach(exercise.secondary, id: \.self) { m in
-                        Text(verbatim: m.title).appFont(.caption).padding(.horizontal, 10).padding(.vertical, 5)
+                        Text(verbatim: m.title).appType(.caption).padding(.horizontal, 10).padding(.vertical, 5)
                             .background(Color.primary.opacity(0.06), in: Capsule())
                     }
                 }
@@ -151,11 +151,11 @@ struct ExerciseDetailView: View {
 
                 if !exercise.steps.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("ex.how").appFont(.headline)
+                        Text("ex.how").appType(.cardTitle)
                         ForEach(Array(exercise.steps.enumerated()), id: \.offset) { i, step in
                             HStack(alignment: .firstTextBaseline, spacing: 12) {
-                                Text("\(i + 1)").appFont(.headline).foregroundStyle(Theme.accent).frame(width: 22)
-                                Text(verbatim: step).appFont(.callout)
+                                Text("\(i + 1)").appType(.cardTitle).foregroundStyle(Theme.accent).frame(width: 22)
+                                Text(verbatim: step).appType(.body)
                             }
                         }
                     }
@@ -164,17 +164,17 @@ struct ExerciseDetailView: View {
                 }
 
                 NavigationLink { ItemEditorView(exercise: exercise, switchToWorkout: true) } label: {
-                    Label("ex.train", systemImage: "plus.circle.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Label("ex.train", systemImage: "plus.circle.fill").appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
 
                 if canSaveLists {
                     Button { showLists = true } label: {
                         Label("ex.addToList", systemImage: "text.badge.plus").lineLimit(1).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
                 } else {
-                    Label("ex.listsLocked", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary)
+                    Label("ex.listsLocked", systemImage: "lock.fill").appType(.caption).foregroundStyle(.secondary)
                 }
             }
             .padding(20)
@@ -185,7 +185,7 @@ struct ExerciseDetailView: View {
     }
 
     private func chip(_ key: LocalizedStringKey) -> some View {
-        Text(key).appFont(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6)
+        Text(key).appType(.caption, weight: .bold).padding(.horizontal, 12).padding(.vertical, 6)
             .background(Theme.accent.opacity(0.35), in: Capsule())
     }
 }
@@ -202,9 +202,9 @@ struct AddToListSheet: View {
             AppBackground()
             ScrollView {
                 VStack(spacing: 14) {
-                    Text("ex.addToList").appFont(.title3, weight: .bold)
+                    Text("ex.addToList").appType(.sectionTitle, weight: .bold, uppercase: true)
                     if consentAt == 0 {
-                        Label("lists.needConsent", systemImage: "lock.fill").appFont(.callout).glassCard()
+                        Label("lists.needConsent", systemImage: "lock.fill").appType(.body).glassCard()
                     } else {
                         ForEach(store.lists) { list in
                             Button {
@@ -212,7 +212,7 @@ struct AddToListSheet: View {
                                 dismiss()
                             } label: {
                                 HStack {
-                                    Text(verbatim: list.name).appFont(.headline)
+                                    Text(verbatim: list.name).appType(.cardTitle)
                                     Spacer()
                                     if list.exerciseIDs.contains(exercise.id) { Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.accent) }
                                 }
@@ -228,11 +228,11 @@ struct AddToListSheet: View {
                                 store.createList(name: name, items: [WorkoutItem(exerciseID: exercise.id)])
                                 dismiss()
                             }
-                            .buttonStyle(.glassProminent).tint(Theme.accent)
+                            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                         }
                         .glassCard(padding: 16)
                     }
-                    Button("info.cancel") { dismiss() }.buttonStyle(.glass)
+                    Button("info.cancel") { dismiss() }.buttonStyle(.glass).appType(.button)
                 }
                 .padding(24)
             }
@@ -278,12 +278,12 @@ struct ExerciseListsView: View {
                 } : []
 
                 if !presets.isEmpty {
-                    Text("lists.presets").appFont(.headline).frame(maxWidth: .infinity, alignment: .leading)
+                    Text("lists.presets").appType(.cardTitle).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 ForEach(presets, id: \.0) { region, items in
                     NavigationLink { ExerciseCollectionView(title: region.title, exercises: items) } label: {
                         HStack {
-                            Label(region.title, systemImage: region.symbol).appFont(.headline)
+                            Label(region.title, systemImage: region.symbol).appType(.cardTitle)
                             Spacer()
                             Text("\(items.count)").foregroundStyle(.secondary)
                         }
@@ -294,19 +294,19 @@ struct ExerciseListsView: View {
 
                 // Durante la ricerca la sezione si vede solo con risultati; gli avvisi solo quando non si cerca
                 if !searching || !mine.isEmpty {
-                    Text("lists.mine").appFont(.headline).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
+                    Text("lists.mine").appType(.cardTitle).frame(maxWidth: .infinity, alignment: .leading).padding(.top, 8)
                 }
                 if !canSave {
-                    if !searching { Label("ex.listsLocked", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary) }
+                    if !searching { Label("ex.listsLocked", systemImage: "lock.fill").appType(.caption).foregroundStyle(.secondary) }
                 } else if consentAt == 0 {
-                    if !searching { Label("lists.needConsent", systemImage: "lock.fill").appFont(.footnote).foregroundStyle(.secondary) }
+                    if !searching { Label("lists.needConsent", systemImage: "lock.fill").appType(.caption).foregroundStyle(.secondary) }
                 } else {
                     ForEach(mine, id: \.0.id) { list, found in
                         NavigationLink {
                             ExerciseCollectionView(title: list.name, exercises: found)
                         } label: {
                             HStack {
-                                Text(verbatim: list.name).appFont(.headline)
+                                Text(verbatim: list.name).appType(.cardTitle)
                                 Spacer()
                                 Text("\(found.count)").foregroundStyle(.secondary)
                             }
@@ -317,7 +317,7 @@ struct ExerciseListsView: View {
                     }
                     if !searching {
                         Button { showNew = true } label: { Label("lists.new", systemImage: "plus").lineLimit(1).frame(maxWidth: .infinity) }
-                            .buttonStyle(.glass)
+                            .buttonStyle(.glass).appType(.button)
                     }
                 }
 
@@ -383,7 +383,7 @@ struct ExerciseMusclesCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("ex.musclesWorked").appFont(.headline)
+            Text("ex.musclesWorked").appType(.cardTitle)
             HStack(spacing: 24) {
                 ForEach(sides, id: \.self) { front in
                     VStack(spacing: 6) {
@@ -391,7 +391,7 @@ struct ExerciseMusclesCard: View {
                             primary.contains(m) ? .primary : (secondary.contains(m) ? .secondary : .idle)
                         })
                         .frame(height: 250)
-                        Text(front ? BodySide.front.titleKey : BodySide.back.titleKey).appFont(.caption).foregroundStyle(.secondary)
+                        Text(front ? BodySide.front.titleKey : BodySide.back.titleKey).appType(.caption).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -415,8 +415,8 @@ struct ExerciseMusclesCard: View {
                 Text(title)
                 Text(verbatim: ": ")
             }
-            .appFont(.footnote, weight: .bold)
-            Text(verbatim: muscles.map(\.title).joined(separator: ", ")).appFont(.footnote).foregroundStyle(.secondary)
+            .appType(.caption, weight: .bold)
+            Text(verbatim: muscles.map(\.title).joined(separator: ", ")).appType(.caption).foregroundStyle(.secondary)
         }
     }
 }
@@ -467,7 +467,7 @@ struct KindChips: View {
     private func chip(_ title: LocalizedStringKey, on: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
-                .appFont(.subheadline, weight: .semibold)
+                .appType(.secondary, weight: .semibold)
                 .padding(.horizontal, 14).padding(.vertical, 9)
                 .foregroundStyle(on ? Color.white : Color.primary)
                 .background(on ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.primary.opacity(0.10)), in: Capsule())
@@ -484,7 +484,7 @@ struct BodyweightChip: View {
     var body: some View {
         Button { on.toggle() } label: {
             Text("ex.bodyweight")
-                .appFont(.subheadline, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
+                .appType(.secondary, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
                 .padding(.horizontal, 14).padding(.vertical, 9)
                 .foregroundStyle(on ? Color.white : Color.primary)
                 .background(on ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.primary.opacity(0.10)), in: Capsule())
@@ -520,20 +520,20 @@ struct HomeEquipmentSection: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 8) {
                 Image(systemName: "house.fill").appFont(.footnote).foregroundStyle(Theme.accent)
-                Text("equipment.home.title").appFont(.subheadline, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
+                Text("equipment.home.title").appType(.secondary, weight: .bold).lineLimit(1).minimumScaleFactor(0.6)
             }
             if !FeatureGate.isAvailable(.homeEquipment, for: tier) {
                 LockedNote(key: "equipment.home.locked")
             } else {
                 let owned = HomeEquipment.choices.filter { settings.ownedEquipment.contains($0) }
                 if owned.isEmpty {
-                    Text("equipment.home.none").appFont(.footnote).foregroundStyle(.secondary)
+                    Text("equipment.home.none").appType(.caption).foregroundStyle(.secondary)
                 } else {
                     // Filtro acceso: attrezzi segnati in evidenza (accento pieno, testo onAccent); spento: accento tenue
                     let lit = settings.equipmentFilter
                     FlowLayout(spacing: 8) {
                         ForEach(owned, id: \.self) { name in
-                            Text(verbatim: equipmentTitle(name)).appFont(.caption, weight: .bold)
+                            Text(verbatim: equipmentTitle(name)).appType(.caption, weight: .bold)
                                 .foregroundStyle(lit ? Theme.onAccent : Color.primary)
                                 .padding(.horizontal, 12).padding(.vertical, 6)
                                 .background(lit ? Theme.accent : Theme.accent.opacity(0.35), in: Capsule())
@@ -543,7 +543,7 @@ struct HomeEquipmentSection: View {
                 Button { editing = true } label: {
                     Label("equipment.home.edit", systemImage: "pencil").lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -596,7 +596,7 @@ struct EquipmentFilterChip: View {
             let on = settings.equipmentFilter
             Button { settings.setEquipmentFilter(!on) } label: {
                 Label("equipment.home.filter", systemImage: "house")
-                    .appFont(.subheadline, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
+                    .appType(.secondary, weight: .semibold).lineLimit(1).minimumScaleFactor(0.7)
                     .padding(.horizontal, 14).padding(.vertical, 9)
                     .foregroundStyle(on ? Color.white : Color.primary)
                     .background(on ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.primary.opacity(0.10)), in: Capsule())
@@ -618,7 +618,7 @@ struct ShowMoreButton: View {
             Button(action: action) {
                 Label("ex.showMore \(remaining)", systemImage: "chevron.down").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
+            .buttonStyle(.glass).appType(.button)
         }
     }
 }
@@ -635,7 +635,7 @@ struct ExercisePhotosCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("ex.photos").appFont(.headline)
+            Text("ex.photos").appType(.cardTitle)
             HStack(spacing: 10) {
                 ForEach(Array(exercise.images.prefix(2).enumerated()), id: \.offset) { i, link in
                     VStack(spacing: 6) {
@@ -651,12 +651,12 @@ struct ExercisePhotosCard: View {
                                 }
                             }
                             .clipShape(RoundedRectangle(cornerRadius: 16))
-                        Text(LocalizedStringKey(i == 0 ? "ex.photoStart" : "ex.photoEnd")).appFont(.caption).foregroundStyle(.secondary)
+                        Text(LocalizedStringKey(i == 0 ? "ex.photoStart" : "ex.photoEnd")).appType(.caption).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                 }
             }
-            Text("ex.photosCredit").font(.system(size: 8.8)).foregroundStyle(.secondary) // 20% più piccola di .caption2 (11 pt)
+            Text("ex.photosCredit").appType(.caption).foregroundStyle(.secondary)   // nessun testo sotto la caption (prima 8,8 pt)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()

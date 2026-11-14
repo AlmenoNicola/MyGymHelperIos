@@ -19,9 +19,9 @@ struct NutritionView: View {
                     .tutorialTarget(TutorialTarget.tabNutrition)
                 if consentAt == 0 {
                     VStack(spacing: 14) {
-                        Label("consent.locked", systemImage: "lock.fill").appFont(.callout)
+                        Label("consent.locked", systemImage: "lock.fill").appType(.body)
                         Button("consent.open") { showConsent = true }
-                            .buttonStyle(.glassProminent).tint(Theme.accent)
+                            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     }
                     .frame(maxWidth: .infinity)
                     .glassCard()
@@ -32,7 +32,7 @@ struct NutritionView: View {
                 }
 
                 Text(LocalizedStringKey(Disclaimer.bodyKey))
-                    .appFont(.footnote).foregroundStyle(.secondary).padding(.horizontal, 8)
+                    .appType(.caption).foregroundStyle(.secondary).padding(.horizontal, 8)
             }
             .padding(20)
         }
@@ -90,7 +90,7 @@ private struct NutritionContent: View {
                 NavigationLink { FoodSearchView() } label: {
                     Label("food.search.open", systemImage: "magnifyingglass").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             } else {
                 LockedNote(key: "nutrition.targetsLocked").glassCard(padding: 16)
             }
@@ -114,25 +114,25 @@ private struct NutritionContent: View {
     private var mealPlan: some View {
         let day = DietPlanner.plan(targets: targets, diets: diets, trainingDay: trainingDay)
         return VStack(alignment: .leading, spacing: 14) {
-            Text("nutrition.meals").appFont(.headline)
+            Text("nutrition.meals").appType(.cardTitle)
             Toggle("nutrition.trainingDay", isOn: $trainingDay).tint(Theme.accent)
             Text("nutrition.dayTotal \(day.calories) \(day.proteinG) \(day.carbsG) \(day.fatG)")
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
             ForEach(day.meals, id: \.nameKey) { meal in
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
-                        Text(LocalizedStringKey(meal.nameKey)).appFont(.subheadline, weight: .bold)
+                        Text(LocalizedStringKey(meal.nameKey)).appType(.secondary, weight: .bold)
                         Spacer()
-                        Text(verbatim: "\(meal.calories) kcal").appFont(.subheadline, monospacedDigit: true)
+                        Text(verbatim: "\(meal.calories) kcal").appType(.secondary, monospacedDigit: true)
                     }
                     Text("nutrition.macros \(meal.proteinG) \(meal.carbsG) \(meal.fatG)")
-                        .appFont(.caption).foregroundStyle(.secondary)
+                        .appType(.caption).foregroundStyle(.secondary)
                     Text(verbatim: meal.suggestions.map { Bundle.main.localizedString(forKey: $0, value: $0, table: nil) }.joined(separator: " · "))
-                        .appFont(.caption).foregroundStyle(Theme.accentSoft)
+                        .appType(.caption).foregroundStyle(Theme.accentSoft)
                 }
                 .padding(.vertical, 4)
             }
-            Text("nutrition.noRecipes").appFont(.caption2).foregroundStyle(.secondary)
+            Text("nutrition.noRecipes").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -144,29 +144,29 @@ private struct NutritionContent: View {
            let plan = try? JSONDecoder().decode(ParsedNutritionPlan.self, from: record.data) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text("nutritionist.title").appFont(.headline)
+                    Text("nutritionist.title").appType(.cardTitle)
                     Spacer()
                     Button("plans.detail.edit") { editingPlan = NutritionDraft(plan: plan, sourceText: "") }
-                        .buttonStyle(.glass)
+                        .buttonStyle(.glass).appType(.button)
                 }
                 if let kcal = plan.calories {
-                    Text(verbatim: "\(kcal) kcal").appFont(.title3, weight: .bold)
+                    Text(verbatim: "\(kcal) kcal").appType(.sectionTitle, weight: .bold)
                 }
                 Text(verbatim: [plan.proteinG.map { "P \($0) g" }, plan.carbsG.map { "C \($0) g" }, plan.fatG.map { "G \($0) g" }]
                         .compactMap { $0 }.joined(separator: " · "))
-                    .appFont(.subheadline).foregroundStyle(.secondary)
+                    .appType(.secondary).foregroundStyle(.secondary)
                 ForEach(plan.meals) { meal in
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(verbatim: meal.name).appFont(.subheadline, weight: .bold)
+                        Text(verbatim: meal.name).appType(.secondary, weight: .bold)
                         ForEach(Array(meal.items.enumerated()), id: \.offset) { _, item in
-                            Text(verbatim: "• \(item)").appFont(.caption)
+                            Text(verbatim: "• \(item)").appType(.caption)
                         }
                     }
                 }
                 Button("history.delete", role: .destructive) {
                     context.delete(record); try? context.save()
                 }
-                .appFont(.footnote)
+                .appType(.caption)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .glassCard()
@@ -202,7 +202,7 @@ private struct ProfileCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("profile.title").appFont(.headline)
+            Text("profile.title").appType(.cardTitle)
             Picker("profile.sex", selection: $profile.sex) {
                 Text("profile.male").tag("male")
                 Text("profile.female").tag("female")
@@ -223,8 +223,8 @@ private struct ProfileCard: View {
                 } label: {
                     Label("health.import", systemImage: "heart.fill").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
-                if let healthMessage { Text(healthMessage).appFont(.caption).foregroundStyle(.secondary) }
+                .buttonStyle(.glass).appType(.button)
+                if let healthMessage { Text(healthMessage).appType(.caption).foregroundStyle(.secondary) }
             }
 
             Picker("profile.activity", selection: $profile.activity) {
@@ -236,7 +236,7 @@ private struct ProfileCard: View {
             }
             // L'obiettivo (dimagrire / mantenere / aumentare) si sceglie nella scheda del fabbisogno, con le calorie di ciascuno.
 
-            Text("profile.diets").appFont(.subheadline, weight: .bold)
+            Text("profile.diets").appType(.secondary, weight: .bold)
             FlowChips(items: DietType.allCases, isOn: { diets.contains($0) }, title: { diet in LocalizedStringKey("diet." + diet.rawValue as String) }) { toggle($0) }
         }
         .tint(Theme.accent)
@@ -273,7 +273,7 @@ struct FlowChips<Item: Hashable>: View {
             ForEach(items, id: \.self) { item in
                 let on = isOn(item)
                 Button { action(item) } label: {
-                    Text(title(item)).appFont(.subheadline, weight: .semibold)
+                    Text(title(item)).appType(.secondary, weight: .semibold)
                         .padding(.horizontal, 14).padding(.vertical, 8)
                         .foregroundStyle(on ? Color.white : Color.primary)
                         .background(on ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.primary.opacity(0.10)), in: Capsule())
@@ -334,16 +334,16 @@ private struct BMICard: View {
     var body: some View {
         if let r = result {
             VStack(spacing: 12) {
-                Text(verbatim: "BMI").appFont(.subheadline, weight: .semibold).foregroundStyle(.secondary)
+                Text(verbatim: "BMI").appType(.secondary, weight: .semibold).foregroundStyle(.secondary)
                 Text(r.value, format: .number.precision(.fractionLength(1)))
-                    .font(.system(size: 64, weight: .heavy, design: .rounded))
+                    .appType(.display)
                     .foregroundStyle(Theme.accentGradient)
                     .contentTransition(.numericText())
-                Text(categoryKey(r.category)).appFont(.headline)
+                Text(categoryKey(r.category)).appType(.cardTitle)
                 Gauge(value: min(max(r.value, 15), 40), in: 15...40) { EmptyView() }
                     .gaugeStyle(.linearCapacity)
                     .tint(Theme.accentGradient)
-                Text("bmi.adultsOnly").appFont(.caption2).foregroundStyle(.secondary)
+                Text("bmi.adultsOnly").appType(.caption).foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity)
             .glassCard()
@@ -382,7 +382,7 @@ private struct TargetsCard: View {
     var body: some View {
         let t = all[selected]
         VStack(alignment: .leading, spacing: 12) {
-            Text("nutrition.targets").appFont(.headline)
+            Text("nutrition.targets").appType(.cardTitle)
             HStack(spacing: 8) {
                 ForEach([Goal.lose, .maintain, .gain], id: \.self) { g in
                     option(g)
@@ -390,10 +390,10 @@ private struct TargetsCard: View {
             }
             if let bmi, let recommended {
                 Text("nutrition.recommendedFor \(String(localized: String.LocalizationValue(categoryKey(bmi.category))))")
-                    .appFont(.caption).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
                 if profile.goalChosen && selected != recommended {
                     Button("nutrition.useRecommended") { choose(recommended, chosen: false) }
-                        .appFont(.subheadline).tint(Theme.accent)
+                        .appType(.secondary).tint(Theme.accent)
                 }
             }
             if let t {
@@ -403,7 +403,7 @@ private struct TargetsCard: View {
                     macro("nutrition.fat", t.fatGrams)
                 }
             }
-            Text("nutrition.indicative").appFont(.caption2).foregroundStyle(.secondary)
+            Text("nutrition.indicative").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -415,13 +415,13 @@ private struct TargetsCard: View {
         let isSelected = g == selected
         return Button { choose(g, chosen: true) } label: {
             VStack(spacing: 2) {
-                Text(LocalizedStringKey("goal." + g.rawValue)).appFont(.subheadline, weight: .semibold)
+                Text(LocalizedStringKey("goal." + g.rawValue)).appType(.secondary, weight: .semibold)
                 Text(verbatim: "\(all[g]?.calories ?? 0)")
-                    .font(.system(size: 26 * AppTextScale, weight: .heavy, design: .rounded).monospacedDigit())
+                    .appType(.headline)
                     .foregroundStyle(isSelected ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(.primary))
-                Text("nutrition.perDay").appFont(.caption2).foregroundStyle(.secondary)
+                Text("nutrition.perDay").appType(.caption).foregroundStyle(.secondary)
                 Text(g == recommended ? LocalizedStringKey("nutrition.recommended") : LocalizedStringKey(" "))
-                    .appFont(.caption2, weight: .bold).foregroundStyle(Theme.accentSoft)
+                    .appType(.caption, weight: .bold).foregroundStyle(Theme.accentSoft)
             }
             .lineLimit(1)
             .minimumScaleFactor(0.6)
@@ -436,8 +436,8 @@ private struct TargetsCard: View {
 
     private func macro(_ title: LocalizedStringKey, _ grams: Int) -> some View {
         VStack(spacing: 4) {
-            Text(verbatim: "\(grams) g").appFont(.title3, weight: .bold, monospacedDigit: true)
-            Text(title).appFont(.caption).foregroundStyle(.secondary)
+            Text(verbatim: "\(grams) g").appType(.sectionTitle, weight: .bold, monospacedDigit: true)
+            Text(title).appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 10)
@@ -458,7 +458,7 @@ struct NutritionPlanReviewView: View {
             Form {
                 Section {
                     Label("plans.review.check", systemImage: "exclamationmark.triangle.fill")
-                        .appFont(.footnote).foregroundStyle(.orange)
+                        .appType(.caption).foregroundStyle(.orange)
                     field("nutrition.calories", value: $draft.plan.calories)
                     field("nutrition.protein", value: $draft.plan.proteinG)
                     field("nutrition.carbs", value: $draft.plan.carbsG)
@@ -466,7 +466,7 @@ struct NutritionPlanReviewView: View {
                 }
                 ForEach($draft.plan.meals) { $meal in
                     Section {
-                        TextField("nutritionist.mealName", text: $meal.name).appFont(.headline)
+                        TextField("nutritionist.mealName", text: $meal.name).appType(.cardTitle)
                         TextField("nutritionist.items", text: Binding(
                             get: { meal.items.joined(separator: "\n") },
                             set: { meal.items = $0.components(separatedBy: .newlines) }
@@ -486,7 +486,7 @@ struct NutritionPlanReviewView: View {
                 if !draft.sourceText.isEmpty {
                     Section {
                         DisclosureGroup("plans.review.source") {
-                            Text(verbatim: draft.sourceText).appFont(.caption, monospaced: true).textSelection(.enabled)
+                            Text(verbatim: draft.sourceText).appFont(.footnote, monospaced: true).textSelection(.enabled)
                         }
                     }
                 }

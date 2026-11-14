@@ -23,7 +23,7 @@ struct MyGymHelperApp: App {
             ContentView()
                 // Testi senza un carattere esplicito (pulsanti, interruttori, campi, testi semplici): body -20%,
                 // anche nei fogli e nel tutorial (AppTextScale in Theme.swift)
-                .appFont(.body)
+                .appType(.body)
                 .environment(subscriptions)
                 .environment(catalog)
                 .environment(account)
@@ -45,8 +45,13 @@ struct MyGymHelperApp: App {
                     if phase == .active { Task { await subscriptions.refresh() } }
                 }
                 .modelContainer(PersistenceController.container)
-                .fullScreenCover(isPresented: .constant(!disclaimerAccepted || !consentDecided)) {
+                // Copertina a tutto schermo finché mancano disclaimer, scelta sul consenso o accesso (obbligatorio dal
+                // 9 novembre 2026). Il contenuto della copertina non eredita l'ambiente qui sopra: l'account si passa a parte.
+                .fullScreenCover(isPresented: .constant(!disclaimerAccepted || !consentDecided
+                                                        || (account.loginRequired && (!account.sessionKnown || !account.isSignedIn)))) {
                     OnboardingFlow()
+                        .environment(account)
+                        .appType(.body)
                 }
         }
     }

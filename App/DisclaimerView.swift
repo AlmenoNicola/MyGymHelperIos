@@ -17,13 +17,13 @@ struct DisclaimerView: View {
                 ScrollView {
                     LegalDocumentView(name: "disclaimer").glassCard()
                 }
-                Toggle(isOn: $understood) { Text("disclaimer.check").appFont(.subheadline) }
+                Toggle(isOn: $understood) { Text("disclaimer.check").appType(.secondary) }
                     .tint(Theme.accent)
                     .glassCard(padding: 16)
                 Button(action: onAccept) {
-                    Text("disclaimer.accept").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Text("disclaimer.accept").appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
-                .buttonStyle(.glassProminent)
+                .buttonStyle(.glassProminent).appType(.button)
                 .tint(Theme.accent)
                 .disabled(!understood)
             }

@@ -28,8 +28,8 @@ struct InfoView: View {
                 // Solo nella versione di sviluppo: spiega perche' l'account non compare (Supabase non collegato).
                 if !account.isConfigured {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("account.title").appFont(.headline)
-                        Text("account.notConfigured").appFont(.caption).foregroundStyle(.secondary)
+                        Text("account.title").appType(.cardTitle)
+                        Text("account.notConfigured").appType(.caption).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .glassCard()
@@ -44,12 +44,12 @@ struct InfoView: View {
                                 Image(systemName: "person.crop.circle.fill").appFont(.title2).foregroundStyle(Theme.accent)
                             }
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("account.title").appFont(.headline)
+                                Text("account.title").appType(.cardTitle)
                                 if let email = account.email {
-                                    Text(verbatim: email).appFont(.caption).foregroundStyle(.secondary)
+                                    Text(verbatim: email).appType(.caption).foregroundStyle(.secondary)
                                 } else {
                                     Text(account.isSignedIn ? "account.signedIn" : "account.optional")
-                                        .appFont(.caption).foregroundStyle(.secondary)
+                                        .appType(.caption).foregroundStyle(.secondary)
                                 }
                             }
                             Spacer()
@@ -67,7 +67,7 @@ struct InfoView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 14) {
                         Image(systemName: "circle.lefthalf.filled").appFont(.title2).foregroundStyle(Theme.accent)
-                        Text("appearance.title").appFont(.headline).lineLimit(1)
+                        Text("appearance.title").appType(.cardTitle).lineLimit(1)
                     }
                     Picker("appearance.title", selection: Binding(get: { ThemeStore.shared.appearance },
                                                                  set: { ThemeStore.shared.appearance = $0 })) {
@@ -76,7 +76,7 @@ struct InfoView: View {
                         }
                     }
                     .pickerStyle(.segmented)
-                    Text("appearance.note").appFont(.caption).foregroundStyle(.secondary)
+                    Text("appearance.note").appType(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard(padding: 16)
@@ -89,8 +89,8 @@ struct InfoView: View {
                     HStack(spacing: 14) {
                         Image(systemName: "graduationcap.fill").appFont(.title2).foregroundStyle(Theme.accent)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("info.tutorial").appFont(.headline).lineLimit(1)
-                            Text("info.tutorialNote").appFont(.caption).foregroundStyle(.secondary)
+                            Text("info.tutorial").appType(.cardTitle).lineLimit(1)
+                            Text("info.tutorialNote").appType(.caption).foregroundStyle(.secondary)
                         }
                         Spacer()
                         Image(systemName: "play.circle.fill").appFont(.title3).foregroundStyle(Theme.accentSoft)
@@ -111,18 +111,18 @@ struct InfoView: View {
                 .glassCard(padding: 16)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("info.consentStatus").appFont(.headline)
+                    Text("info.consentStatus").appType(.cardTitle)
                     if granted {
                         Text("info.granted \(Date(timeIntervalSince1970: consentAt).formatted(date: .abbreviated, time: .omitted))")
-                            .appFont(.subheadline).foregroundStyle(.secondary)
+                            .appType(.secondary).foregroundStyle(.secondary)
                         Button("info.revoke", role: .destructive) {
                             ConsentStore.revoke(); consentAt = 0; healthEnabled = false
                         }
-                        .buttonStyle(.glass)
+                        .buttonStyle(.glass).appType(.button)
                     } else {
-                        Text("info.notGranted").appFont(.subheadline).foregroundStyle(.secondary)
+                        Text("info.notGranted").appType(.secondary).foregroundStyle(.secondary)
                         Button("info.grant") { showConsent = true }
-                            .buttonStyle(.glassProminent).tint(Theme.accent)
+                            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -145,7 +145,7 @@ struct InfoView: View {
                 // pubblicazione): piano simulato per provare il Pro senza acquisti e cronologia finta.
                 if TestTools.enabled {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("debug.title").appFont(.headline).foregroundStyle(.orange)
+                        Text("debug.title").appType(.cardTitle).foregroundStyle(.orange)
                         Picker("debug.title", selection: Binding(get: { AppSettings.shared.debugTier },
                                                                 set: { subscriptions.setDebugTier($0) })) {
                             Text("debug.real").tag(-1)
@@ -153,7 +153,7 @@ struct InfoView: View {
                             Text(verbatim: "Pro").tag(2)
                         }
                         .pickerStyle(.segmented)
-                        Text("debug.note \(String(localized: subscriptions.tier.titleKey))").appFont(.caption).foregroundStyle(.secondary)
+                        Text("debug.note \(String(localized: subscriptions.tier.titleKey))").appType(.caption).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .glassCard()
@@ -163,22 +163,22 @@ struct InfoView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("info.sources").appFont(.headline)
-                    Text("info.sourcesExercises").appFont(.footnote).foregroundStyle(.secondary)
-                    Text("food.attribution").appFont(.footnote).foregroundStyle(.secondary)
-                    Text("info.sourcesLocal").appFont(.footnote).foregroundStyle(.secondary)
+                    Text("info.sources").appType(.cardTitle)
+                    Text("info.sourcesExercises").appType(.caption).foregroundStyle(.secondary)
+                    Text("food.attribution").appType(.caption).foregroundStyle(.secondary)
+                    Text("info.sourcesLocal").appType(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard()
 
                 Button("info.delete", role: .destructive) { confirmDelete = true }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
 
                 // Ultima voce: suggerire funzioni nuove o cosa manca. Si apre la mail verso AppContact.email.
                 suggestRow
 
                 Text(verbatim: "MyGymHelper \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")")
-                    .appFont(.caption2).foregroundStyle(.tertiary)
+                    .appType(.caption).foregroundStyle(.tertiary)
             }
             .padding(20)
         }
@@ -218,14 +218,14 @@ struct InfoView: View {
                 HStack(spacing: 14) {
                     Image(systemName: "lightbulb.fill").appFont(.title2).foregroundStyle(Theme.accent)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("info.suggest").appFont(.headline).lineLimit(1)
-                        Text("info.suggestNote").appFont(.caption).foregroundStyle(.secondary)
+                        Text("info.suggest").appType(.cardTitle).lineLimit(1)
+                        Text("info.suggestNote").appType(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
                 }
                 if suggestNoMail {
-                    Text("suggest.noMail \(Suggestion.email)").appFont(.footnote).foregroundStyle(.orange)
+                    Text("suggest.noMail \(Suggestion.email)").appType(.caption).foregroundStyle(.orange)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -241,9 +241,9 @@ struct InfoView: View {
             HStack(spacing: 14) {
                 Image(systemName: "star.fill").appFont(.title2).foregroundStyle(Theme.accent)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("info.plans").appFont(.headline).lineLimit(1)
+                    Text("info.plans").appType(.cardTitle).lineLimit(1)
                     Text("info.plansNote \(String(localized: subscriptions.tier.titleKey))")
-                        .appFont(.caption).foregroundStyle(.secondary)
+                        .appType(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
@@ -272,7 +272,7 @@ struct InfoView: View {
             }
             .tint(Theme.accent)
             .disabled(!granted || !HealthKitService.shared.isAvailable)
-            Text(granted ? "health.note" : "health.needConsent").appFont(.caption).foregroundStyle(.secondary)
+            Text(granted ? "health.note" : "health.needConsent").appType(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()
@@ -281,7 +281,7 @@ struct InfoView: View {
     private func row(_ title: LocalizedStringKey, _ symbol: String) -> some View {
         HStack(spacing: 14) {
             Image(systemName: symbol).foregroundStyle(Theme.accent).frame(width: 28)
-            Text(title).appFont(.headline)
+            Text(title).appType(.cardTitle)
             Spacer()
             Image(systemName: "chevron.right").appFont(.footnote).foregroundStyle(.secondary)
         }

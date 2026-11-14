@@ -76,19 +76,19 @@ struct FakeHistoryCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("debug.fakeHistory.title").appFont(.headline).foregroundStyle(.orange)
-            Text("debug.fakeHistory.note").appFont(.caption).foregroundStyle(.secondary)
+            Text("debug.fakeHistory.title").appType(.cardTitle).foregroundStyle(.orange)
+            Text("debug.fakeHistory.note").appType(.caption).foregroundStyle(.secondary)
             if subscriptions.tier != .full {
                 Button { subscriptions.setDebugTier(SubscriptionTier.full.rawValue) } label: {
                     Text("debug.fakeHistory.full").frame(maxWidth: .infinity)
-                }.buttonStyle(.glass)
+                }.buttonStyle(.glass).appType(.button)
             }
-            Button { add(.easy) } label: { Text("debug.fakeHistory.easy").frame(maxWidth: .infinity) }.buttonStyle(.glass)
-            Button { add(.hard) } label: { Text("debug.fakeHistory.hard").frame(maxWidth: .infinity) }.buttonStyle(.glass)
+            Button { add(.easy) } label: { Text("debug.fakeHistory.easy").frame(maxWidth: .infinity) }.buttonStyle(.glass).appType(.button)
+            Button { add(.hard) } label: { Text("debug.fakeHistory.hard").frame(maxWidth: .infinity) }.buttonStyle(.glass).appType(.button)
             Button(role: .destructive) {
                 result = String(localized: "debug.fakeHistory.removed \(FakeHistoryDebug.remove())")
-            } label: { Text("debug.fakeHistory.remove").frame(maxWidth: .infinity) }.buttonStyle(.glass)
-            if let result { Text(verbatim: result).appFont(.footnote).foregroundStyle(Theme.accent) }
+            } label: { Text("debug.fakeHistory.remove").frame(maxWidth: .infinity) }.buttonStyle(.glass).appType(.button)
+            if let result { Text(verbatim: result).appType(.caption).foregroundStyle(Theme.accent) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard()

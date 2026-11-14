@@ -38,7 +38,7 @@ struct CustomPlansSection: View {
         VStack(spacing: 16) {
             CreatePlanCard(tier: tier)
             if available && !store.plans.isEmpty {
-                Text("custom.mine").appFont(.title3, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
+                Text("custom.mine").appType(.sectionTitle, weight: .bold).lineLimit(1).minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 CustomPlanCards(tier: tier)
             }
@@ -65,11 +65,11 @@ struct CreatePlanCard: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 10) {
                 Image(systemName: "slider.horizontal.3").foregroundStyle(Theme.highlight).appFont(.title3)
-                Text("custom.create").appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
+                Text("custom.create").appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
                 Spacer()
                 if available { Image(systemName: "chevron.right").foregroundStyle(.secondary) }
             }
-            Text("custom.create.summary").appFont(.footnote).foregroundStyle(.secondary)
+            Text("custom.create.summary").appType(.caption).foregroundStyle(.secondary)
             // Free: la card si vede, con l'invito ai piani
             if !available { LockedNote(key: "presets.locked") }
         }
@@ -92,8 +92,8 @@ struct CustomPlanCards: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(verbatim: r.name).appFont(.headline).lineLimit(1).minimumScaleFactor(0.7)
-                                Text(verbatim: customFacts(r)).appFont(.caption).foregroundStyle(.secondary)
+                                Text(verbatim: r.name).appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7)
+                                Text(verbatim: customFacts(r)).appType(.caption).foregroundStyle(.secondary)
                                     .lineLimit(1).minimumScaleFactor(0.7)
                             }
                             Spacer()
@@ -121,21 +121,21 @@ struct CustomPlanNotesView: View {
             Text(verbatim: String(format: loc("custom.note.person %@ %lld %lld %@"),
                                   loc(i.sex == .female ? "profile.female" : "profile.male"),
                                   i.age, Int(i.heightCm.rounded()), kgText(i.weightKg)))
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
             Text(verbatim: String(format: loc("custom.note.goal %@ %@ %@"), loc(goalKey(i.goal)),
                                   loc("custom.exp." + i.experience.rawValue), loc("custom.place." + i.place.rawValue)))
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
             if let bmi = n.bmi {
                 Text(verbatim: String(format: loc("custom.note.bmi %@ %@"), kgText(bmi.value), loc(bmiKey(bmi.category))))
-                    .appFont(.subheadline).foregroundStyle(.secondary)
+                    .appType(.secondary).foregroundStyle(.secondary)
             }
             Text(verbatim: String(format: loc("custom.note.kcal %lld"), n.dailyCalories))
-                .appFont(.subheadline).foregroundStyle(.secondary)
-            if n.lowImpact { Text("custom.note.lowImpact").appFont(.footnote).foregroundStyle(.secondary) }
-            if n.gentleLoads { Text("custom.note.gentle").appFont(.footnote).foregroundStyle(.secondary) }
+                .appType(.secondary).foregroundStyle(.secondary)
+            if n.lowImpact { Text("custom.note.lowImpact").appType(.caption).foregroundStyle(.secondary) }
+            if n.gentleLoads { Text("custom.note.gentle").appType(.caption).foregroundStyle(.secondary) }
             // Principiante con 5 o più allenamenti: invito a riposare
-            if n.manyDaysBeginner { Text("custom.note.manyDays").appFont(.footnote).foregroundStyle(.secondary) }
-            Text("custom.note.rules").appFont(.caption).foregroundStyle(.secondary)
+            if n.manyDaysBeginner { Text("custom.note.manyDays").appType(.caption).foregroundStyle(.secondary) }
+            Text("custom.note.rules").appType(.caption).foregroundStyle(.secondary)
         }
     }
 }
@@ -155,16 +155,16 @@ struct CustomPlanActions: View {
                 Button { newName = record.name; renaming = true } label: {
                     Label("custom.rename", systemImage: "pencil").lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
                 NavigationLink { CustomPlanEditorView(editID: record.id) } label: {
                     Label("custom.redo", systemImage: "slider.horizontal.3").lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
             Button(role: .destructive) { deleting = true } label: {
                 Label("custom.delete", systemImage: "trash").lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass).tint(.red)
+            .buttonStyle(.glass).appType(.button).tint(.red)
         }
         .alert("custom.rename", isPresented: $renaming) {
             TextField("custom.name", text: $newName)
@@ -220,9 +220,9 @@ struct CustomPlanEditorView: View {
                     } else if consentAt == 0 {
                         // Senza consenso ai dati sulla salute niente scheda (eta', altezza e peso sono dati sanitari)
                         VStack(spacing: 14) {
-                            Label("consent.locked", systemImage: "lock.fill").appFont(.callout)
+                            Label("consent.locked", systemImage: "lock.fill").appType(.body)
                             Button("consent.open") { showConsent = true }
-                                .buttonStyle(.glassProminent).tint(Theme.accent)
+                                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                         }
                         .frame(maxWidth: .infinity)
                         .glassCard()
@@ -269,7 +269,7 @@ struct CustomPlanEditorView: View {
         let limitReached = editing == nil && store.plans.count >= CustomPlanGenerator.maxPlans
 
         VStack(alignment: .leading, spacing: 16) {
-            Text("custom.section.body").appFont(.headline)
+            Text("custom.section.body").appType(.cardTitle)
             Picker("profile.sex", selection: field(\.sex, .male)) {
                 Text("profile.male").tag(BiologicalSex.male)
                 Text("profile.female").tag(BiologicalSex.female)
@@ -286,8 +286,8 @@ struct CustomPlanEditorView: View {
         .glassCard()
 
         VStack(alignment: .leading, spacing: 12) {
-            Text("custom.section.training").appFont(.headline)
-            Text("custom.goal").appFont(.subheadline, weight: .bold)
+            Text("custom.section.training").appType(.cardTitle)
+            Text("custom.goal").appType(.secondary, weight: .bold)
             Picker("custom.goal", selection: field(\.goal, .maintain)) {
                 ForEach([Goal.lose, .maintain, .gain], id: \.self) { g in Text(LocalizedStringKey(goalKey(g))).tag(g) }
             }
@@ -295,14 +295,14 @@ struct CustomPlanEditorView: View {
             if let bmi = current.bmi {
                 Text(verbatim: String(format: loc("custom.goal.recommended %@"),
                                       loc(goalKey(NutritionCalculator.recommendedGoal(bmi.category)))))
-                    .appFont(.caption).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
             }
-            Text("custom.experience").appFont(.subheadline, weight: .bold)
+            Text("custom.experience").appType(.secondary, weight: .bold)
             Picker("custom.experience", selection: field(\.experience, .beginner)) {
                 ForEach(Experience.allCases, id: \.self) { e in Text(LocalizedStringKey("custom.exp." + e.rawValue)).tag(e) }
             }
             .pickerStyle(.segmented)
-            Text("custom.days").appFont(.subheadline, weight: .bold)
+            Text("custom.days").appType(.secondary, weight: .bold)
             // Da 1 a 7 allenamenti a settimana (con 7 uno è di stretching)
             Picker("custom.days", selection: field(\.daysPerWeek, 3)) {
                 ForEach(CustomPlanInput.minDays...CustomPlanInput.maxDays, id: \.self) { d in
@@ -311,16 +311,16 @@ struct CustomPlanEditorView: View {
             }
             .pickerStyle(.segmented)
             if let input, CustomPlanGenerator.isManyDaysBeginner(input) {
-                Text("custom.note.manyDays").appFont(.caption).foregroundStyle(.secondary)
+                Text("custom.note.manyDays").appType(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Text("custom.place").appFont(.subheadline, weight: .bold)
+            Text("custom.place").appType(.secondary, weight: .bold)
             Picker("custom.place", selection: field(\.place, .gym)) {
                 ForEach(TrainingPlace.allCases, id: \.self) { p in Text(LocalizedStringKey("custom.place." + p.rawValue)).tag(p) }
             }
             .pickerStyle(.segmented)
             if current.place == .home {
-                Text("custom.place.homeNote").appFont(.caption).foregroundStyle(.secondary)
+                Text("custom.place.homeNote").appType(.caption).foregroundStyle(.secondary)
                 FlowChips(items: HomeEquipment.choices, isOn: { current.ownedEquipment.contains($0) },
                           title: { LocalizedStringKey("equipment." + $0) }) { eq in
                     if current.ownedEquipment.contains(eq) { input?.ownedEquipment.remove(eq) } else { input?.ownedEquipment.insert(eq) }
@@ -332,7 +332,7 @@ struct CustomPlanEditorView: View {
         .glassCard()
 
         VStack(alignment: .leading, spacing: 12) {
-            Text("custom.name").appFont(.subheadline, weight: .bold)
+            Text("custom.name").appType(.secondary, weight: .bold)
             TextField("custom.name", text: $name)
                 .textFieldStyle(.plain)
                 .padding(14)
@@ -340,13 +340,13 @@ struct CustomPlanEditorView: View {
                 .onChange(of: name) { _, v in if v.count > 60 { name = String(v.prefix(60)) } }
             if limitReached {
                 Text(verbatim: String(format: loc("custom.limit %lld"), CustomPlanGenerator.maxPlans))
-                    .appFont(.footnote).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
             }
             Button(action: create) {
                 Label(editing != nil ? "custom.regenerate" : "custom.generate", systemImage: "slider.horizontal.3")
-                    .appFont(.headline).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity).padding(.vertical, 4)
+                    .appType(.cta).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity).padding(.vertical, 4)
             }
-            .buttonStyle(.glassProminent).tint(Theme.accent)
+            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             .disabled(limitReached || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || catalog.all.isEmpty)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

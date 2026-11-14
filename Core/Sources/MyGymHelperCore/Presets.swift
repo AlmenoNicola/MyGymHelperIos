@@ -249,7 +249,7 @@ public enum MonthlyPlanner {
     static let fullC: [MuscleGroup] = [.glutes, .lats, .chest, .shoulders, .calves, .abs]
     static let upper: [MuscleGroup] = [.chest, .lats, .shoulders, .traps, .biceps, .triceps]
     static let lower: [MuscleGroup] = [.quads, .hamstrings, .glutes, .calves, .abs]
-    static let lightEquipment: Set<String> = ["bodyweight", "band", "exerciseBall", "other"]
+    static let lightEquipment: Set<String> = ["bodyweight", "band", "exerciseBall", "pilatesRing", "other"]
     static let excludedCategories: Set<String> = ["olympic", "strongman"]
 
     /// Mese ("yyyy-MM") e inizio del mese in corso e di quello precedente, nel fuso del telefono.

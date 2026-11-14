@@ -211,18 +211,18 @@ private struct TutorialBubble: View {
                 StepDots(index: index)
                 Spacer(minLength: 4)
                 Text("tutorial.step \(index + 1) \(TutorialGuide.steps.count)")
-                    .appFont(.caption).foregroundStyle(.secondary).monospacedDigit()
+                    .appType(.caption).foregroundStyle(.secondary).monospacedDigit()
                 if !isLast {
                     Button("tutorial.skip") { tutorial.finish() }
-                        .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accentSoft)
+                        .appType(.secondary, weight: .semibold).foregroundStyle(Theme.accentSoft)
                 }
             }
             VStack(alignment: .leading, spacing: 8) {
                 if showArt, let art = step.art {
                     TutorialArtwork(art: art).frame(maxWidth: .infinity)
                 }
-                Text(LocalizedStringKey(step.titleKey)).appFont(.title3, weight: .bold).lineLimit(1)
-                Text(LocalizedStringKey(step.bodyKey)).appFont(.subheadline).foregroundStyle(Color.primary.opacity(0.88))
+                Text(LocalizedStringKey(step.titleKey)).appType(.sectionTitle, weight: .bold, uppercase: true).lineLimit(1)
+                Text(LocalizedStringKey(step.bodyKey)).appType(.secondary).foregroundStyle(Color.primary.opacity(0.88))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .id(step.id)
@@ -232,15 +232,15 @@ private struct TutorialBubble: View {
                     Button { tutorial.go(to: prev) } label: {
                         Text("tutorial.back").lineLimit(1).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
                 }
                 Button {
                     if let next = TutorialGuide.next(index) { tutorial.go(to: next) } else { tutorial.finish() }
                 } label: {
                     Text(LocalizedStringKey(isLast ? "tutorial.done" : "tutorial.next"))
-                        .appFont(.headline).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 4)
+                        .appType(.cardTitle).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 4)
                 }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
                 .layoutPriority(1)
             }
         }
@@ -296,7 +296,7 @@ private struct TutorialArtwork: View {
                         .rotationEffect(.degrees(-90))
                     VStack(spacing: 0) {
                         Image(systemName: "timer").appFont(.caption, weight: .bold)
-                        Text(verbatim: "10").font(.system(size: 30 * AppTextScale, weight: .black, design: .rounded))
+                        Text(verbatim: "10").appType(.number)
                     }
                     .foregroundStyle(.white)
                 }

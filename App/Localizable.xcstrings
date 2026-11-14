@@ -7,1812 +7,13 @@
     " " : {
 
     },
-    "calories.defaultWeight" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Body weight not entered: 70 kg used. Enter it in Profile for a better estimate."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peso corporeo non inserito: sono stati usati 70 kg. Inseriscilo nel Profilo per una stima migliore."
-          }
-        }
-      }
-    },
-    "calories.disclaimer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This is only a rough estimate, not a measurement: it is based on the sets you actually did (length of sets and rests), your body weight and average values for weight training. Real calorie burn depends on intensity, loads and your metabolism and may differ. It does not replace advice from doctors, nutritionists or personal trainers."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "È solo una stima indicativa, non una misura: si basa sulle serie che hai fatto davvero (durata di serie e pause), sul tuo peso corporeo e su valori medi dell'allenamento con i pesi. Il consumo reale dipende da intensità, carichi e metabolismo e può essere diverso. Non sostituisce il parere di medici, nutrizionisti o personal trainer."
-          }
-        }
-      }
-    },
-    "calories.item %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "≈ %lld kcal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "≈ %lld kcal"
-          }
-        }
-      }
-    },
-    "calories.partialTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calories burned so far (exercises done)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calorie bruciate finora (esercizi fatti)"
-          }
-        }
-      }
-    },
-    "calories.session %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calories burned (estimate): ≈ %lld kcal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calorie bruciate (stima): ≈ %lld kcal"
-          }
-        }
-      }
-    },
-    "calories.totalTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total calories burned in this workout"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calorie bruciate in tutto l'allenamento"
-          }
-        }
-      }
-    },
-    "compare.customPlans" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom plan from height, weight and goal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scheda su misura da altezza, peso e obiettivo"
-          }
-        }
-      }
-    },
-    "compare.profileStats" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muscle statistics and progress charts"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Statistiche dei muscoli e grafici dell'andamento"
-          }
-        }
-      }
-    },
-    "custom.create" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create your plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crea la tua scheda"
-          }
-        }
-      }
-    },
-    "custom.create.summary" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter height, weight, sex, age and goal (lose weight, maintain or build muscle): the app builds a plan for you. You can create more than one and rename them."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inserisci altezza, peso, sesso, età e obiettivo (dimagrire, mantenere o massa muscolare): l'app prepara una scheda su misura. Puoi crearne più di una e rinominarle."
-          }
-        }
-      }
-    },
-    "custom.days" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Workouts a week"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allenamenti a settimana"
-          }
-        }
-      }
-    },
-    "custom.defaultName" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "My plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La mia scheda"
-          }
-        }
-      }
-    },
-    "custom.delete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elimina la scheda"
-          }
-        }
-      }
-    },
-    "custom.deleteBody" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lists already created from this plan are kept."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gli elenchi già creati da questa scheda restano."
-          }
-        }
-      }
-    },
-    "custom.deleteTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete this plan?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminare la scheda?"
-          }
-        }
-      }
-    },
-    "custom.editor.redo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change the plan details"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambia i dati della scheda"
-          }
-        }
-      }
-    },
-    "custom.editor.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your details stay on your phone"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I dati restano solo sul telefono"
-          }
-        }
-      }
-    },
-    "custom.editor.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create your plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crea la tua scheda"
-          }
-        }
-      }
-    },
-    "custom.exp.advanced" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Advanced"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avanzato"
-          }
-        }
-      }
-    },
-    "custom.exp.beginner" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beginner"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Principiante"
-          }
-        }
-      }
-    },
-    "custom.exp.intermediate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intermediate"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intermedio"
-          }
-        }
-      }
-    },
-    "custom.experience" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Experience"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esperienza"
-          }
-        }
-      }
-    },
-    "custom.facts %@ %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ · %lld workouts a week"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ · %lld allenamenti a settimana"
-          }
-        }
-      }
-    },
-    "custom.facts.one %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ · 1 workout a week"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ · 1 allenamento a settimana"
-          }
-        }
-      }
-    },
-    "custom.generate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crea la scheda"
-          }
-        }
-      }
-    },
-    "custom.goal" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Goal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obiettivo"
-          }
-        }
-      }
-    },
-    "custom.goal.gain" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Build muscle"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Massa"
-          }
-        }
-      }
-    },
-    "custom.goal.lose" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lose weight"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dimagrire"
-          }
-        }
-      }
-    },
-    "custom.goal.maintain" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maintain"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mantenere"
-          }
-        }
-      }
-    },
-    "custom.goal.recommended %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suggested by your BMI: %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Consigliato dal tuo BMI: %@"
-          }
-        }
-      }
-    },
-    "custom.limit %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You already have %lld plans: delete one to create another."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hai già %lld schede: eliminane una per crearne un'altra."
-          }
-        }
-      }
-    },
-    "custom.mine" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your plans"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le tue schede"
-          }
-        }
-      }
-    },
-    "custom.name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plan name"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nome della scheda"
-          }
-        }
-      }
-    },
-    "custom.note.bmi %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BMI %1$@: %2$@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BMI %1$@: %2$@"
-          }
-        }
-      }
-    },
-    "custom.note.gentle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Longer rests and at least 10 reps, with lighter loads."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pause più lunghe e almeno 10 ripetizioni, con carichi più leggeri."
-          }
-        }
-      }
-    },
-    "custom.note.goal %@ %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Goal: %1$@ · %2$@ · %3$@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obiettivo: %1$@ · %2$@ · %3$@"
-          }
-        }
-      }
-    },
-    "custom.note.kcal %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rough daily need for your goal: about %lld kcal."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fabbisogno indicativo per il tuo obiettivo: circa %lld kcal al giorno."
-          }
-        }
-      }
-    },
-    "custom.note.lowImpact" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No jumping exercises, to protect your joints."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niente esercizi con salti, per proteggere le articolazioni."
-          }
-        }
-      }
-    },
-    "custom.note.manyDays" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If you are just starting, 2-4 workouts a week are enough: muscles grow on rest days. If you feel tired or sore, take a rest."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per chi inizia bastano 2-4 allenamenti a settimana: i muscoli crescono nei giorni di recupero. Se ti senti stanco o indolenzito, riposa."
-          }
-        }
-      }
-    },
-    "custom.note.person %@ %lld %lld %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@, %2$lld years, %3$lld cm, %4$@ kg"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@, %2$lld anni, %3$lld cm, %4$@ kg"
-          }
-        }
-      }
-    },
-    "custom.note.rules" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plan built on your phone with fixed rules from your details: it does not replace a personal trainer or a doctor. You choose the weight: start light."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scheda creata sul telefono con regole fisse in base ai tuoi dati: non sostituisce un personal trainer o un medico. Il peso lo scegli tu: parti leggero."
-          }
-        }
-      }
-    },
-    "custom.place" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Where you train"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dove ti alleni"
-          }
-        }
-      }
-    },
-    "custom.place.bodyweight" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bodyweight"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Corpo libero"
-          }
-        }
-      }
-    },
-    "custom.place.gym" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gym"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Palestra"
-          }
-        }
-      }
-    },
-    "custom.place.home" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Casa"
-          }
-        }
-      }
-    },
-    "custom.place.homeNote" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tick the equipment you own: the plan will use only that and bodyweight."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Segna gli attrezzi che hai: la scheda userà solo quelli e il corpo libero."
-          }
-        }
-      }
-    },
-    "custom.redo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change details"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambia i dati"
-          }
-        }
-      }
-    },
-    "custom.regenerate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Redo the plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rifai la scheda"
-          }
-        }
-      }
-    },
-    "custom.rename" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rename"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rinomina"
-          }
-        }
-      }
-    },
-    "custom.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salva"
-          }
-        }
-      }
-    },
-    "custom.section.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About you"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il tuo corpo"
-          }
-        }
-      }
-    },
-    "custom.section.training" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your training"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il tuo allenamento"
-          }
-        }
-      }
-    },
-    "custom.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom plan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scheda su misura"
-          }
-        }
-      }
-    },
-    "ex.collapse" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Collapse"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chiudi"
-          }
-        }
-      }
-    },
-    "ex.districts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muscle groups involved"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distretti muscolari coinvolti"
-          }
-        }
-      }
-    },
-    "ex.expand" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expand"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apri"
-          }
-        }
-      }
-    },
-    "ex.listDistricts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muscle groups in this list"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distretti muscolari dell'elenco"
-          }
-        }
-      }
-    },
-    "ex.listsHint" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap a list to see its exercises."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tocca un elenco per vedere i suoi esercizi."
-          }
-        }
-      }
-    },
-    "lists.none" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No lists or exercises found."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun elenco o esercizio trovato."
-          }
-        }
-      }
-    },
-    "lists.search" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search lists or exercises"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cerca negli elenchi o negli esercizi"
-          }
-        }
-      }
-    },
-    "presets.twoDay" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full body in 2 workouts"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full body in 2 allenamenti"
-          }
-        }
-      }
-    },
-    "presets.twoDay.summary" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Two full-body workouts, A and B: 2 workouts a week, for when you have little time."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Due allenamenti per tutto il corpo, A e B: 2 allenamenti a settimana, per chi ha poco tempo."
-          }
-        }
-      }
-    },
-    "profile.back" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Back"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Retro"
-          }
-        }
-      }
-    },
-    "profile.chart.reps" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reps"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ripetizioni"
-          }
-        }
-      }
-    },
-    "profile.chart.sets" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sets done"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serie svolte"
-          }
-        }
-      }
-    },
-    "profile.chart.total %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Totale: %@"
-          }
-        }
-      }
-    },
-    "profile.chart.volume" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Volume (kg × reps)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Volume (kg × ripetizioni)"
-          }
-        }
-      }
-    },
-    "profile.chart.weight" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Body weight"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peso corporeo"
-          }
-        }
-      }
-    },
-    "profile.chart.weightChange %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change: %@ kg"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Variazione: %@ kg"
-          }
-        }
-      }
-    },
-    "profile.chart.weightEmpty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No weigh-ins in this period. The weight you enter in your data is saved once a day."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuna pesata in questo periodo. Il peso che inserisci nei tuoi dati si salva una volta al giorno."
-          }
-        }
-      }
-    },
-    "profile.chart.workouts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Workouts (days)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allenamenti (giorni)"
-          }
-        }
-      }
-    },
-    "profile.charts.empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No workouts in this period: the charts fill up as you train."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun allenamento in questo periodo: i grafici si riempiono man mano che ti alleni."
-          }
-        }
-      }
-    },
-    "profile.charts.locked" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Progress charts are available with the Pro subscription."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I grafici dell'andamento sono disponibili con l'abbonamento Pro."
-          }
-        }
-      }
-    },
-    "profile.charts.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Progress"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Andamento"
-          }
-        }
-      }
-    },
-    "profile.data.bmi %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BMI %1$@ · %2$@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BMI %1$@ · %2$@"
-          }
-        }
-      }
-    },
-    "profile.data.note" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Used for the avatar, “Create your plan” and advice. They stay on your phone only."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Servono per l'avatar, per «Crea la tua scheda» e per i consigli. Restano solo sul telefono."
-          }
-        }
-      }
-    },
-    "profile.data.summary %lld %@ %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld cm · %2$@ kg · %3$lld years"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld cm · %2$@ kg · %3$lld anni"
-          }
-        }
-      }
-    },
-    "profile.data.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your data"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I tuoi dati"
-          }
-        }
-      }
-    },
-    "profile.front" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Front"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fronte"
-          }
-        }
-      }
-    },
-    "profile.muscles.empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No exercises done in this period."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun esercizio svolto in questo periodo."
-          }
-        }
-      }
-    },
-    "profile.muscles.rule" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Share of all sets done: each set counts 1 for the exercise's primary muscles and 0.5 for its secondary ones."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Percentuale sul totale delle serie svolte: ogni serie vale 1 per i muscoli principali dell'esercizio e 0,5 per quelli secondari."
-          }
-        }
-      }
-    },
-    "profile.muscles.selected %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@: %2$@ of the work"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@: %2$@ del lavoro"
-          }
-        }
-      }
-    },
-    "profile.muscles.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trained muscles"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muscoli allenati"
-          }
-        }
-      }
-    },
-    "profile.needConsent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Saving age, weight, sex and height and seeing your statistics requires consent to health data."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per salvare età, peso, sesso e altezza e vedere le statistiche serve il consenso ai dati sulla salute."
-          }
-        }
-      }
-    },
-    "profile.period.locked" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Week, month, year and all time are available with the Pro subscription: here you see today's data."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settimana, mese, anno e totale sono disponibili con l'abbonamento Pro: qui vedi i dati di oggi."
-          }
-        }
-      }
-    },
-    "profile.range.today" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oggi"
-          }
-        }
-      }
-    },
-    "profile.stat.reps" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reps"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ripetizioni"
-          }
-        }
-      }
-    },
-    "profile.stat.sets" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sets"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serie"
-          }
-        }
-      }
-    },
-    "profile.stat.volume" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kg lifted"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kg sollevati"
-          }
-        }
-      }
-    },
-    "profile.stat.workouts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Workouts"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allenamenti"
-          }
-        }
-      }
-    },
-    "profile.tab.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your data, trained muscles and progress"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I tuoi dati, i muscoli allenati e i progressi"
-          }
-        }
-      }
-    },
-    "profile.tab.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profilo"
-          }
-        }
-      }
-    },
-    "region.glutes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Glutes"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Glutei"
-          }
-        }
-      }
-    },
-    "stats.period.all" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All time"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Totale"
-          }
-        }
-      }
-    },
-    "stats.period.day" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giorno"
-          }
-        }
-      }
-    },
-    "stats.period.month" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Month"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mese"
-          }
-        }
-      }
-    },
-    "stats.period.week" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Week"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settimana"
-          }
-        }
-      }
-    },
-    "stats.period.year" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Year"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anno"
-          }
-        }
-      }
-    },
-    "tab.profile" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profilo"
-          }
-        }
-      }
-    },
-    "tutorial.profileCharts.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Charts of workouts, sets, kg lifted, reps and body weight for the period chosen above. Tap a column to read its value. With the Pro subscription."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Grafici di allenamenti, serie, kg sollevati, ripetizioni e peso corporeo nel periodo scelto sopra. Tocca una colonna per leggerne il valore. Con l'abbonamento Pro."
-          }
-        }
-      }
-    },
-    "tutorial.profileCharts.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Progress"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Andamento"
-          }
-        }
-      }
-    },
-    "tutorial.profileMuscles.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose the period (day, week, month, year or all time): the front and back figure shows how much you worked each muscle, with its percentage. Tap a muscle to read it. On the Free plan you see today."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scegli il periodo (giorno, settimana, mese, anno o totale): sulla figura davanti e dietro vedi quanto hai lavorato ogni muscolo, con la percentuale. Tocca un muscolo per leggerla. Nel piano Free vedi la giornata di oggi."
-          }
-        }
-      }
-    },
-    "tutorial.profileMuscles.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trained muscles"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muscoli allenati"
-          }
-        }
-      }
-    },
-    "tutorial.profileTab.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter your age, sex, height and weight here: the avatar changes with your data, which is also used by “Create your plan”. It stays on your phone only."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qui inserisci età, sesso, altezza e peso: l'avatar cambia con i tuoi dati, che servono anche per «Crea la tua scheda». Restano solo sul telefono."
-          }
-        }
-      }
-    },
-    "tutorial.profileTab.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profilo"
-          }
-        }
-      }
-    },
-    "workout.yourPlans" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your plans"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le tue schede"
-          }
-        }
-      }
-    },
     "—" : {
 
     },
     "/ %lld" : {
+
+    },
+    "%@" : {
 
     },
     "%lld" : {
@@ -2045,13 +246,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Optional: sign in to link your subscription"
+            "value" : "Sign in to use the app"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Facoltativo: accedi per collegare l'abbonamento"
+            "value" : "Accedi per usare l'app"
           }
         }
       }
@@ -2147,13 +348,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Optional, to link your subscription"
+            "value" : "Needed to use the app and link your subscription"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Facoltativo, per collegare l'abbonamento"
+            "value" : "Serve per usare l'app e collegare l'abbonamento"
           }
         }
       }
@@ -2198,13 +399,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An account links your subscription to you. The app also works without one."
+            "value" : "An account is needed to use the app and links your subscription to you."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'account collega l'abbonamento a te. L'app funziona anche senza."
+            "value" : "L'account serve per usare l'app e collega l'abbonamento a te."
           }
         }
       }
@@ -2562,6 +763,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausa consigliata: %lld secondi"
+          }
+        }
+      }
+    },
+    "advice.startWeight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You haven't done this exercise yet: I suggest a cautious starting weight based on your Profile (weight, sex, age). It's only a starting point: adjust it to how you feel."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non hai ancora fatto questo esercizio: ti propongo un peso di partenza prudente in base al tuo Profilo (peso, sesso, età). È solo un punto di partenza: adattalo a come ti senti."
           }
         }
       }
@@ -4045,6 +2263,108 @@
         }
       }
     },
+    "calories.defaultWeight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight not entered: 70 kg used. Enter it in Profile for a better estimate."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peso corporeo non inserito: sono stati usati 70 kg. Inseriscilo nel Profilo per una stima migliore."
+          }
+        }
+      }
+    },
+    "calories.disclaimer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is only a rough estimate, not a measurement: it is based on the sets you actually did (length of sets and rests), your body weight and average values for weight training. Real calorie burn depends on intensity, loads and your metabolism and may differ. It does not replace advice from doctors, nutritionists or personal trainers."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È solo una stima indicativa, non una misura: si basa sulle serie che hai fatto davvero (durata di serie e pause), sul tuo peso corporeo e su valori medi dell'allenamento con i pesi. Il consumo reale dipende da intensità, carichi e metabolismo e può essere diverso. Non sostituisce il parere di medici, nutrizionisti o personal trainer."
+          }
+        }
+      }
+    },
+    "calories.item %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %lld kcal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %lld kcal"
+          }
+        }
+      }
+    },
+    "calories.partialTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories burned so far (exercises done)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate finora (esercizi fatti)"
+          }
+        }
+      }
+    },
+    "calories.session %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories burned (estimate): ≈ %lld kcal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate (stima): ≈ %lld kcal"
+          }
+        }
+      }
+    },
+    "calories.totalTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total calories burned in this workout"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorie bruciate in tutto l'allenamento"
+          }
+        }
+      }
+    },
     "coach.addset" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4334,6 +2654,23 @@
         }
       }
     },
+    "compare.customPlans" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom plan from height, weight and goal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda su misura da altezza, peso e obiettivo"
+          }
+        }
+      }
+    },
     "compare.fixedCoaching" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4466,6 +2803,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fabbisogno calorico e ricerca alimenti"
+          }
+        }
+      }
+    },
+    "compare.profileStats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscle statistics and progress charts"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistiche dei muscoli e grafici dell'andamento"
           }
         }
       }
@@ -4840,6 +3194,771 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voce"
+          }
+        }
+      }
+    },
+    "custom.create" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la tua scheda"
+          }
+        }
+      }
+    },
+    "custom.create.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter height, weight, sex, age and goal (lose weight, maintain or build muscle): the app builds a plan for you. You can create more than one and rename them."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci altezza, peso, sesso, età e obiettivo (dimagrire, mantenere o massa muscolare): l'app prepara una scheda su misura. Puoi crearne più di una e rinominarle."
+          }
+        }
+      }
+    },
+    "custom.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workouts a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti a settimana"
+          }
+        }
+      }
+    },
+    "custom.defaultName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mia scheda"
+          }
+        }
+      }
+    },
+    "custom.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina la scheda"
+          }
+        }
+      }
+    },
+    "custom.deleteBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lists already created from this plan are kept."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli elenchi già creati da questa scheda restano."
+          }
+        }
+      }
+    },
+    "custom.deleteTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete this plan?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminare la scheda?"
+          }
+        }
+      }
+    },
+    "custom.editor.redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change the plan details"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia i dati della scheda"
+          }
+        }
+      }
+    },
+    "custom.editor.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your details stay on your phone"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I dati restano solo sul telefono"
+          }
+        }
+      }
+    },
+    "custom.editor.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la tua scheda"
+          }
+        }
+      }
+    },
+    "custom.exp.advanced" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzato"
+          }
+        }
+      }
+    },
+    "custom.exp.beginner" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginner"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Principiante"
+          }
+        }
+      }
+    },
+    "custom.exp.intermediate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermediate"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermedio"
+          }
+        }
+      }
+    },
+    "custom.experience" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Experience"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esperienza"
+          }
+        }
+      }
+    },
+    "custom.facts %@ %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %lld workouts a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %lld allenamenti a settimana"
+          }
+        }
+      }
+    },
+    "custom.facts.one %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 1 workout a week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 1 allenamento a settimana"
+          }
+        }
+      }
+    },
+    "custom.generate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea la scheda"
+          }
+        }
+      }
+    },
+    "custom.goal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiettivo"
+          }
+        }
+      }
+    },
+    "custom.goal.gain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build muscle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Massa"
+          }
+        }
+      }
+    },
+    "custom.goal.lose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lose weight"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimagrire"
+          }
+        }
+      }
+    },
+    "custom.goal.maintain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintain"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantenere"
+          }
+        }
+      }
+    },
+    "custom.goal.recommended %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested by your BMI: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigliato dal tuo BMI: %@"
+          }
+        }
+      }
+    },
+    "custom.limit %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have %lld plans: delete one to create another."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai già %lld schede: eliminane una per crearne un'altra."
+          }
+        }
+      }
+    },
+    "custom.mine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your plans"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue schede"
+          }
+        }
+      }
+    },
+    "custom.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan name"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome della scheda"
+          }
+        }
+      }
+    },
+    "custom.note.bmi %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@: %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@: %2$@"
+          }
+        }
+      }
+    },
+    "custom.note.gentle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longer rests and at least 10 reps, with lighter loads."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause più lunghe e almeno 10 ripetizioni, con carichi più leggeri."
+          }
+        }
+      }
+    },
+    "custom.note.goal %@ %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal: %1$@ · %2$@ · %3$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiettivo: %1$@ · %2$@ · %3$@"
+          }
+        }
+      }
+    },
+    "custom.note.kcal %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rough daily need for your goal: about %lld kcal."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fabbisogno indicativo per il tuo obiettivo: circa %lld kcal al giorno."
+          }
+        }
+      }
+    },
+    "custom.note.lowImpact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No jumping exercises, to protect your joints."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niente esercizi con salti, per proteggere le articolazioni."
+          }
+        }
+      }
+    },
+    "custom.note.manyDays" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you are just starting, 2-4 workouts a week are enough: muscles grow on rest days. If you feel tired or sore, take a rest."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per chi inizia bastano 2-4 allenamenti a settimana: i muscoli crescono nei giorni di recupero. Se ti senti stanco o indolenzito, riposa."
+          }
+        }
+      }
+    },
+    "custom.note.person %@ %lld %lld %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld years, %3$lld cm, %4$@ kg"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld anni, %3$lld cm, %4$@ kg"
+          }
+        }
+      }
+    },
+    "custom.note.rules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan built on your phone with fixed rules from your details: it does not replace a personal trainer or a doctor. You choose the weight: start light."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda creata sul telefono con regole fisse in base ai tuoi dati: non sostituisce un personal trainer o un medico. Il peso lo scegli tu: parti leggero."
+          }
+        }
+      }
+    },
+    "custom.place" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where you train"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dove ti alleni"
+          }
+        }
+      }
+    },
+    "custom.place.bodyweight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bodyweight"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corpo libero"
+          }
+        }
+      }
+    },
+    "custom.place.gym" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gym"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palestra"
+          }
+        }
+      }
+    },
+    "custom.place.home" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Casa"
+          }
+        }
+      }
+    },
+    "custom.place.homeNote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tick the equipment you own: the plan will use only that and bodyweight."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segna gli attrezzi che hai: la scheda userà solo quelli e il corpo libero."
+          }
+        }
+      }
+    },
+    "custom.redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change details"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia i dati"
+          }
+        }
+      }
+    },
+    "custom.regenerate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redo the plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rifai la scheda"
+          }
+        }
+      }
+    },
+    "custom.rename" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rinomina"
+          }
+        }
+      }
+    },
+    "custom.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva"
+          }
+        }
+      }
+    },
+    "custom.section.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About you"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo corpo"
+          }
+        }
+      }
+    },
+    "custom.section.training" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your training"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo allenamento"
+          }
+        }
+      }
+    },
+    "custom.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheda su misura"
           }
         }
       }
@@ -5575,6 +4694,23 @@
         }
       }
     },
+    "equipment.pilatesRing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilates ring"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anello pilates"
+          }
+        }
+      }
+    },
     "ex.addToList" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5609,24 +4745,6 @@
         }
       }
     },
-    "ex.removeMuscle %@" : {
-      "comment" : "Pillola di un muscolo scelto sotto la mappa: tocco per toglierlo (accessibilità)",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Togli %@"
-          }
-        }
-      }
-    },
     "ex.clear" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5640,6 +4758,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Azzera selezione"
+          }
+        }
+      }
+    },
+    "ex.collapse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapse"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
+        }
+      }
+    },
+    "ex.districts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscle groups involved"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distretti muscolari coinvolti"
+          }
+        }
+      }
+    },
+    "ex.expand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expand"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri"
           }
         }
       }
@@ -5678,6 +4847,23 @@
         }
       }
     },
+    "ex.listDistricts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscle groups in this list"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distretti muscolari dell'elenco"
+          }
+        }
+      }
+    },
     "ex.lists" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5691,6 +4877,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Elenchi"
+          }
+        }
+      }
+    },
+    "ex.listsHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a list to see its exercises."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca un elenco per vedere i suoi esercizi."
           }
         }
       }
@@ -5861,6 +5064,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consigliati per te"
+          }
+        }
+      }
+    },
+    "ex.removeMuscle %@" : {
+      "comment" : "Pillola di un muscolo scelto sotto la mappa: tocco per toglierlo (accessibilità)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Togli %@"
           }
         }
       }
@@ -6660,6 +5881,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pesce bianco"
+          }
+        }
+      }
+    },
+    "gate.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To use MyGymHelper you need to sign up or sign in with Apple or Google. Your first sign-in creates your account; after that you stay signed in. Your health data stays on your iPhone."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per usare MyGymHelper devi registrarti o accedere con Apple o Google. Il primo accesso crea il tuo account; le volte successive resti collegato. I dati sulla salute restano sul tuo iPhone."
+          }
+        }
+      }
+    },
+    "gate.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An Apple or Google account is required"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve un account Apple o Google"
+          }
+        }
+      }
+    },
+    "gate.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to continue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accedi per continuare"
           }
         }
       }
@@ -7942,6 +7214,23 @@
         }
       }
     },
+    "lists.none" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No lists or exercises found."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun elenco o esercizio trovato."
+          }
+        }
+      }
+    },
     "lists.presets" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -7955,6 +7244,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Per zona del corpo"
+          }
+        }
+      }
+    },
+    "lists.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search lists or exercises"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca negli elenchi o negli esercizi"
           }
         }
       }
@@ -8282,19 +7588,36 @@
         }
       }
     },
+    "movement.forwardBack" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forward/back"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanti/indietro"
+          }
+        }
+      }
+    },
     "movement.hint" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relative to the floor, however the phone is turned. Up/down: raises, presses, squats. Left/right: torso twists, rows and presses on cables or machines that move horizontally."
+            "value" : "Relative to the floor, however the phone is turned. Up/down: raises, presses, squats. Left/right: torso twists, rows and presses on cables or machines that move horizontally. Forward/back: horizontal swings and drags (swings, sled)."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rispetto al pavimento, comunque sia girato il telefono. Su/giù: alzate, spinte, piegamenti. Sinistra/destra: rotazioni del busto, rematori e spinte ai cavi o alle macchine in orizzontale."
+            "value" : "Rispetto al pavimento, comunque sia girato il telefono. Su/giù: alzate, spinte, piegamenti. Sinistra/destra: rotazioni del busto, rematori e spinte ai cavi o alle macchine in orizzontale. Avanti/indietro: oscillazioni e trascinamenti in orizzontale (swing, slitta)."
           }
         }
       }
@@ -8316,19 +7639,36 @@
         }
       }
     },
+    "movement.switchTo.forwardBack" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch: count forward/back"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia: conta avanti/indietro"
+          }
+        }
+      }
+    },
     "movement.switchTo.leftRight" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Count left/right"
+            "value" : "Switch: count left/right"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conta sinistra/destra"
+            "value" : "Cambia: conta sinistra/destra"
           }
         }
       }
@@ -8339,13 +7679,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Count up/down"
+            "value" : "Switch: count up/down"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conta su/giù"
+            "value" : "Cambia: conta su/giù"
           }
         }
       }
@@ -10101,6 +9441,23 @@
         }
       }
     },
+    "plans.review.pickHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick an exercise from the list (or keep the text you typed):"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli un esercizio dell'elenco (o lascia il testo che hai scritto):"
+          }
+        }
+      }
+    },
     "plans.review.reps" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11274,6 +10631,40 @@
         }
       }
     },
+    "presets.twoDay" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full body in 2 workouts"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full body in 2 allenamenti"
+          }
+        }
+      }
+    },
+    "presets.twoDay.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two full-body workouts, A and B: 2 workouts a week, for when you have little time."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due allenamenti per tutto il corpo, A e B: 2 allenamenti a settimana, per chi ha poco tempo."
+          }
+        }
+      }
+    },
     "presets.upperLower" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11359,6 +10750,278 @@
         }
       }
     },
+    "profile.back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retro"
+          }
+        }
+      }
+    },
+    "profile.chart.reps" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reps"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripetizioni"
+          }
+        }
+      }
+    },
+    "profile.chart.sets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sets done"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie svolte"
+          }
+        }
+      }
+    },
+    "profile.chart.total %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Totale: %@"
+          }
+        }
+      }
+    },
+    "profile.chart.volume" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume (kg × reps)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume (kg × ripetizioni)"
+          }
+        }
+      }
+    },
+    "profile.chart.weight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body weight"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peso corporeo"
+          }
+        }
+      }
+    },
+    "profile.chart.weightChange %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change: %@ kg"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variazione: %@ kg"
+          }
+        }
+      }
+    },
+    "profile.chart.weightEmpty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No weigh-ins in this period. The weight you enter in your data is saved once a day."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna pesata in questo periodo. Il peso che inserisci nei tuoi dati si salva una volta al giorno."
+          }
+        }
+      }
+    },
+    "profile.chart.workouts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workouts (days)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti (giorni)"
+          }
+        }
+      }
+    },
+    "profile.charts.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No workouts in this period: the charts fill up as you train."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun allenamento in questo periodo: i grafici si riempiono man mano che ti alleni."
+          }
+        }
+      }
+    },
+    "profile.charts.locked" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress charts are available with the Pro subscription."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I grafici dell'andamento sono disponibili con l'abbonamento Pro."
+          }
+        }
+      }
+    },
+    "profile.charts.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andamento"
+          }
+        }
+      }
+    },
+    "profile.data.bmi %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@ · %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMI %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "profile.data.note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used for the avatar, “Create your plan” and advice. They stay on your phone only."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servono per l'avatar, per «Crea la tua scheda» e per i consigli. Restano solo sul telefono."
+          }
+        }
+      }
+    },
+    "profile.data.summary %lld %@ %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld cm · %2$@ kg · %3$lld years"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld cm · %2$@ kg · %3$lld anni"
+          }
+        }
+      }
+    },
+    "profile.data.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your data"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I tuoi dati"
+          }
+        }
+      }
+    },
     "profile.diets" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11393,6 +11056,23 @@
         }
       }
     },
+    "profile.front" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Front"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fronte"
+          }
+        }
+      }
+    },
     "profile.goal" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11423,6 +11103,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maschio"
+          }
+        }
+      }
+    },
+    "profile.muscles.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No exercises done in this period."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun esercizio svolto in questo periodo."
+          }
+        }
+      }
+    },
+    "profile.muscles.rule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share of all sets done: each set counts 1 for the exercise's primary muscles and 0.5 for its secondary ones."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percentuale sul totale delle serie svolte: ogni serie vale 1 per i muscoli principali dell'esercizio e 0,5 per quelli secondari."
+          }
+        }
+      }
+    },
+    "profile.muscles.selected %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ of the work"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ del lavoro"
+          }
+        }
+      }
+    },
+    "profile.muscles.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trained muscles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscoli allenati"
+          }
+        }
+      }
+    },
+    "profile.needConsent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving age, weight, sex and height and seeing your statistics requires consent to health data."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per salvare età, peso, sesso e altezza e vedere le statistiche serve il consenso ai dati sulla salute."
+          }
+        }
+      }
+    },
+    "profile.period.locked" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Week, month, year and all time are available with the Pro subscription: here you see today's data."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settimana, mese, anno e totale sono disponibili con l'abbonamento Pro: qui vedi i dati di oggi."
           }
         }
       }
@@ -11495,6 +11277,23 @@
         }
       }
     },
+    "profile.range.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oggi"
+          }
+        }
+      }
+    },
     "profile.sex" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11508,6 +11307,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sesso"
+          }
+        }
+      }
+    },
+    "profile.stat.reps" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reps"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripetizioni"
+          }
+        }
+      }
+    },
+    "profile.stat.sets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sets"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        }
+      }
+    },
+    "profile.stat.volume" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kg lifted"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kg sollevati"
+          }
+        }
+      }
+    },
+    "profile.stat.workouts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workouts"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti"
+          }
+        }
+      }
+    },
+    "profile.tab.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your data, trained muscles and progress"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I tuoi dati, i muscoli allenati e i progressi"
+          }
+        }
+      }
+    },
+    "profile.tab.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilo"
           }
         }
       }
@@ -11695,6 +11596,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Core"
+          }
+        }
+      }
+    },
+    "region.glutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glutes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glutei"
           }
         }
       }
@@ -12375,6 +12293,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sto rivedendo la proposta con l'AI del telefono…"
+          }
+        }
+      }
+    },
+    "session.backToReady" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to Ready"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Torna a Pronto"
           }
         }
       }
@@ -13419,6 +13354,91 @@
         }
       }
     },
+    "stats.period.all" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All time"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Totale"
+          }
+        }
+      }
+    },
+    "stats.period.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giorno"
+          }
+        }
+      }
+    },
+    "stats.period.month" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Month"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mese"
+          }
+        }
+      }
+    },
+    "stats.period.week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Week"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settimana"
+          }
+        }
+      }
+    },
+    "stats.period.year" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Year"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anno"
+          }
+        }
+      }
+    },
     "stop.confirm" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13606,6 +13626,23 @@
         }
       }
     },
+    "tab.profile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilo"
+          }
+        }
+      }
+    },
     "tab.workout" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13697,13 +13734,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Machine taken or missing equipment? On the start screen of an exercise press \"Do an alternative exercise\": the exercise list opens with its filters, already set to the same muscles. Pick one and set sets, reps, weight and rest (they start from the original exercise), then press \"Only for this session\" to do it in its place today, or \"Replace in the list\" to swap it for good."
+            "value" : "Machine taken or missing equipment? On the start screen of an exercise press \"Do an alternative exercise\": the exercise list opens with its filters, already set to the same muscles. Pick one and set sets, reps, weight and rest (they start from the original exercise), then press \"Only for this session\" to do it in its place today, or \"Replace in the list\" to swap it for good. You also find it when editing an exercise in the list (the pencil): there you pick the alternative and can replace it in the list without starting the exercise."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Macchina occupata o attrezzo che manca? Nella schermata di avvio di un esercizio premi \"Fai esercizio alternativo\": si apre l'elenco degli esercizi con i filtri, già impostato sugli stessi muscoli. Scegline uno e imposta serie, ripetizioni, peso e pausa (partono da quelli dell'esercizio originale), poi premi \"Solo per questa sessione\" per farlo al suo posto oggi, oppure \"Sostituisci nell'elenco\" per cambiarlo in modo definitivo."
+            "value" : "Macchina occupata o attrezzo che manca? Nella schermata di avvio di un esercizio premi \"Fai esercizio alternativo\": si apre l'elenco degli esercizi con i filtri, già impostato sugli stessi muscoli. Scegline uno e imposta serie, ripetizioni, peso e pausa (partono da quelli dell'esercizio originale), poi premi \"Solo per questa sessione\" per farlo al suo posto oggi, oppure \"Sostituisci nell'elenco\" per cambiarlo in modo definitivo. Lo trovi anche nella modifica di un esercizio dell'elenco (la matita): lì scegli l'alternativa e puoi sostituirla nell'elenco senza avviare l'esercizio."
           }
         }
       }
@@ -13884,13 +13921,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Lists you find ready-made lists (glutes included) and saved ones; use \"Search\" to find a list by its name or by an exercise it contains. In Plans (Pro) you enter your gym's plan manually: exercises, sets, reps and weights."
+            "value" : "In Lists you find ready-made lists (glutes included) and saved ones; use \"Search\" to find a list by its name or by an exercise it contains. In Plans (Pro) you enter your gym's plan manually: exercises, sets, reps and weights: while you type the name it suggests exercises from the list to pick."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Elenchi trovi elenchi pronti (anche per i glutei) e quelli salvati; con \"Cerca\" trovi un elenco dal nome o da un esercizio che contiene. In Schede (Pro) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi."
+            "value" : "In Elenchi trovi elenchi pronti (anche per i glutei) e quelli salvati; con \"Cerca\" trovi un elenco dal nome o da un esercizio che contiene. In Schede (Pro) inserisci a mano la scheda della tua palestra: esercizi, serie, ripetizioni e pesi: mentre scrivi il nome ti propone gli esercizi dell'elenco da scegliere."
           }
         }
       }
@@ -14020,13 +14057,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "With the Pro subscription, in the filters box below the figure, mark the equipment you have available (dumbbells, kettlebell, bands…): you can view, add or remove it whenever you like. Then turn on the \"Available equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it: the marked equipment lights up. Bodyweight exercises are always shown."
+            "value" : "With the Pro subscription, in the filters box below the figure, mark the equipment you have available (dumbbells, kettlebell, bands, Pilates ring…): you can view, add or remove it whenever you like. Then turn on the \"Available equipment only\" filter, here and in Add exercise, to see only the exercises you can do with it: the marked equipment lights up. Bodyweight exercises are always shown."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con l'abbonamento Pro, nel riquadro dei filtri sotto la figura, segni gli attrezzi che hai a disposizione (manubri, kettlebell, elastici…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo attrezzi disponibili\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli: gli attrezzi segnati si illuminano. Gli esercizi a corpo libero si vedono sempre."
+            "value" : "Con l'abbonamento Pro, nel riquadro dei filtri sotto la figura, segni gli attrezzi che hai a disposizione (manubri, kettlebell, elastici, anello pilates…): puoi vederli, aggiungerli o toglierli quando vuoi. Poi accendi il filtro \"Solo attrezzi disponibili\", qui e in Aggiungi esercizio, per vedere solo gli esercizi che puoi fare con quelli: gli attrezzi segnati si illuminano. Gli esercizi a corpo libero si vedono sempre."
           }
         }
       }
@@ -14088,13 +14125,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you have no list yet, with the Pro subscription you find “Create your plan” right here. Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green and show the calories burned (an estimate, counting only the sets you did); at the bottom you find the total with a note. Reset clears them. Below “Loaded exercises”, the “My plans” box gathers the plans made with “Create your plan” and those you wrote yourself. With \"Next exercise\" you move on to the next one, but it always starts when you say so. The Pro subscription lets you save several lists (Select plan). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
+            "value" : "If you have no list yet, with the Pro subscription you find “Create your plan” right here. Exercises you add are gathered here in a closed box: tap it to open the list (and again to close it). Each one appears with the muscles it works drawn on the body, sets, reps, weight and rest (with different sets, the reps and weight of each set): tap one to start, the pencil to edit it, the bin to remove it. Done ones turn green and show the calories burned (an estimate, counting only the sets you did); at the bottom you find the total with a note. Reset clears them. Below “Loaded exercises”, the “My plans” box gathers the plans made with “Create your plan” and those you wrote yourself. With \"Next exercise\" (on by default in new lists) you move on to the next one, but it always starts when you say so. When editing an exercise, \"Today's suggestion\" has an Apply button only when it has a result; if you haven't done the exercise yet it suggests a cautious starting weight based on your Profile. The Pro subscription lets you save several lists (Select plan). You can type the weight or use + and −: they move in 0.5 kg steps up to 4 kg, then 1 kg up to 10 kg, then 5 kg."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se non hai ancora nessun elenco, con l'abbonamento Pro qui trovi subito «Crea la tua scheda». Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi e mostrano le calorie bruciate (una stima, calcolata solo sulle serie fatte); in fondo trovi il totale con un avviso. Reset li azzera. Sotto «Esercizi caricati», il riquadro «Le mie schede» raccoglie le schede fatte con «Crea la tua scheda» e quelle scritte da te. Con \"Esercizio successivo\" passi al prossimo, ma parte sempre quando lo decidi tu. Con l'abbonamento Pro puoi salvare più elenchi (Seleziona scheda). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
+            "value" : "Se non hai ancora nessun elenco, con l'abbonamento Pro qui trovi subito «Crea la tua scheda». Gli esercizi aggiunti sono raccolti qui in un riquadro chiuso: toccalo per aprire l'elenco (e di nuovo per chiuderlo). Ognuno compare con i muscoli che allena disegnati sul corpo, serie, ripetizioni, peso e pausa (con le serie diverse, ripetizioni e peso di ogni serie): toccane uno per iniziare, la matita per modificarlo, il cestino per toglierlo. Quelli fatti diventano verdi e mostrano le calorie bruciate (una stima, calcolata solo sulle serie fatte); in fondo trovi il totale con un avviso. Reset li azzera. Sotto «Esercizi caricati», il riquadro «Le mie schede» raccoglie le schede fatte con «Crea la tua scheda» e quelle scritte da te. Con \"Esercizio successivo\" (acceso di default nei nuovi elenchi) passi al prossimo, ma parte sempre quando lo decidi tu. Nella modifica di un esercizio, \"Consiglio per oggi\" ha il pulsante Applica solo quando ha un risultato; se non hai ancora fatto l'esercizio propone un peso di partenza prudente in base al tuo Profilo. Con l'abbonamento Pro puoi salvare più elenchi (Seleziona scheda). Il peso puoi scriverlo a mano oppure usare + e −: sale di 0,5 kg fino a 4 kg, poi di 1 kg fino a 10 kg e poi di 5 kg."
           }
         }
       }
@@ -14303,6 +14340,108 @@
         }
       }
     },
+    "tutorial.profileCharts.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charts of workouts, sets, kg lifted, reps and body weight for the period chosen above. Tap a column to read its value. With the Pro subscription."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grafici di allenamenti, serie, kg sollevati, ripetizioni e peso corporeo nel periodo scelto sopra. Tocca una colonna per leggerne il valore. Con l'abbonamento Pro."
+          }
+        }
+      }
+    },
+    "tutorial.profileCharts.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andamento"
+          }
+        }
+      }
+    },
+    "tutorial.profileMuscles.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the period (day, week, month, year or all time): the front and back figure shows how much you worked each muscle, with its percentage. Tap a muscle to read it. On the Free plan you see today."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli il periodo (giorno, settimana, mese, anno o totale): sulla figura davanti e dietro vedi quanto hai lavorato ogni muscolo, con la percentuale. Tocca un muscolo per leggerla. Nel piano Free vedi la giornata di oggi."
+          }
+        }
+      }
+    },
+    "tutorial.profileMuscles.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trained muscles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muscoli allenati"
+          }
+        }
+      }
+    },
+    "tutorial.profileTab.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your age, sex, height and weight here: the avatar changes with your data, which is also used by “Create your plan”. It stays on your phone only."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui inserisci età, sesso, altezza e peso: l'avatar cambia con i tuoi dati, che servono anche per «Crea la tua scheda». Restano solo sul telefono."
+          }
+        }
+      }
+    },
+    "tutorial.profileTab.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilo"
+          }
+        }
+      }
+    },
     "tutorial.replay.body" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -14343,13 +14482,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose where the phone is and press Start: the app counts up/down or left/right movement depending on the exercise (you can change it when editing the exercise). The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\"; if it does not count your movements, try the button to count the other axis. During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary with the estimated calories burned, and tips."
+            "value" : "Choose where the phone is and press Start: the app counts up/down, left/right or forward/back movement depending on the exercise (you can change it when editing the exercise). The exercise explanation plays (you can skip it), then counting starts: the voice tells you when to stop, counts the rest and tells you when to start again. If you stop early, press \"I stopped\"; if you did all the reps but the count missed some, press \"All reps done\"; if it does not count your movements, try the button to change the movement being counted. During the rest before the last set, the voice lets you know and introduces the next exercise: name, muscles, equipment and where to put the phone. At the end you get a summary with the estimated calories burned, and tips."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scegli dove hai il telefono e premi Avvia: l'app conta il movimento su/giù o sinistra/destra in base all'esercizio (puoi cambiarlo nella modifica dell'esercizio). Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\"; se non conta i movimenti, prova il pulsante per contare l'altro asse. Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo con la stima delle calorie bruciate e i consigli."
+            "value" : "Scegli dove hai il telefono e premi Avvia: l'app conta il movimento su/giù, sinistra/destra o avanti/indietro in base all'esercizio (puoi cambiarlo nella modifica dell'esercizio). Parte la spiegazione dell'esercizio (puoi saltarla), poi il conteggio: la voce ti dice quando fermarti, conta la pausa e ti avvisa quando ricominciare. Se ti fermi prima, premi \"Mi sono fermato\"; se hai fatto tutte le ripetizioni ma il conteggio non le ha prese, premi \"Ripetizioni completate\"; se non conta i movimenti, prova il pulsante per cambiare il movimento contato. Nella pausa prima dell'ultima serie la voce ti avvisa e ti presenta il prossimo esercizio: nome, muscoli, attrezzo e dove mettere il telefono. Alla fine vedi il riepilogo con la stima delle calorie bruciate e i consigli."
           }
         }
       }
@@ -14571,6 +14710,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allenamento"
+          }
+        }
+      }
+    },
+    "unit.reps" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REPS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REP"
           }
         }
       }
@@ -15795,6 +15951,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allenamento odierno"
+          }
+        }
+      }
+    },
+    "workout.yourPlans" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your plans"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue schede"
           }
         }
       }

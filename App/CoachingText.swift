@@ -54,7 +54,7 @@ struct ParametersLine: View {
                 Label { Text(verbatim: "\(parameters.restSeconds) s") } icon: { Image(systemName: "timer") }
                     .labelStyle(.titleAndIcon)
             }
-            .appFont(.subheadline, weight: .semibold)
+            .appType(.secondary, weight: .semibold)
         } else {
             uniformLine
         }
@@ -66,7 +66,7 @@ struct ParametersLine: View {
             Label { Text(verbatim: parameters.weightKg > 0 ? parameters.weightKg.kgText : "—") } icon: { Image(systemName: "scalemass") }
             Label { Text(verbatim: "\(parameters.restSeconds) s") } icon: { Image(systemName: "timer") }
         }
-        .appFont(.subheadline, weight: .semibold)
+        .appType(.secondary, weight: .semibold)
         .labelStyle(.titleAndIcon)
     }
 }
@@ -83,23 +83,23 @@ struct AdviceCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label { Text(title).appFont(.headline) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
+            Label { Text(title).appType(.cardTitle) } icon: { Image(systemName: "sparkles").foregroundStyle(Theme.accent) }
             ForEach(reasons, id: \.self) { key in
-                Text(LocalizedStringKey(key)).appFont(.subheadline).foregroundStyle(.secondary)
+                Text(LocalizedStringKey(key)).appType(.secondary).foregroundStyle(.secondary)
             }
             ForEach(Array(details.enumerated()), id: \.offset) { _, item in
-                Text(item).appFont(.subheadline)
+                Text(item).appType(.secondary)
             }
             if let before {
                 Text(verbatim: AdviceText.loadChange(before: before, after: parameters))
-                    .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accent)
+                    .appType(.secondary, weight: .semibold).foregroundStyle(Theme.accent)
             }
             ParametersLine(parameters: parameters)
             if let onApply {
                 Button(action: onApply) {
                     Label("advice.apply", systemImage: "checkmark").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,9 +115,9 @@ struct LockedNote: View {
         NavigationLink { PaywallView() } label: {
             HStack {
                 Label(key, systemImage: "lock.fill")
-                    .appFont(.footnote).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
                 Spacer(minLength: 8)
-                Text("plans.see").appFont(.footnote, weight: .bold).foregroundStyle(Theme.accentSoft)
+                Text("plans.see").appType(.caption, weight: .bold).foregroundStyle(Theme.accentSoft)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

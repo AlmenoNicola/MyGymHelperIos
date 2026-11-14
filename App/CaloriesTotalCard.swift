@@ -16,15 +16,15 @@ struct CaloriesTotalCard: View {
                 Image(systemName: "flame.fill").font(.system(size: 26 * AppTextScale)).foregroundStyle(Theme.done)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(allDone ? "calories.totalTitle" : "calories.partialTitle")
-                        .font(.system(size: 12 * AppTextScale)).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.7)
+                        .appType(.caption).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.7)
                     Text("calories.item \(total)")
-                        .font(.system(size: 24 * AppTextScale, weight: .heavy)).lineLimit(1).minimumScaleFactor(16.0 / 24.0)
+                        .appType(.headline, uppercase: true).lineLimit(1).minimumScaleFactor(16.0 / 26.0)   // "≈ 350 KCAL"
                 }
                 Spacer(minLength: 0)
             }
-            Text("calories.disclaimer").font(.system(size: 12 * AppTextScale)).foregroundStyle(.secondary)
+            Text("calories.disclaimer").appType(.caption).foregroundStyle(.secondary)
             if ProfileData.bodyWeightKg() == nil {
-                Text("calories.defaultWeight").font(.system(size: 12 * AppTextScale))
+                Text("calories.defaultWeight").appType(.caption)
             }
         }
         .padding(14)

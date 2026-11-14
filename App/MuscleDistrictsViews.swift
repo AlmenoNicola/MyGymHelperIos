@@ -36,7 +36,7 @@ struct MuscleDistrictsBox: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "figure.arms.open").appFont(.footnote).foregroundStyle(Theme.accent)
-                        Text(title).appFont(.subheadline, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
+                        Text(title).appType(.secondary, weight: .semibold).lineLimit(1).minimumScaleFactor(0.6)
                         Spacer(minLength: 4)
                         Image(systemName: isOpen ? "chevron.up" : "chevron.down").appFont(.footnote).foregroundStyle(.secondary)
                     }
@@ -49,7 +49,7 @@ struct MuscleDistrictsBox: View {
                 if isOpen {
                     ForEach(districts, id: \.region) { d in
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(verbatim: d.region.title).appFont(.subheadline, weight: .bold)
+                            Text(verbatim: d.region.title).appType(.secondary, weight: .bold)
                             if !d.primary.isEmpty {
                                 legend(AnyShapeStyle(Theme.accentGradient), "ex.primaryMuscles", d.primary)
                             }
@@ -67,7 +67,7 @@ struct MuscleDistrictsBox: View {
                                     primary.contains(m) ? .primary : (secondary.contains(m) ? .secondary : .idle)
                                 })
                                 .frame(height: 160)
-                                Text(front ? BodySide.front.titleKey : BodySide.back.titleKey).appFont(.caption).foregroundStyle(.secondary)
+                                Text(front ? BodySide.front.titleKey : BodySide.back.titleKey).appType(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -89,8 +89,8 @@ struct MuscleDistrictsBox: View {
                 Text(title)
                 Text(verbatim: ": ")
             }
-            .appFont(.footnote, weight: .bold)
-            Text(verbatim: muscles.map(\.title).joined(separator: ", ")).appFont(.footnote).foregroundStyle(.secondary)
+            .appType(.caption, weight: .bold)
+            Text(verbatim: muscles.map(\.title).joined(separator: ", ")).appType(.caption).foregroundStyle(.secondary)
         }
     }
 }

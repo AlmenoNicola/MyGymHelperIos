@@ -63,7 +63,7 @@ public enum TutorialTarget {
 public enum TutorialGuide {
     /// Versione del tutorial: aumentarla a ogni aggiornamento dei passi. Viene salvata quando l'utente lo
     /// completa o lo salta; il tutorial parte da solo solo se non e' mai stato visto (valore salvato 0).
-    public static let version = 31  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
+    public static let version = 32  // 2: "Aggiungi esercizio" e "Schede pronte"; 3: scelta del tema grafico;
                                     // 4: passi della Nutrizione nascosti mentre la scheda e' disattivata;
                                     // 5: i Piani passano dalla barra delle schede all'Area personale;
                                     // 6: "Suggerisci una funzione" (ultima voce dell'Area personale);
@@ -92,6 +92,7 @@ public enum TutorialGuide {
                                     // 29: "Attrezzi in casa" diventa "Attrezzi a disposizione", dentro i filtri sotto la figura; filtro "Solo attrezzi disponibili" con gli attrezzi segnati in evidenza (passo "homeEquipment")
                                     // 30: asse del movimento (su/giù o sinistra/destra) nel passo "session"; tolto Apple Salute/Health Connect da "infoTab"
                                     // 31: Esercizi: tolta la sezione "Le mie schede", "Cerca esercizio" sotto la figura (passo "exercisesTab")
+                                    // 32: avanti/indietro nel passo session, Esercizio successivo acceso di default, Consiglio per oggi con peso di partenza, alternativo anche in modifica, scheda a mano dal catalogo, anello pilates
 
     /// Tutti i passi, compresi quelli delle funzioni disattivate.
     public static let allSteps: [TutorialStep] = [

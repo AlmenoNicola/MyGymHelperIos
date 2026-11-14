@@ -41,7 +41,9 @@ struct WorkoutSessionView: View {
 
     var body: some View {
         if let controller {
-            SessionContent(controller: controller, target: target) { next in
+            SessionContent(controller: controller, target: target,
+                           // Freccia "indietro" durante la spiegazione: si torna a "Pronto" (la sessione si chiude)
+                           onBack: { self.controller = nil }) { next in
                 // Esercizio successivo: si torna alla schermata "Pronto" (la sessione finita si chiude da sola).
                 self.controller = nil
                 target = next
@@ -155,15 +157,15 @@ private struct ReadyView: View {
                         // Esercizio alternativo: quello dell'elenco che sostituisce, solo per questa sessione.
                         if let replacing {
                             Label("alternative.instead \(replacing.name)", systemImage: "arrow.left.arrow.right")
-                                .appFont(.subheadline, weight: .semibold).foregroundStyle(Theme.accentSoft)
+                                .appType(.secondary, weight: .semibold).foregroundStyle(Theme.accentSoft)
                                 .lineLimit(1).minimumScaleFactor(0.7)
                         }
                         Text(verbatim: exercise.primary.map(\.title).joined(separator: ", "))
-                            .appFont(.subheadline).foregroundStyle(.secondary)
-                        Text(verbatim: parameters.summaryText).appFont(.headline)
+                            .appType(.secondary).foregroundStyle(.secondary)
+                        Text(verbatim: parameters.summaryText).appType(.cardTitle)
                         Text(verbatim: String(format: NSLocalizedString("movement.counted %@", comment: ""),
                                               NSLocalizedString(axis.titleKey, comment: "")))
-                            .appFont(.caption).foregroundStyle(.secondary)
+                            .appType(.caption).foregroundStyle(.secondary)
                     } else {
                         // Conteggio libero: serie, ripetizioni e pausa si scelgono qui.
                         CounterRow(title: "counter.sets", value: $parameters.sets, range: WorkoutParameters.setsRange)
@@ -183,26 +185,26 @@ private struct ReadyView: View {
                         Label("alternative.button", systemImage: "arrow.left.arrow.right")
                             .lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glass)
+                    .buttonStyle(.glass).appType(.button)
                     .tint(Theme.accent)
                 }
                 if let replacing, let onRestore {
                     Button(action: onRestore) {
                         Text("alternative.restore \(replacing.name)").lineLimit(1).minimumScaleFactor(0.7)
                     }
-                    .appFont(.footnote).tint(Theme.accent)
+                    .appType(.caption).tint(Theme.accent)
                 }
                 PositionPicker(selected: $position)
                 CalibrationSummary(position: position)
                 Label("workout.pocketWarning", systemImage: "iphone.gen3.radiowaves.left.and.right")
-                    .appFont(.footnote).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Button(action: onStart) {
                     Label("ready.start", systemImage: "play.fill")
-                        .appFont(.title3, weight: .bold).frame(maxWidth: .infinity).padding(.vertical, 8)
+                        .appType(.cta).frame(maxWidth: .infinity).padding(.vertical, 8)
                 }
-                .buttonStyle(.glassProminent)
+                .buttonStyle(.glassProminent).appType(.button)
                 .tint(Theme.accent)
             }
             .padding(20)
@@ -215,6 +217,8 @@ private struct ReadyView: View {
 private struct SessionContent: View {
     let controller: SessionController
     let target: SessionTarget
+    /// Torna alla schermata "Pronto" (solo durante la spiegazione, prima della prima serie).
+    var onBack: () -> Void
     var onNext: (SessionTarget) -> Void
     @Environment(CatalogStore.self) private var catalog
     @State private var showStop = false
@@ -241,6 +245,17 @@ private struct SessionContent: View {
         .padding(20)
         .appScreen()
         .navigationBarBackButtonHidden(controller.phase != .finished)
+        // Durante la spiegazione (prima della prima serie) c'e' la freccia "indietro", che riporta a "Pronto"
+        // (per esempio per cambiare la posizione del telefono). Nel conteggio e nella pausa resta nascosta:
+        // si esce con "Termina allenamento". (9 novembre 2026)
+        .toolbar {
+            if controller.phase == .notStarted && controller.explaining {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: onBack) { Image(systemName: "chevron.backward") }
+                        .accessibilityLabel(Text("session.backToReady"))
+                }
+            }
+        }
         .onAppear { controller.start() }
         .onDisappear { controller.end() }
         .onReceive(timer) { _ in controller.tick() }
@@ -270,15 +285,16 @@ private struct SessionContent: View {
             progressBar
             VStack(spacing: 4) {
                 if let exercise = controller.exercise {
-                    Text(verbatim: exercise.name).appFont(.title3, weight: .bold)
+                    Text(verbatim: exercise.name).appType(.sectionTitle, weight: .bold, uppercase: true)
                 }
                 Text("session.set \(controller.currentSetNumber) \(controller.totalSets)")
-                    .appFont(.headline).foregroundStyle(.secondary)
+                    .appType(.cardTitle).foregroundStyle(.secondary)
                 // Peso della serie in corso (serie diverse: cambia da una serie all'altra).
                 let setWeight = controller.currentTarget.weightKg
                 if setWeight > 0 {
                     Text(verbatim: setWeight.kgText)
-                        .appFont(controller.isVaried ? .title3 : .subheadline, weight: controller.isVaried ? .bold : nil).foregroundStyle(Theme.accentSoft)
+                        // "80 KG": più grande con le serie diverse (cambia da una serie all'altra)
+                        .appType(controller.isVaried ? .stat : .metric, uppercase: true).foregroundStyle(Theme.accentSoft)
                 }
             }
 
@@ -286,13 +302,13 @@ private struct SessionContent: View {
 
             if !controller.motion.isAvailable {
                 Label("session.noSensor", systemImage: "exclamationmark.triangle.fill")
-                    .appFont(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
+                    .appType(.secondary).foregroundStyle(.orange).glassCard(padding: 14)
             } else if controller.motion.isCalibrating {
                 Label("session.calibrating", systemImage: "waveform.path")
-                    .appFont(.subheadline).glassCard(padding: 14)
+                    .appType(.secondary).glassCard(padding: 14)
             } else if controller.motion.lowConfidence {
                 Label("workout.pocketWarning", systemImage: "exclamationmark.triangle.fill")
-                    .appFont(.subheadline).foregroundStyle(.orange).glassCard(padding: 14)
+                    .appType(.secondary).foregroundStyle(.orange).glassCard(padding: 14)
             }
 
             Spacer(minLength: 0)
@@ -301,57 +317,58 @@ private struct SessionContent: View {
             if controller.motion.isAvailable {
                 Text(verbatim: String(format: NSLocalizedString("movement.counted %@", comment: ""),
                                       NSLocalizedString(controller.axis.titleKey, comment: "")))
-                    .appFont(.caption).foregroundStyle(.secondary)
+                    .appType(.caption).foregroundStyle(.secondary)
                 Button { controller.toggleAxis() } label: {
-                    Label(LocalizedStringKey(controller.axis == .upDown ? "movement.switchTo.leftRight" : "movement.switchTo.upDown"),
-                          systemImage: controller.axis == .upDown ? "arrow.left.and.right" : "arrow.up.and.down")
-                        .appFont(.headline).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    // Passa all'asse successivo: su/giù → sinistra/destra → avanti/indietro → su/giù
+                    Label(LocalizedStringKey("movement.switchTo." + controller.axis.other.rawValue),
+                          systemImage: controller.axis.other.symbol)
+                        .appType(.cardTitle).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
 
             Button { showStop = true } label: {
                 Label("session.stopped", systemImage: "hand.raised.fill")
-                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
-            .buttonStyle(.glass).tint(.red)
+            .buttonStyle(.glass).appType(.button).tint(.red)
 
             // Tutte le ripetizioni della serie fatte (se il conteggio non le ha prese tutte): serie completa, senza scrivere il numero.
             Button { controller.stop(doneReps: controller.targetReps) } label: {
                 Label("session.setDone", systemImage: "checkmark.circle.fill")
-                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
-            .buttonStyle(.glass)
+            .buttonStyle(.glass).appType(.button)
 
             Button("session.end") { controller.endEarly() }
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
         }
     }
 
     private func restView(afterSet: Int, remaining: Int) -> some View {
         VStack(spacing: 26) {
             progressBar
-            Text("session.rest").appFont(.headline).foregroundStyle(.secondary)
+            Text("session.rest").appType(.cardTitle).foregroundStyle(.secondary)
             CountdownRing(remaining: remaining, total: controller.restSeconds)
-            Text("session.next \(afterSet + 1)").appFont(.title3, weight: .bold)
+            Text("session.next \(afterSet + 1)").appType(.sectionTitle, weight: .bold)
             // Prossima serie: ripetizioni e peso (con le serie diverse cambiano da una serie all'altra).
             let next = controller.target(afterSet + 1)
             Text(verbatim: String(localized: "session.nextTarget \(next.reps)") + (next.weightKg > 0 ? " · " + next.weightKg.kgText : ""))
-                .appFont(.headline).foregroundStyle(Theme.accentSoft)
+                .appType(.cardTitle).foregroundStyle(Theme.accentSoft)
             Spacer(minLength: 0)
             Button { controller.skipRest() } label: {
                 Label("session.skipRest", systemImage: "forward.fill")
-                    .appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    .appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
-            .buttonStyle(.glassProminent).tint(Theme.accent)
+            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             if controller.hasExplanation {
                 Button { controller.explain() } label: {
                     Label("explain.again", systemImage: "person.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.glass).appType(.button)
             }
             Button("session.end") { controller.endEarly() }
-                .appFont(.subheadline).foregroundStyle(.secondary)
+                .appType(.secondary).foregroundStyle(.secondary)
         }
     }
 
@@ -359,10 +376,10 @@ private struct SessionContent: View {
     private var explanationView: some View {
         let speaking = VoiceEngine.shared.speakingID
         return VStack(alignment: .leading, spacing: 16) {
-            Text("explain.title").appFont(.headline).foregroundStyle(.secondary)
+            Text("explain.title").appType(.cardTitle).foregroundStyle(.secondary)
             if let exercise = controller.exercise {
-                Text(verbatim: exercise.name).appFont(.title, weight: .bold)
-                Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appFont(.subheadline).foregroundStyle(.secondary)
+                Text(verbatim: exercise.name).appType(.screenTitle, weight: .bold)
+                Text(verbatim: exercise.primary.map(\.title).joined(separator: ", ")).appType(.secondary).foregroundStyle(.secondary)
                 ScrollView {
                     VStack(spacing: 10) {
                         // Foto della posizione iniziale e finale (se ci sono), sopra i passaggi
@@ -387,7 +404,7 @@ private struct SessionContent: View {
                         }
                         ForEach(Array(exercise.steps.enumerated()), id: \.offset) { i, step in
                             HStack(alignment: .top, spacing: 12) {
-                                Text(verbatim: "\(i + 1)").appFont(.headline).foregroundStyle(Theme.accent)
+                                Text(verbatim: "\(i + 1)").appType(.cardTitle).foregroundStyle(Theme.accent)
                                 Text(verbatim: step).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(14)
@@ -398,16 +415,16 @@ private struct SessionContent: View {
                 }
             }
             if let countdown = controller.startCountdown {
-                Text("explain.startsIn \(countdown)").appFont(.title2, weight: .bold).frame(maxWidth: .infinity)
+                Text("explain.startsIn \(countdown)").appType(.stat, weight: .bold).frame(maxWidth: .infinity)
             }
             Button { controller.startNow() } label: {
-                Label("explain.startNow", systemImage: "play.fill").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                Label("explain.startNow", systemImage: "play.fill").appType(.cta).frame(maxWidth: .infinity).padding(.vertical, 6)
             }
-            .buttonStyle(.glassProminent).tint(Theme.accent)
+            .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
             Button { controller.explain() } label: {
                 Label("explain.again", systemImage: "person.wave.2.fill").lineLimit(1).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.glass)
+            .buttonStyle(.glass).appType(.button)
         }
     }
 
@@ -468,7 +485,7 @@ struct CountdownRing: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 0.3), value: progress)
             Text("\(remaining)")
-                .font(.system(size: 92, weight: .heavy, design: .rounded).monospacedDigit())
+                .appType(.timer)            // Oswald 88, fuori dalla riduzione del 20%
                 .contentTransition(.numericText())
         }
         .frame(width: 270, height: 270)
@@ -492,15 +509,15 @@ struct StopSheet: View {
         ZStack {
             AppBackground()
             VStack(spacing: 22) {
-                Text("stop.title").appFont(.title3, weight: .bold)
+                Text("stop.title").appType(.sectionTitle, weight: .bold)
                 CounterRow(title: "counter.reps", value: $reps, range: 0...target).glassCard()
                 Button {
                     onConfirm(reps); dismiss()
                 } label: {
-                    Text("stop.confirm").appFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Text("stop.confirm").appType(.cardTitle).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
-                .buttonStyle(.glassProminent).tint(Theme.accent)
-                Button("info.cancel") { dismiss() }.buttonStyle(.glass)
+                .buttonStyle(.glassProminent).appType(.button).tint(Theme.accent)
+                Button("info.cancel") { dismiss() }.buttonStyle(.glass).appType(.button)
             }
             .padding(24)
         }

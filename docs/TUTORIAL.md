@@ -203,3 +203,6 @@ A ogni modifica o aggiunta di una funzione (Android e iOS), nella stessa consegn
   (`tutorial.session.body`); tolto Apple Salute/Health Connect da "infoTab" (`tutorial.infoTab.body`). Nessun passo nuovo.
 - 9 novembre 2026 (versione 31), iOS fatto: Esercizi senza "Le mie schede" in cima e con "Cerca esercizio" sotto la
   figura (`tutorial.exercisesTab.body`). Nessun passo nuovo.
+- 9 novembre 2026 (versione 32), iOS fatto: avanti/indietro nel passo "session", "Esercizio successivo" acceso di
+  default, "Consiglio per oggi" con peso di partenza, alternativo anche dalla matita, scheda a mano con proposte dal
+  catalogo, anello pilates. Nessun passo nuovo.
